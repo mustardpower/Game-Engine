@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Data Structures">
+      <UniqueIdentifier>{b34c7757-0e91-4eb2-ac84-b1c826f3f113}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data Structures\Binary Tree">
+      <UniqueIdentifier>{41672b62-b9b9-49d2-880e-4e429c1a3965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data Structures\AVL Tree">
+      <UniqueIdentifier>{49317c86-c08e-4c1e-b53c-b192dad0640a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader Files">
+      <UniqueIdentifier>{987fd3bc-5e3a-42fc-a3f3-ee89f8a021a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GLSL">
+      <UniqueIdentifier>{c8083091-7b95-4b8c-95ac-00d7f126c3b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Physics Handling">
+      <UniqueIdentifier>{5779bd9f-82ae-4fef-acb8-47b939b4b22a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics Handling">
+      <UniqueIdentifier>{28697897-72f2-433e-bd89-b71f3f9aef98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GLSL">
+      <UniqueIdentifier>{5df63d6f-f650-4647-91d0-fa7f4f55bdc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data Structures">
+      <UniqueIdentifier>{d94a54d5-3a32-4cb9-b545-fec6cd1acd3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data Handling">
+      <UniqueIdentifier>{1fbf699f-9c31-4e0e-b3fb-44b8816bd739}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data Handling">
+      <UniqueIdentifier>{a61bdcc2-5d9b-481b-9488-7ca753c3e1ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SceneManagement">
+      <UniqueIdentifier>{a16224a6-ceb9-4e5b-a624-70c30404419d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SceneManagement">
+      <UniqueIdentifier>{16a5580f-07ac-4de4-87ad-e3df723fd548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GeoModels">
+      <UniqueIdentifier>{fbc4e31f-ed2b-4b9f-b0d9-33052c3e60d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GeoModels\BoundingObjects">
+      <UniqueIdentifier>{04a6e348-3a5b-4a71-a8f0-b2ad8f61bb4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GeoModels">
+      <UniqueIdentifier>{f77731fa-9149-485b-b09d-6b1f2b501d18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GeoModels\BoundingObjects">
+      <UniqueIdentifier>{3f922515-b185-4696-a7f7-87312e66ab4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data Handling\FreeImage">
+      <UniqueIdentifier>{b5b58a81-fa5f-401f-a7aa-98ae0f3d1314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data Handling\SOIL">
+      <UniqueIdentifier>{5bfe54c1-4dd1-4b03-9803-ecffc27a6ca2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data Handling\SOIL">
+      <UniqueIdentifier>{8ba128f0-5821-4621-879a-0ed86012039c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstraintsHandler.cpp">
+      <Filter>Source Files\Physics Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\SceneManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>Source Files\Data Structures</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderable.cpp">
+      <Filter>Source Files\SceneManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\SceneManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelImporter3D.cpp">
+      <Filter>Source Files\Data Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="glApplication.cpp">
+      <Filter>Source Files\GLSL</Filter>
+    </ClCompile>
+    <ClCompile Include="glsl.cpp">
+      <Filter>Source Files\GLSL</Filter>
+    </ClCompile>
+    <ClCompile Include="glutwindow.cpp">
+      <Filter>Source Files\GLSL</Filter>
+    </ClCompile>
+    <ClCompile Include="glWindow.cpp">
+      <Filter>Source Files\GLSL</Filter>
+    </ClCompile>
+    <ClCompile Include="tiny_obj_loader.cc">
+      <Filter>Source Files\Data Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="GeoModel3D.cpp">
+      <Filter>Source Files\GeoModels</Filter>
+    </ClCompile>
+    <ClCompile Include="lodepng.cpp">
+      <Filter>Source Files\Data Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="SOIL\stb_image_aug.c">
+      <Filter>Source Files\Data Handling\SOIL</Filter>
+    </ClCompile>
+    <ClCompile Include="SOIL\SOIL.c">
+      <Filter>Source Files\Data Handling\SOIL</Filter>
+    </ClCompile>
+    <ClCompile Include="SOIL\image_helper.c">
+      <Filter>Source Files\Data Handling\SOIL</Filter>
+    </ClCompile>
+    <ClCompile Include="SOIL\image_DXT.c">
+      <Filter>Source Files\Data Handling\SOIL</Filter>
+    </ClCompile>
+    <ClCompile Include="AABB.cpp">
+      <Filter>Source Files\GeoModels\BoundingObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundingSphere.cpp">
+      <Filter>Source Files\GeoModels\BoundingObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine.cpp">
+      <Filter>Source Files\GLSL</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BinarySearchTree.h">
+      <Filter>Header Files\Data Structures\Binary Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files\Data Structures\Binary Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="AVL Node.h">
+      <Filter>Header Files\Data Structures\AVL Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="AVL Tree.h">
+      <Filter>Header Files\Data Structures\AVL Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadtree.h">
+      <Filter>Header Files\Data Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files\SceneManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\SceneManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelImporter3D.h">
+      <Filter>Header Files\Data Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="glApplication.h">
+      <Filter>Header Files\GLSL</Filter>
+    </ClInclude>
+    <ClInclude Include="glsl.h">
+      <Filter>Header Files\GLSL</Filter>
+    </ClInclude>
+    <ClInclude Include="glutwindow.h">
+      <Filter>Header Files\GLSL</Filter>
+    </ClInclude>
+    <ClInclude Include="glWindow.h">
+      <Filter>Header Files\GLSL</Filter>
+    </ClInclude>
+    <ClInclude Include="tiny_obj_loader.h">
+      <Filter>Header Files\Data Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>Header Files\GeoModels\BoundingObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingObject.h">
+      <Filter>Header Files\GeoModels\BoundingObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingSphere.h">
+      <Filter>Header Files\GeoModels\BoundingObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GeoModel3D.h">
+      <Filter>Header Files\GeoModels</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine.h">
+      <Filter>Header Files\GLSL</Filter>
+    </ClInclude>
+    <ClInclude Include="lodepng.h">
+      <Filter>Header Files\Data Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeImage\FreeImage.h">
+      <Filter>Header Files\Data Handling\FreeImage</Filter>
+    </ClInclude>
+    <ClInclude Include="SOIL\stbi_DDS_aug_c.h">
+      <Filter>Header Files\Data Handling\SOIL</Filter>
+    </ClInclude>
+    <ClInclude Include="SOIL\stbi_DDS_aug.h">
+      <Filter>Header Files\Data Handling\SOIL</Filter>
+    </ClInclude>
+    <ClInclude Include="SOIL\stb_image_aug.h">
+      <Filter>Header Files\Data Handling\SOIL</Filter>
+    </ClInclude>
+    <ClInclude Include="SOIL\SOIL.h">
+      <Filter>Header Files\Data Handling\SOIL</Filter>
+    </ClInclude>
+    <ClInclude Include="SOIL\image_helper.h">
+      <Filter>Header Files\Data Handling\SOIL</Filter>
+    </ClInclude>
+    <ClInclude Include="SOIL\image_DXT.h">
+      <Filter>Header Files\Data Handling\SOIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Header Files\SceneManagement</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="frag_shader.fs">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="vert_shader.vs">
+      <Filter>Shader Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

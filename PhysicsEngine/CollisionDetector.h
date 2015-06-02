@@ -1,0 +1,7 @@
+ 
+
+class CollisionDetector
+{
+private:
+public:
+};

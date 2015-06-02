@@ -1,0 +1,1 @@
+Delete allocated buffers when rendering
