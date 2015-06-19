@@ -2,9 +2,6 @@
 
 GeoModel3D::GeoModel3D(std::string file_name)
 {
-	rotation_angle = 0.0f;
-	rotation_vec.x = 1.0f;
-
 	std::string err = tinyobj::LoadObj(shapes, materials, (file_name+".obj").c_str());
 	std::cout<<err<<std::endl;
 
@@ -41,41 +38,22 @@ AABB* GeoModel3D::getAABB()
 	return boundingBox;
 }
 
-void GeoModel3D::render(cwc::glShader *shader, Camera camera)
+void GeoModel3D::render(cwc::glShader *shader)
 {
-	GLint vertex_index = 0;	//store location of the "position" attribute in shaders
-	GLint normal_index = 1;	//store location of the "normal" attribute in shaders
+	GLint vertex_index = 0;	
+	GLint normal_index = 1;	
 	GLint sampler_index;	
 	GLint texture_coords_index = 2;
-	GLint model_index;
-	GLint view_index;
-	GLint projection_index;
 
-	glm::mat4 modelMatrix = camera.getModelMatrix();
-	glm::mat4 viewMatrix = camera.getViewMatrix();
-	glm::mat4 projectionMatrix = camera.getProjectionMatrix();
-
-	modelMatrix = glm::translate(modelMatrix, position);
-	modelMatrix = glm::rotate(modelMatrix, rotation_angle, rotation_vec);
-
-	model_index = shader->GetUniformLocation( "model" );
-	glUniformMatrix4fv( model_index, 1, GL_FALSE, &modelMatrix[0][0] );
-
-	view_index = shader->GetUniformLocation( "view" );
-	glUniformMatrix4fv( view_index, 1, GL_FALSE, &viewMatrix[0][0] );
-
-	projection_index = shader->GetUniformLocation( "projection" );
-	glUniformMatrix4fv(projection_index,1,GL_FALSE,&projectionMatrix[0][0]);
-
-	//for all shapes in the obj file
+	// each mesh is made up of a number of shapes
 	for(size_t i = 0;i<shapes.size();i++ )
 	{
 		tinyobj::mesh_t current_mesh = shapes[i].mesh;
 
-		/*shader->BindAttribLocation(normal_index,"normal");
+		shader->BindAttribLocation(normal_index,"normal");
 		glBufferData(GL_ARRAY_BUFFER,sizeof(float)*current_mesh.normals.size(), &current_mesh.normals[0],GL_STATIC_DRAW);
 		glVertexAttribPointer(normal_index, 3, GL_FLOAT, GL_FALSE, 0, 0); 
-		glEnableVertexAttribArray(normal_index);*/
+		glEnableVertexAttribArray(normal_index);
 
 		shader->BindAttribLocation(vertex_index,"position");
 		glBufferData(GL_ARRAY_BUFFER,sizeof(float)*current_mesh.positions.size(), &current_mesh.positions[0], GL_STATIC_DRAW);
@@ -122,12 +100,6 @@ GLuint GeoModel3D::loadTexture (std::string file_name)
 					);
 
   return tex_id;
-}
-
-void GeoModel3D::rotate(float angle, glm::vec3 vec)
-{
-	rotation_angle += angle;
-	rotation_vec = vec;
 }
 
 void GeoModel3D::setPosition(glm::vec3 pos)

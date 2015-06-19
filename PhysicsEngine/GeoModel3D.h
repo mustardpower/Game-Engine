@@ -19,14 +19,12 @@ private:
 	std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
 	std::map<unsigned int,unsigned int> textures;
-	glm::vec3 rotation_vec;
-	float rotation_angle;
 	glm::vec3 position;
+	glm::mat4 transformMatrix;
 public:
 	GeoModel3D(std::string file_name);
 	AABB* getAABB();
-	void render(cwc::glShader *shader, Camera camera);
+	void render(cwc::glShader *shader);
 	GLuint loadTexture(std::string file_name);
 	void setPosition(glm::vec3 pos);
-	void rotate(float angle, glm::vec3 rotation_vec);
 };

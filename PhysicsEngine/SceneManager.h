@@ -8,17 +8,19 @@
 // Name:		SceneManager
 // Variables:	objects - vector of all objects within the world
 //				quadtree - a quadtree data structure to minimize unneccessary updating of the screen
-// Desc:		This class manages all the objects in the scene and ensures their properties are updated
+// Desc:		This class manages all the scene object data 
 //-----------------------------------------------------------------------------
 class SceneManager
 {
 private:
 	std::vector<Renderable> objects;
 	QuadTree quadtree;
+	Camera glCamera;
 public:
 	SceneManager();
 
 	std::vector<Renderable> getObjects();
 	void addObject(Renderable object);
+	void onKeyPress(int nKey, char cAscii);
 	void update();
 };

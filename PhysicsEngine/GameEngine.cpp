@@ -5,20 +5,17 @@
 void GameEngine::OnRender(void)
 {
 	std::vector<Renderable> objects;
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
+	
+	sceneManager.update();
     if (shader) shader->begin();
-
 	objects = sceneManager.getObjects();
-
 	for(std::vector<Renderable>::iterator it = objects.begin(); it != objects.end(); it++)
 	{
-		it->render(shader, camera);
+		it->render(shader);
 	}
 
     if (shader) shader->end();
-
     glutSwapBuffers();
 }
 
@@ -54,43 +51,13 @@ void GameEngine::OnRender(void)
 	void GameEngine::OnMouseWheel(int nWheelNumber, int nDirection, int x, int y){}
 	void GameEngine::OnKeyDown(int nKey, char cAscii)
 	{       
-		const float INCREMENT = 1; // For altering rotation angle, translation vector and scale factor of camera
-
 		if (cAscii == 27) // 0x1b = ESC
 		{
 			this->Close(); // Close GameEngine!
 		}
-		else if (cAscii == 43) // +
+		else
 		{
-			camera.translateZ(INCREMENT); 
-		}
-		else if (cAscii == 45) // -
-		{
-			camera.translateZ(-INCREMENT); 
-		}
-		else if (nKey == GLUT_KEY_RIGHT)
-		{
-			camera.translateX(INCREMENT); 
-		}
-		else if (nKey == GLUT_KEY_LEFT)
-		{
-			camera.translateX(-INCREMENT); 
-		}
-		else if (nKey == GLUT_KEY_UP)
-		{
-			camera.translateY(INCREMENT); 
-		}
-		else if (nKey == GLUT_KEY_DOWN)
-		{
-			camera.translateY(-INCREMENT); 
-		}
-		else if (cAscii == 97) 
-		{
-			camera.rotate(-INCREMENT); 
-		}
-		else if (cAscii == 100) 
-		{
-			camera.rotate(INCREMENT);
+			sceneManager.onKeyPress(nKey,cAscii);
 		}
 
 		glutPostRedisplay();

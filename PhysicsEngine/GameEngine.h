@@ -13,7 +13,6 @@ protected:
    cwc::glShaderManager SM;
    cwc::glShader *shader;
    SceneManager sceneManager;
-   Camera camera;
    GLuint VBO;
 
 public:

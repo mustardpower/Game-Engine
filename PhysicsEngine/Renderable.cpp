@@ -6,7 +6,7 @@ Renderable::Renderable(char* file_name, glm::vec3 position)
 	model->setPosition(position);
 }
 
-void Renderable::render(cwc::glShader *shader, Camera camera)
+void Renderable::render(cwc::glShader *shader)
 {
-	model->render(shader, camera);
+	model->render(shader);
 }
