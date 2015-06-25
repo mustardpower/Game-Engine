@@ -12,10 +12,8 @@ class Camera
 {
 private:
 	float nearZ, farZ, fov;
-
 	glm::mat4 modelMatrix;
 	glm::mat4 viewMatrix;
-	glm::mat4 projectionMatrix;
 public:
 	Camera();
 	void zoom(float increment);

@@ -3,11 +3,9 @@
 SceneManager::SceneManager()
 {
 	objects = std::vector<Renderable>();
-	objects.push_back(Renderable("cube",glm::vec3(10.0,0.0,0.0)));
-	objects.push_back(Renderable("cube", glm::vec3(4.0, 0.0, 0.0)));
-	/*objects.push_back(Renderable("cube", glm::vec3(0.0, 0.0, 0.0)));
-	objects.push_back(Renderable("cube", glm::vec3(-4.0, 0.0, 0.0)));
-	objects.push_back(Renderable("cube", glm::vec3(-10.0, 0.0, 0.0))); */
+	
+	objects.push_back(Renderable("cube", glm::vec3(10, 0.0, 0.0)));
+	objects.push_back(Renderable("cube", glm::vec3(0.0, 0.0, 0.0))); 
 }
 void SceneManager::update()
 {
@@ -15,17 +13,23 @@ void SceneManager::update()
 }
 void SceneManager::onKeyPress(int nKey,char cAscii)
 {
+	const int increment = 1;
+
 	if (cAscii == 43) // +
 	{
+		glCamera.rotate(increment);
 	}
 	else if (cAscii == 45) // -
 	{
+		glCamera.rotate(-increment);
 	}
 	else if (nKey == GLUT_KEY_RIGHT)
 	{ 
+		glCamera.translateX(increment);
 	}
 	else if (nKey == GLUT_KEY_LEFT)
 	{
+		glCamera.translateX(-increment);
 	}
 	else if (nKey == GLUT_KEY_UP)
 	{
@@ -48,7 +52,18 @@ void SceneManager::addObject(Renderable object)
 {
 	objects.push_back(object);
 }
-std::vector<Renderable> SceneManager::getObjects()                 
+std::vector<GeoModel3D*> SceneManager::getObjectModels()                 
 {
-	return objects;
+	std::vector<Renderable>::iterator object;
+	std::vector<GeoModel3D*> object_models;
+	for(object = objects.begin();object != objects.end(); object++)
+	{
+		GeoModel3D* model = object->getModel();
+		object_models.push_back(object->getModel());
+	}
+	return object_models;
+}
+Camera SceneManager::getCamera()
+{
+	return glCamera;
 }

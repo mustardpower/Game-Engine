@@ -6,14 +6,13 @@
 #include "glutWindow.h"
 #include "glsl.h"
 #include "SceneManager.h"
+#include "SceneRenderer.h"
 
 class GameEngine : public cwc::glutWindow
 {
 protected:
-   cwc::glShaderManager SM;
-   cwc::glShader *shader;
    SceneManager sceneManager;
-   GLuint VBO;
+   SceneRenderer sceneRenderer;
 
 public:
 	GameEngine(char* GameEngineTitle) : cwc::glutWindow(GameEngineTitle){}

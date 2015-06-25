@@ -19,12 +19,12 @@ private:
 	std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
 	std::map<unsigned int,unsigned int> textures;
-	glm::vec3 position;
-	glm::mat4 transformMatrix;
+	glm::mat4 model_matrix;
 public:
 	GeoModel3D(std::string file_name);
 	AABB* getAABB();
-	void render(cwc::glShader *shader);
+	void retrieveData(std::vector<tinyobj::shape_t> &model_shapes,std::vector<tinyobj::material_t> &mat,std::map<unsigned int,unsigned int> &tex);
 	GLuint loadTexture(std::string file_name);
-	void setPosition(glm::vec3 pos);
+	void translate(glm::vec3 pos);
+	glm::mat4 getModelMatrix();
 };

@@ -15,5 +15,5 @@ private:
 	GeoModel3D* model;
 public:
 	Renderable(char* file_name, glm::vec3 position);
-	void render(cwc::glShader *shader);
+	GeoModel3D* getModel();
 };

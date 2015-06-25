@@ -38,53 +38,11 @@ AABB* GeoModel3D::getAABB()
 	return boundingBox;
 }
 
-void GeoModel3D::render(cwc::glShader *shader)
+void GeoModel3D::retrieveData(std::vector<tinyobj::shape_t> &model_shapes,std::vector<tinyobj::material_t> &mat,std::map<unsigned int,unsigned int> &tex)
 {
-	GLint vertex_index = 0;	
-	GLint normal_index = 1;	
-	GLint sampler_index;	
-	GLint texture_coords_index = 2;
-
-	// each mesh is made up of a number of shapes
-	for(size_t i = 0;i<shapes.size();i++ )
-	{
-		tinyobj::mesh_t current_mesh = shapes[i].mesh;
-
-		shader->BindAttribLocation(normal_index,"normal");
-		glBufferData(GL_ARRAY_BUFFER,sizeof(float)*current_mesh.normals.size(), &current_mesh.normals[0],GL_STATIC_DRAW);
-		glVertexAttribPointer(normal_index, 3, GL_FLOAT, GL_FALSE, 0, 0); 
-		glEnableVertexAttribArray(normal_index);
-
-		shader->BindAttribLocation(vertex_index,"position");
-		glBufferData(GL_ARRAY_BUFFER,sizeof(float)*current_mesh.positions.size(), &current_mesh.positions[0], GL_STATIC_DRAW);
-		glVertexAttribPointer(vertex_index, 3, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(vertex_index);	
-
-		if(!current_mesh.texcoords.empty())
-		{
-			shader->BindAttribLocation(texture_coords_index,"texCoord");	
-			glBufferData(GL_ARRAY_BUFFER,sizeof(float)*current_mesh.texcoords.size(), &current_mesh.texcoords[0], GL_STATIC_DRAW);
-			glVertexAttribPointer(texture_coords_index, 2, GL_FLOAT, GL_FALSE, 0, 0); 
-			glEnableVertexAttribArray(texture_coords_index);
-		}
-
-		sampler_index = shader->GetUniformLocation("sampler");
-
-		if(current_mesh.material_ids[0]>=0) 
-		{
-            tinyobj::material_t& material = materials[current_mesh.material_ids[0]];
-			unsigned int texture_id = textures.at(current_mesh.material_ids[0]);
-			glActiveTexture(GL_TEXTURE0 + texture_id); 
-			glBindTexture(GL_TEXTURE_2D, texture_id);
-			glUniform1i(sampler_index, texture_id);
-        }
-
-		glDrawElements(GL_TRIANGLES, shapes[i].mesh.indices.size(), GL_UNSIGNED_INT, &current_mesh.indices[0] );
-		
-		glDisableVertexAttribArray(vertex_index);
-		glDisableVertexAttribArray(normal_index);	
-		glDisableVertexAttribArray(texture_coords_index);
-	}
+	model_shapes = shapes;
+	mat = materials;
+	tex = textures;
 }
 
 GLuint GeoModel3D::loadTexture (std::string file_name)
@@ -102,7 +60,12 @@ GLuint GeoModel3D::loadTexture (std::string file_name)
   return tex_id;
 }
 
-void GeoModel3D::setPosition(glm::vec3 pos)
+void GeoModel3D::translate(glm::vec3 pos)
 {
-	position = pos;
+	model_matrix = glm::translate(model_matrix,pos);
+}
+
+glm::mat4 GeoModel3D::getModelMatrix()
+{
+	return model_matrix;
 }

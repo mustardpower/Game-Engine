@@ -3,10 +3,10 @@
 Renderable::Renderable(char* file_name, glm::vec3 position)
 {
 	model = new GeoModel3D(file_name);
-	model->setPosition(position);
+	model->translate(position);
 }
 
-void Renderable::render(cwc::glShader *shader)
+GeoModel3D* Renderable::getModel()
 {
-	model->render(shader);
+	return model;
 }

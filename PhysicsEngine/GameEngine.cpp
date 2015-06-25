@@ -4,19 +4,14 @@
 
 void GameEngine::OnRender(void)
 {
-	std::vector<Renderable> objects;
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	sceneManager.update();
-    if (shader) shader->begin();
-	objects = sceneManager.getObjects();
-	for(std::vector<Renderable>::iterator it = objects.begin(); it != objects.end(); it++)
-	{
-		it->render(shader);
-	}
+	std::vector<GeoModel3D*> object_models;
+	Camera camera;
 
-    if (shader) shader->end();
-    glutSwapBuffers();
+	object_models = sceneManager.getObjectModels();
+	camera = sceneManager.getCamera();
+
+	sceneManager.update();
+	sceneRenderer.renderScene(camera,object_models);
 }
 
 	void GameEngine::OnIdle() { }
@@ -25,26 +20,11 @@ void GameEngine::OnRender(void)
 	// is already available!
 	void GameEngine::OnInit()
 	{
-		glClearColor(0.5f, 0.5f, 1.0f, 0.0f);
-		glEnable(GL_DEPTH_TEST);
-		glShadeModel(GL_SMOOTH);
-
-		glClearDepth( 1.0f );
-		glDepthFunc( GL_LEQUAL );	
-
-		shader = SM.loadfromFile("vert_shader.vs","frag_shader.fs"); // load (and compile, link) shaders from file
-		  if (shader==0) 
-			  std::cout << "Error Loading, compiling or linking shader\n";
-
-		glGenBuffers(1,&VBO);	//create a vertex buffer object for vertices, normals and texture coordinates
-		glBindBuffer(GL_ARRAY_BUFFER, VBO); //bind the buffer
-
 	}
 
 	void GameEngine::OnResize(int w, int h) {}
 	void GameEngine::OnClose(void)
 	{
-		glDeleteBuffers(1, &VBO);
 	}
 	void GameEngine::OnMouseDown(int button, int x, int y) {}    
 	void GameEngine::OnMouseUp(int button, int x, int y) {}

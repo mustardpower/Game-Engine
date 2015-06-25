@@ -43,6 +43,5 @@ glm::mat4 Camera::getViewMatrix()
 glm::mat4 Camera::getProjectionMatrix()
 {
 	float aspect = 1.0f;
-	projectionMatrix = glm::perspective(fov,aspect,nearZ,farZ);
-	return projectionMatrix;
+	return glm::perspective(fov,aspect,nearZ,farZ);
 }

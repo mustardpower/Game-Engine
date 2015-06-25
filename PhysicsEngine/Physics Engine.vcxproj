@@ -98,6 +98,7 @@
     <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SceneRenderer.cpp" />
     <ClCompile Include="SOIL\image_DXT.c" />
     <ClCompile Include="SOIL\image_helper.c" />
     <ClCompile Include="SOIL\SOIL.c" />
@@ -125,6 +126,7 @@
     <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SceneRenderer.h" />
     <ClInclude Include="SOIL\image_DXT.h" />
     <ClInclude Include="SOIL\image_helper.h" />
     <ClInclude Include="SOIL\SOIL.h" />

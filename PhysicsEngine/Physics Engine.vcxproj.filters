@@ -138,6 +138,9 @@
     <ClCompile Include="GameEngine.cpp">
       <Filter>Source Files\GLSL</Filter>
     </ClCompile>
+    <ClCompile Include="SceneRenderer.cpp">
+      <Filter>Source Files\SceneManagement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinarySearchTree.h">
@@ -219,6 +222,9 @@
       <Filter>Header Files\Data Handling\SOIL</Filter>
     </ClInclude>
     <ClInclude Include="Renderable.h">
+      <Filter>Header Files\SceneManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneRenderer.h">
       <Filter>Header Files\SceneManagement</Filter>
     </ClInclude>
   </ItemGroup>
