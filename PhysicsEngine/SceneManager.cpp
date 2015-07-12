@@ -2,10 +2,6 @@
 
 SceneManager::SceneManager()
 {
-	objects = std::vector<Renderable>();
-	
-	objects.push_back(Renderable("cube", glm::vec3(10, 0.0, 0.0)));
-	objects.push_back(Renderable("cube", glm::vec3(0.0, 0.0, 0.0))); 
 }
 void SceneManager::update()
 {

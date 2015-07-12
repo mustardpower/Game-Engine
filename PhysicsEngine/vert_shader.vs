@@ -1,12 +1,10 @@
 in vec3 position;
-in vec3 norm;
+in vec2 tex_coords;
 
 uniform mat4 mvp_matrix;
 
-out vec3 normal;
-
 void main( void )
 {
-	normal = norm;
+	gl_TexCoord[0] = vec4(tex_coords,0.0,0.0);
 	gl_Position = mvp_matrix * vec4(position, 1.0);
 }

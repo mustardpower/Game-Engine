@@ -2,6 +2,14 @@
 
 SceneRenderer::SceneRenderer()
 {
+}
+SceneRenderer::~SceneRenderer()
+{
+	glDeleteBuffers(1, &vertex_index);
+	glDeleteBuffers(1, &tex_coords_index);
+}
+void SceneRenderer::onInit()
+{
 	glClearColor(0.5f, 0.5f, 1.0f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 	glShadeModel(GL_SMOOTH);
@@ -15,12 +23,9 @@ SceneRenderer::SceneRenderer()
 
 	/* Allocate and assign two Vertex Buffer Objects to our handle */
     glGenBuffers(1, &vertex_index);
-	glGenBuffers(1, &normal_index);
-}
-SceneRenderer::~SceneRenderer()
-{
-	glDeleteBuffers(1, &vertex_index);
-	glDeleteBuffers(1, &normal_index);
+	shader->BindAttribLocation(vertex_index,"position");
+	glGenBuffers(1, &tex_coords_index);
+	shader->BindAttribLocation(tex_coords_index,"tex_coords");
 }
 void SceneRenderer::renderScene(Camera glCamera,std::vector<GeoModel3D*> models)
 {
@@ -65,16 +70,23 @@ void SceneRenderer::renderObject(Camera glCamera,GeoModel3D* model)
 		glVertexAttribPointer(vertex_index, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glEnableVertexAttribArray(vertex_index);
 
-		/* Bind our second VBO as being the active buffer and storing normal attributes */
-		glBindBuffer(GL_ARRAY_BUFFER,normal_index);
-		glBufferData(GL_ARRAY_BUFFER,sizeof(float)*current_mesh.normals.size(), &current_mesh.normals[0], GL_STATIC_DRAW);
-		glVertexAttribPointer(normal_index, 3, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(normal_index);
+		/* Bind our third VBO as being the active buffer and storing texture coordinates */
+		glBindBuffer(GL_ARRAY_BUFFER,tex_coords_index);
+		glBufferData(GL_ARRAY_BUFFER,sizeof(float)*current_mesh.texcoords.size(), &current_mesh.texcoords[0], GL_STATIC_DRAW);
+		glVertexAttribPointer(tex_coords_index, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(tex_coords_index);
 
+		if(!textures.empty())
+		{
+			shader->setUniform1i("texture1",0);
+			GLuint texture1Id = textures.at(0);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, texture1Id);
+		}
 		glDrawElements(GL_TRIANGLES, shapes[i].mesh.indices.size(), GL_UNSIGNED_INT, &current_mesh.indices[0] );
 	}
 
 	// these attributes are no longer used in the shader
 	glDisableVertexAttribArray(vertex_index);
-	glDisableVertexAttribArray(normal_index);
+	glDisableVertexAttribArray(tex_coords_index);
 }

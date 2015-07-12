@@ -13,10 +13,12 @@ private:
 	cwc::glShaderManager SM;
 	cwc::glShader *shader;
 	GLuint vao;
-	GLuint vertex_index, normal_index;	//vbos
+	GLuint vertex_index, tex_coords_index;	//vbos
 public:
 	SceneRenderer();
 	~SceneRenderer();
+	void onInit();
 	void renderScene(Camera camera,std::vector<GeoModel3D*> models);
 	void renderObject(Camera glCamera,GeoModel3D* model);
+	void setTextureUnit(int unit);
 };

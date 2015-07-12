@@ -47,7 +47,6 @@ void GeoModel3D::retrieveData(std::vector<tinyobj::shape_t> &model_shapes,std::v
 
 GLuint GeoModel3D::loadTexture (std::string file_name)
 {
-  
   GLuint tex_id = SOIL_load_OGL_texture(
 					file_name.c_str(),
 					SOIL_LOAD_AUTO,
