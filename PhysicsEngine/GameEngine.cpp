@@ -22,7 +22,7 @@ void GameEngine::OnRender(void)
 	{
 		sceneRenderer.onInit();
 		sceneManager.addObject(Renderable("cube", glm::vec3(10, 0.0, 0.0)));
-		sceneManager.addObject(Renderable("cube", glm::vec3(0.0, 0.0, 0.0))); 
+		sceneManager.addObject(Renderable("cube", glm::vec3(0.0, 0.0, 0.0)));
 	}
 
 	void GameEngine::OnResize(int w, int h) {}

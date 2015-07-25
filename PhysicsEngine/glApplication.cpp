@@ -22,6 +22,7 @@ glApplication::glApplication(void)
    int argc = 1;
    char* argv = "CWCApp";
    
+   printf("glutInit");
    glutInit(&argc, &argv);
 }
 

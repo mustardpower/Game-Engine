@@ -1,13 +1,21 @@
+#include <Windows.h>
+#include <WinGDI.h>
 #include "GeoModel3D.h"
 
 GeoModel3D::GeoModel3D(std::string file_name)
 {
+	std::vector<tinyobj::shape_t> shapes;
 	std::string err = tinyobj::LoadObj(shapes, materials, (file_name+".obj").c_str());
 	std::cout<<err<<std::endl;
 
 	for(size_t i = 0;i<shapes.size();i++ )
 	{
+		// each mesh is made up of a number of shapes	
 		tinyobj::mesh_t current_mesh = shapes[i].mesh;
+
+		// collect the vertex information of each shape
+		vertices.insert(vertices.end(),current_mesh.positions.begin(),current_mesh.positions.end());
+		indices.insert(indices.end(),current_mesh.indices.begin(),current_mesh.indices.end());
 
 		if(current_mesh.material_ids[0]>=0) // no texture = -1 in material ids
 		{
@@ -38,25 +46,31 @@ AABB* GeoModel3D::getAABB()
 	return boundingBox;
 }
 
-void GeoModel3D::retrieveData(std::vector<tinyobj::shape_t> &model_shapes,std::vector<tinyobj::material_t> &mat,std::map<unsigned int,unsigned int> &tex)
+void GeoModel3D::retrieveData(std::vector<float> &model_vertices,std::vector<int> &model_indices,std::vector<tinyobj::material_t> &mat,std::map<GLuint,GLuint> &tex)
 {
-	model_shapes = shapes;
+	model_vertices = vertices;
+	model_indices = indices;
 	mat = materials;
 	tex = textures;
 }
 
 GLuint GeoModel3D::loadTexture (std::string file_name)
 {
-  GLuint tex_id = SOIL_load_OGL_texture(
+	printf("loadTexture");
+	if(!wglGetCurrentContext())
+	{
+		printf("No OpenGL context\n");
+	}
+
+	glEnable(GL_TEXTURE_2D);
+	GLuint tex_id = SOIL_load_OGL_texture(
 					file_name.c_str(),
 					SOIL_LOAD_AUTO,
 					SOIL_CREATE_NEW_ID,
-					SOIL_FLAG_POWER_OF_TWO
-					| SOIL_FLAG_MIPMAPS
-					| SOIL_FLAG_DDS_LOAD_DIRECT
+					NULL
 					);
 
-  return tex_id;
+	return tex_id;
 }
 
 void GeoModel3D::translate(glm::vec3 pos)

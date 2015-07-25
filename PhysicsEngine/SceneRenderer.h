@@ -12,13 +12,14 @@ class SceneRenderer
 private:
 	cwc::glShaderManager SM;
 	cwc::glShader *shader;
-	GLuint vao;
-	GLuint vertex_index, tex_coords_index;	//vbos
+	unsigned int vaoID[1]; // Our Vertex Array Object
+	unsigned int vboID[1]; // Our Vertex Buffer Object
 public:
 	SceneRenderer();
 	~SceneRenderer();
 	void onInit();
 	void renderScene(Camera camera,std::vector<GeoModel3D*> models);
+	void createObject(GeoModel3D* model);
 	void renderObject(Camera glCamera,GeoModel3D* model);
 	void setTextureUnit(int unit);
 };

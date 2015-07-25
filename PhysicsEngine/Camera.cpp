@@ -6,7 +6,7 @@ Camera::Camera()
 	fov = 60.0;
 	nearZ = 1.0f;
 	farZ  = 1000.0f;
-	modelMatrix = glm::translate(modelMatrix,glm::vec3(0,0,-30));
+	model_matrix = glm::translate(model_matrix,glm::vec3(0,0,-30));
 }
 void Camera::zoom(float increment)
 {
@@ -14,31 +14,35 @@ void Camera::zoom(float increment)
 }
 void Camera::rotate(float increment)
 {
-	modelMatrix = glm::rotate(modelMatrix,increment,glm::vec3(0,1,0));
+	model_matrix = glm::rotate(model_matrix,increment,glm::vec3(0,1,0));
 }
 
 void Camera::translateX(float increment)
 {
-	modelMatrix = glm::translate(modelMatrix,glm::vec3(increment,0,0));
+	model_matrix = glm::translate(model_matrix,glm::vec3(increment,0,0));
 }
 
 void Camera::translateY(float increment)
 {
-	modelMatrix = glm::translate(modelMatrix,glm::vec3(0,increment,0));
+	model_matrix = glm::translate(model_matrix,glm::vec3(0,increment,0));
 }
 
 void Camera::translateZ(float increment)
 {
-	modelMatrix = glm::translate(modelMatrix,glm::vec3(0,0,increment));
+	model_matrix = glm::translate(model_matrix,glm::vec3(0,0,increment));
 }
 
+glm::mat4 Camera::getMVPMatrix()
+{
+	return getProjectionMatrix() * view_matrix * model_matrix;
+}
 glm::mat4 Camera::getModelMatrix()
 {
-	return modelMatrix;
+	return model_matrix;
 }
 glm::mat4 Camera::getViewMatrix()
 {
-	return viewMatrix;
+	return view_matrix;
 }
 glm::mat4 Camera::getProjectionMatrix()
 {
