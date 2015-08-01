@@ -1,9 +1,9 @@
 #include "Renderable.h"
 
-Renderable::Renderable(char* file_name, glm::vec3 position)
+Renderable::Renderable(GeoModel3D* the_model, glm::vec3 position)
 {
-	model = new GeoModel3D(file_name);
-	model->translate(position);
+	model = the_model;
+	/*model->translate(position);*/
 }
 
 GeoModel3D* Renderable::getModel()

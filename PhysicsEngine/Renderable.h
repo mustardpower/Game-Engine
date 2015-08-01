@@ -14,6 +14,6 @@ class Renderable
 private:
 	GeoModel3D* model;
 public:
-	Renderable(char* file_name, glm::vec3 position);
+	Renderable(GeoModel3D* model, glm::vec3 position);
 	GeoModel3D* getModel();
 };

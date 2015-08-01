@@ -12,20 +12,22 @@
 #include <map>
 #include "SOIL\SOIL.h"
 
+struct GLModel3DData		// this is model data to be uploaded to the graphics card - we do not need multiple versions for objects that share data
+	{
+		std::vector<GLfloat> vertices, normals, tex_coords;
+		std::vector<GLint> indices;
+		std::vector<tinyobj::material_t> materials;
+		GLuint texture;
+	};
 class GeoModel3D
 {
 private:
-	AABB* boundingBox;
-	std::vector<float> vertices;
-	std::vector<int> indices;
-    std::vector<tinyobj::material_t> materials;
-	std::map<GLuint,GLuint> textures;
-	glm::mat4 model_matrix;
+	GLModel3DData data;
+	int object_id;			//this is unique to an instance of the object
+	static GLuint NUMBER_OF_OBJECTS;
 public:
+	GLuint getObjectID();
 	GeoModel3D(std::string file_name);
-	AABB* getAABB();
-	void retrieveData(std::vector<float> &vertices, std::vector<int> &indices, std::vector<tinyobj::material_t> &mat,std::map<GLuint,GLuint> &tex);
+	GLModel3DData retrieveData();
 	GLuint loadTexture(std::string file_name);
-	void translate(glm::vec3 pos);
-	glm::mat4 getModelMatrix();
 };

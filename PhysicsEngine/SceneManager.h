@@ -15,7 +15,7 @@ class SceneManager
 {
 private:
 	std::vector<Renderable> objects;
-	QuadTree quadtree;
+	/*QuadTree quadtree;*/
 	Camera glCamera;
 public:
 	SceneManager();

@@ -1167,6 +1167,7 @@ unsigned int
     tex_id = reuse_texture_ID;
     if( tex_id == 0 )
     {
+		printf("glGenTextures");
 		glGenTextures( 1, &tex_id );
     }
 	check_for_GL_errors( "glGenTextures" );
@@ -1209,6 +1210,8 @@ unsigned int
 			}
 		}
 		/*  bind an OpenGL texture ID	*/
+
+		printf("glBindTexture");
 		glBindTexture( opengl_texture_type, tex_id );
 		check_for_GL_errors( "glBindTexture" );
 		/*  upload the main image	*/
@@ -1238,6 +1241,7 @@ unsigned int
 			} else
 			{
 				/*	my compression failed, try the OpenGL driver's version	*/
+				printf("glTexImage2D");
 				glTexImage2D(
 					opengl_texture_target, 0,
 					internal_texture_format, width, height, 0,
@@ -1248,6 +1252,7 @@ unsigned int
 		} else
 		{
 			/*	user want OpenGL to do all the work!	*/
+			printf("glTexImage2D");
 			glTexImage2D(
 				opengl_texture_target, 0,
 				internal_texture_format, width, height, 0,
@@ -1297,6 +1302,7 @@ unsigned int
 					} else
 					{
 						/*	my compression failed, try the OpenGL driver's version	*/
+						printf("glTexImage2D");
 						glTexImage2D(
 							opengl_texture_target, MIPlevel,
 							internal_texture_format, MIPwidth, MIPheight, 0,
@@ -1306,6 +1312,7 @@ unsigned int
 				} else
 				{
 					/*	user want OpenGL to do all the work!	*/
+					printf("glTexImage2D");
 					glTexImage2D(
 						opengl_texture_target, MIPlevel,
 						internal_texture_format, MIPwidth, MIPheight, 0,
@@ -1709,8 +1716,11 @@ unsigned int SOIL_direct_load_DDS_from_memory(
 	tex_ID = reuse_texture_ID;
 	if( tex_ID == 0 )
 	{
+		printf("glGenTextures\n");
 		glGenTextures( 1, &tex_ID );
 	}
+
+	printf("glBindTexture\n");
 	/*  bind an OpenGL texture ID	*/
 	glBindTexture( opengl_texture_type, tex_ID );
 	/*	do this for each face of the cubemap!	*/
@@ -1761,6 +1771,7 @@ unsigned int SOIL_direct_load_DDS_from_memory(
 				if( uncompressed )
 				{
 					mip_size = w*h*block_size;
+					printf("glTexImage2D\n");
 					glTexImage2D(
 						cf_target, i,
 						S3TC_type, w, h, 0,

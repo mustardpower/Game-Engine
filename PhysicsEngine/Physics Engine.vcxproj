@@ -95,7 +95,6 @@
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelImporter3D.cpp" />
-    <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneRenderer.cpp" />
@@ -123,7 +122,6 @@
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="ModelImporter3D.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneRenderer.h" />

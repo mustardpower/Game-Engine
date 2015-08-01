@@ -514,14 +514,20 @@ bool glShader::setUniform1i(GLcharARB* varname, GLint v0, GLint index)
     
     GLint loc;
     if (varname)
+	{
+		printf("before getUniformLocation: %i\n",glGetError());
        loc = GetUniformLocation(varname);
+	   printf("after getUniformLocation: %i\n",glGetError());
+	}
     else
        loc = index;
 
     if (loc==-1) 
        return false;  // can't find variable / invalid index
     
+	printf("before glUniform1i: %i\n",glGetError());
     glUniform1i(loc, v0);
+	printf("after glUniform1i: %i\n",glGetError());
     
     return true;
 }

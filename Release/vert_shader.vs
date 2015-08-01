@@ -1,13 +1,14 @@
-#version 110
+#version 140
 
-attribute vec3 position;
-attribute vec2 tex_coords;
+in vec3 position;
+in vec2 TexCoord;
+
+out vec2 TexCoord0;
 
 uniform mat4 mvp_matrix;
-varying vec2 t_coords;
 
 void main( void )
 {
-	t_coords = tex_coords;
+	TexCoord0 = TexCoord;
 	gl_Position = mvp_matrix * vec4(position, 1.0);
 }

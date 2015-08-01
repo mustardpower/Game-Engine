@@ -55,7 +55,7 @@ std::vector<GeoModel3D*> SceneManager::getObjectModels()
 	for(object = objects.begin();object != objects.end(); object++)
 	{
 		GeoModel3D* model = object->getModel();
-		object_models.push_back(object->getModel());
+		object_models.push_back(model);
 	}
 	return object_models;
 }
