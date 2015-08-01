@@ -20,7 +20,7 @@ private:
 public:
 	SceneManager();
 
-	std::vector<GeoModel3D*> getObjectModels();
+	std::vector<Renderable> getObjects();
 	void addObject(Renderable object);
 	void onKeyPress(int nKey, char cAscii);
 	Camera getCamera();

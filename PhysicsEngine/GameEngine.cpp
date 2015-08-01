@@ -5,10 +5,10 @@
 void GameEngine::OnRender(void)
 {
 	std::vector<GeoModel3D*> object_models;
-	object_models = sceneManager.getObjectModels();
+	std::vector<Renderable> objects = sceneManager.getObjects();
 	Camera camera = sceneManager.getCamera();
 	sceneManager.update();
-	sceneRenderer.renderScene(camera,object_models);
+	sceneRenderer.renderScene(camera,objects);
 }
 
 	void GameEngine::OnIdle() { }
@@ -21,6 +21,7 @@ void GameEngine::OnRender(void)
 		GeoModel3D* cube = new GeoModel3D("cube");	// load the model from the file name
 		sceneRenderer.createVAO(cube);				// upload model data to graphics card
 		sceneManager.addObject(Renderable(cube, glm::vec3(10, 0.0, 0.0)));	//add an instance of a renderable object with that data
+		sceneManager.addObject(Renderable(cube, glm::vec3(20, 0.0, 0.0)));	//add an instance of a renderable object with that data
 	}
 
 	void GameEngine::OnResize(int w, int h) {}

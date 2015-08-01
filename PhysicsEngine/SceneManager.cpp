@@ -29,15 +29,19 @@ void SceneManager::onKeyPress(int nKey,char cAscii)
 	}
 	else if (nKey == GLUT_KEY_UP)
 	{
+		glCamera.translateY(increment);
 	}
 	else if (nKey == GLUT_KEY_DOWN)
 	{
+		glCamera.translateY(-increment);
 	}
 	else if (cAscii == 97) // a
 	{
+		glCamera.rotate(increment);
 	}
 	else if (cAscii == 100) // d
 	{
+		glCamera.rotate(-increment);
 	}
 	else
 	{
@@ -48,16 +52,9 @@ void SceneManager::addObject(Renderable object)
 {
 	objects.push_back(object);
 }
-std::vector<GeoModel3D*> SceneManager::getObjectModels()                 
+std::vector<Renderable> SceneManager::getObjects()
 {
-	std::vector<Renderable>::iterator object;
-	std::vector<GeoModel3D*> object_models;
-	for(object = objects.begin();object != objects.end(); object++)
-	{
-		GeoModel3D* model = object->getModel();
-		object_models.push_back(model);
-	}
-	return object_models;
+	return objects;
 }
 Camera SceneManager::getCamera()
 {

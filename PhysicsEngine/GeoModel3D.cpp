@@ -2,10 +2,10 @@
 #include <WinGDI.h>
 #include "GeoModel3D.h"
 
-GLuint GeoModel3D::NUMBER_OF_OBJECTS = 0;
+GLuint GeoModel3D::NUMBER_OF_MODELS = 0;
 GeoModel3D::GeoModel3D(std::string file_name)
 {
-	object_id = ++NUMBER_OF_OBJECTS;
+	model_id = ++NUMBER_OF_MODELS;
 	std::vector<tinyobj::shape_t> shapes;
 
 	std::string err = tinyobj::LoadObj(shapes, data.materials, (file_name+".obj").c_str());
@@ -45,9 +45,9 @@ GeoModel3D::GeoModel3D(std::string file_name)
 	}
 }
 
-GLuint GeoModel3D::getObjectID()
+GLuint GeoModel3D::getModelID()
 {
-	return object_id;
+	return model_id;
 }
 GLModel3DData GeoModel3D::retrieveData()
 {

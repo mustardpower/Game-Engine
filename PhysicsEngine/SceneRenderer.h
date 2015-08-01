@@ -21,11 +21,11 @@ public:
 	~SceneRenderer();
 	void onInit();
 	void createVAO(GeoModel3D* model);
-	void renderScene(Camera glCamera,std::vector<GeoModel3D*> models);
+	void renderScene(Camera glCamera,std::vector<Renderable> objects);
 	void createVertexBuffer(GLModel3DData data);
 	void createIndexBuffer(GLModel3DData data);
 	void createNormalsBuffer(GLModel3DData data);
 	void createTexCoordsBuffer(GLModel3DData data);
-	void renderObject(GeoModel3D* model);
+	void renderModel(GeoModel3D* model);
 	void setTextureUnit(int unit);
 };

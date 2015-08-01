@@ -23,10 +23,10 @@ class GeoModel3D
 {
 private:
 	GLModel3DData data;
-	int object_id;			//this is unique to an instance of the object
-	static GLuint NUMBER_OF_OBJECTS;
+	int model_id;			//this is unique to an instance of the object
+	static GLuint NUMBER_OF_MODELS;
 public:
-	GLuint getObjectID();
+	GLuint getModelID();
 	GeoModel3D(std::string file_name);
 	GLModel3DData retrieveData();
 	GLuint loadTexture(std::string file_name);

@@ -33,8 +33,8 @@ void SceneRenderer::createVAO(GeoModel3D* model)
 	glGenBuffers(1, &IBO);
 	glGenBuffers(3,vbos);
 	GLModel3DData modelData = model->retrieveData();
-	GLuint object_id = model->getObjectID();
-	std::pair<GLuint,GLuint> mapping(object_id,vao_new_id);
+	GLuint model_id = model->getModelID();
+	std::pair<GLuint,GLuint> mapping(model_id,vao_new_id);
 	object_vao_map.insert(mapping);
 	createVertexBuffer(modelData);
 	/*createNormalsBuffer(modelData);*/
@@ -44,18 +44,21 @@ void SceneRenderer::createVAO(GeoModel3D* model)
 	glEnableVertexAttribArray(0); // Disable our Vertex Array Object
 	glBindVertexArray(0); // Disable our Vertex Buffer Object
 }
-void SceneRenderer::renderScene(Camera glCamera,std::vector<GeoModel3D*> models)
+void SceneRenderer::renderScene(Camera glCamera,std::vector<Renderable> objects)
 {
-	std::vector<GeoModel3D*>::iterator object;
-	glm::mat4 mvp_matrix = glCamera.getMVPMatrix();
+	glm::mat4 object_model_matrix;
+	glm::mat4 mvp_matrix;
+	glm::mat4 camera_mvp_matrix = glCamera.getMVPMatrix();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	if (shader) shader->begin();
 
-	shader->setUniformMatrix4fv("mvp_matrix",1,GL_FALSE,&mvp_matrix[0][0]);
-	for(object = models.begin(); object != models.end(); object++)
+	for(std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 	{
-		renderObject(*object);
+		object_model_matrix = object->getModelMatrix();
+		mvp_matrix = camera_mvp_matrix * object_model_matrix;
+		shader->setUniformMatrix4fv("mvp_matrix",1,GL_FALSE,&mvp_matrix[0][0]);
+		renderModel(object->getModel());
 	}
 	if (shader) shader->end();
     glutSwapBuffers();
@@ -93,11 +96,11 @@ void SceneRenderer::createIndexBuffer(GLModel3DData data)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * data.indices.size(), &data.indices[0], GL_STATIC_DRAW);
 }
 
-void SceneRenderer::renderObject(GeoModel3D* model)
+void SceneRenderer::renderModel(GeoModel3D* model)
 {
 	GLuint sampler_loc = 4;
 	GLModel3DData modelData = model->retrieveData();
-	GLuint vaoID = object_vao_map.at(model->getObjectID());
+	GLuint vaoID = object_vao_map.at(model->getModelID());
 	glBindVertexArray(vaoID); // Bind our Vertex Array Object
 
 	glActiveTexture(GL_TEXTURE0);
