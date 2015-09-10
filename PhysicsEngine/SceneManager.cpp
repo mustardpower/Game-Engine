@@ -45,7 +45,7 @@ void SceneManager::onKeyPress(int nKey,char cAscii)
 	}
 	else
 	{
-		printf("The key has no action in the scene\n");
+		glCamera.translateZ(-increment);
 	}
 }
 void SceneManager::addObject(Renderable object)

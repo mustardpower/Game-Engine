@@ -1,52 +1,31 @@
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\aabb.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\boundingsphere.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\camera.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\constraintshandler.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\geomodel3d.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\glapplication.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\glsl.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\glutwindow.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\glwindow.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\lodepng.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\main.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\modelimporter3d.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\quadtree.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\renderable.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\scenemanager.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\tiny_obj_loader.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\gameengine.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\vc100.pdb
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\image_dxt.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\image_helper.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\soil.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\stb_image_aug.obj
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\debug\physics engine.ilk
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\debug\physics engine.exe
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\physics engine.exe.intermediate.manifest
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\debug\physics engine.pdb
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\physics engine.exe.embed.manifest
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\physics engine.exe.embed.manifest.res
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\physics engine.vcxprojresolveassemblyreference.cache
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\cl.command.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\cl.read.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\cl.write.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\link-cvtres.read.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\link-cvtres.write.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\link.5712-cvtres.read.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\link.5712-cvtres.write.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\link.5712.read.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\link.5712.write.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\link.command.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\link.read.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\link.write.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\mt.command.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\mt.read.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\mt.write.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\physics engine.write.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\rc.command.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\rc.read.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\rc.write.1.tlog
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\vc100.idb
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\vc120.idb
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\vc120.pdb
-c:\users\paul\documents\visual studio 2010\projects\c++\physicsengine\physicsengine\debug\physics engine_manifest.rc
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\vc140.pdb
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\vc140.idb
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\aabb.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\boundingsphere.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\camera.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\constraintshandler.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\geomodel3d.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\glapplication.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\glsl.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\glutwindow.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\glwindow.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\lodepng.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\main.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\modelimporter3d.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\renderable.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\scenemanager.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\scenerenderer.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\tiny_obj_loader.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\gameengine.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\image_dxt.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\image_helper.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\soil.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\stb_image_aug.obj
+c:\users\paul\desktop\code\projects\c++\physicsengine\debug\physics engine.pdb
+c:\users\paul\desktop\code\projects\c++\physicsengine\debug\physics engine.ilk
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\physics engine.tlog\cl.command.1.tlog
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\physics engine.tlog\cl.read.1.tlog
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\physics engine.tlog\cl.write.1.tlog
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\physics engine.tlog\link.command.1.tlog
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\physics engine.tlog\link.read.1.tlog
+c:\users\paul\desktop\code\projects\c++\physicsengine\physicsengine\debug\physics engine.tlog\link.write.1.tlog

@@ -27,22 +27,28 @@ void SceneRenderer::createVAO(GeoModel3D* model)
 {
 	GLuint vao_new_id;
 
-	glGenVertexArrays(1,&vao_new_id); // Create our Vertex Array Object
-	glBindVertexArray(vao_new_id); // Bind our Vertex Array Object so we can use it  
+	std::vector<GLModel3DData> modelData = model->retrieveMeshes();
 
-	glGenBuffers(1, &IBO);
-	glGenBuffers(3,vbos);
-	GLModel3DData modelData = model->retrieveData();
-	GLuint model_id = model->getModelID();
-	std::pair<GLuint,GLuint> mapping(model_id,vao_new_id);
-	object_vao_map.insert(mapping);
-	createVertexBuffer(modelData);
-	/*createNormalsBuffer(modelData);*/
-	createTexCoordsBuffer(modelData);
-	createIndexBuffer(modelData);
-	
-	glEnableVertexAttribArray(0); // Disable our Vertex Array Object
-	glBindVertexArray(0); // Disable our Vertex Buffer Object
+	for (std::vector<GLModel3DData>::iterator mesh = modelData.begin(); mesh != modelData.end(); mesh++)
+	{ 
+		glGenVertexArrays(1, &vao_new_id); // Create our Vertex Array Object
+		glBindVertexArray(vao_new_id); // Bind our Vertex Array Object so we can use it  
+
+		glGenBuffers(1, &IBO);
+		glGenBuffers(3, vbos);
+
+		GLuint mesh_id = mesh->getMeshID();
+		tinyobj::mesh_t mesh_data = mesh->getMeshData();
+		std::pair<GLuint, GLuint> mapping(mesh_id, vao_new_id);
+		object_vao_map.insert(mapping);
+		createVertexBuffer(mesh_data.positions);
+		/*createNormalsBuffer(mesh_data.normals);*/
+		createTexCoordsBuffer(mesh_data.texcoords);
+		createIndexBuffer(mesh_data.indices);
+
+		glEnableVertexAttribArray(0); // Disable our Vertex Array Object
+		glBindVertexArray(0); // Disable our Vertex Buffer Object
+	}
 }
 void SceneRenderer::renderScene(Camera glCamera,std::vector<Renderable> objects)
 {
@@ -63,49 +69,57 @@ void SceneRenderer::renderScene(Camera glCamera,std::vector<Renderable> objects)
 	if (shader) shader->end();
     glutSwapBuffers();
 }
-void SceneRenderer::createVertexBuffer(GLModel3DData data)
+void SceneRenderer::createVertexBuffer(std::vector<GLfloat> vertices)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vbos[0]); // Bind our Vertex Buffer Object
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * data.vertices.size(), &data.vertices[0], GL_STATIC_DRAW); // Set the size and data of our VBO and set it to STATIC_DRAW
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertices.size(), &vertices[0], GL_STATIC_DRAW); // Set the size and data of our VBO and set it to STATIC_DRAW
 
 	GLint posAttrib = glGetAttribLocation(shader->GetProgramObject(), "position");
     glEnableVertexAttribArray(posAttrib);
     glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
-void SceneRenderer::createNormalsBuffer(GLModel3DData data)
+void SceneRenderer::createNormalsBuffer(std::vector<GLfloat> normals)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vbos[1]); // Bind our Vertex Buffer Object
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * data.normals.size(), &data.normals[0], GL_STATIC_DRAW); 
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * normals.size(), &normals[0], GL_STATIC_DRAW); 
 
 	GLint normalAttrib = glGetAttribLocation(shader->GetProgramObject(), "position");
     glEnableVertexAttribArray(normalAttrib);
     glVertexAttribPointer(normalAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
-void SceneRenderer::createTexCoordsBuffer(GLModel3DData data)
+void SceneRenderer::createTexCoordsBuffer(std::vector<GLfloat> tex_coords)
 {
+	if (tex_coords.empty())
+	{
+		printf("No texture coordinates - will not show object until alternative shader is defined");
+	}
 	glBindBuffer(GL_ARRAY_BUFFER, vbos[2]); // Bind our Vertex Buffer Object
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * data.tex_coords.size(), &data.tex_coords[0], GL_STATIC_DRAW); 
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * tex_coords.size(), &tex_coords[0], GL_STATIC_DRAW); 
 
 	GLint textureAttrib = glGetAttribLocation(shader->GetProgramObject(), "TexCoord");
     glEnableVertexAttribArray(textureAttrib);
     glVertexAttribPointer(textureAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
 }
-void SceneRenderer::createIndexBuffer(GLModel3DData data)
+void SceneRenderer::createIndexBuffer(std::vector<unsigned int> indices)
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * data.indices.size(), &data.indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * indices.size(), &indices[0], GL_STATIC_DRAW);
 }
 
 void SceneRenderer::renderModel(GeoModel3D* model)
 {
 	GLuint sampler_loc = 4;
-	GLModel3DData modelData = model->retrieveData();
-	GLuint vaoID = object_vao_map.at(model->getModelID());
-	glBindVertexArray(vaoID); // Bind our Vertex Array Object
+	std::vector<GLModel3DData> modelData = model->retrieveMeshes();
+	for (std::vector<GLModel3DData>::iterator m = modelData.begin(); m != modelData.end(); m++)
+	{
+		GLuint vaoID = object_vao_map.at(m->getMeshID());
+		glBindVertexArray(vaoID); // Bind our Vertex Array Object
 
-	glActiveTexture(GL_TEXTURE0);
-	shader->BindAttribLocation(sampler_loc,"texture1");
-	glBindTexture(GL_TEXTURE_2D,modelData.texture);
+		glActiveTexture(GL_TEXTURE0);
+		shader->BindAttribLocation(sampler_loc, "texture1");
+		glBindTexture(GL_TEXTURE_2D, m->texture);
 
-	glDrawElements(GL_TRIANGLES, modelData.indices.size(), GL_UNSIGNED_INT, 0);
+		tinyobj::mesh_t mesh = m->getMeshData();
+		glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
+	}
 }

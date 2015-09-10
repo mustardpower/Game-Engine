@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -21,14 +21,14 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>false</CLRSupport>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Users\Paul\Documents\Programming\OpenGL\glut-3.7\include;C:\Users\Paul\Documents\Programming\OpenGL\glew-1.10.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Paul\Documents\Visual Studio 2010\Projects\C++\PhysicsEngine\PhysicsEngine\FreeImage;C:\Users\Paul\Documents\Programming\OpenGL\glew-1.10.0\lib;C:\Users\Paul\Documents\Programming\OpenGL\glut-3.7\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\Paul\Desktop\Code\Projects\C++\PhysicsEngine\PhysicsEngine\lib;C:\Users\Paul\Documents\Visual Studio 2010\Projects\C++\PhysicsEngine\PhysicsEngine\FreeImage;C:\Users\Paul\Documents\Programming\OpenGL\glew-1.10.0\lib;C:\Users\Paul\Documents\Programming\OpenGL\glut-3.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -117,6 +117,7 @@
     <ClInclude Include="GeoModel3D.h" />
     <ClInclude Include="glApplication.h" />
     <ClInclude Include="glsl.h" />
+    <ClInclude Include="glut.h" />
     <ClInclude Include="glutwindow.h" />
     <ClInclude Include="glWindow.h" />
     <ClInclude Include="lodepng.h" />

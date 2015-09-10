@@ -221,6 +221,9 @@
     <ClInclude Include="SceneRenderer.h">
       <Filter>Header Files\SceneManagement</Filter>
     </ClInclude>
+    <ClInclude Include="glut.h">
+      <Filter>Header Files\GLSL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="frag_shader.fs">

@@ -3,9 +3,6 @@
   # comment
 
 # empty line including some space
-   
-
-mtllib cornell_box.mtl
 
 o floor
 usemtl white

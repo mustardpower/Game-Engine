@@ -18,10 +18,9 @@ void GameEngine::OnRender(void)
 	void GameEngine::OnInit()
 	{
 		sceneRenderer.onInit();
-		GeoModel3D* cube = new GeoModel3D("cube");	// load the model from the file name
+		GeoModel3D* cube = new GeoModel3D("Spider-Man_Modern");	// load the model from the file name
 		sceneRenderer.createVAO(cube);				// upload model data to graphics card
 		sceneManager.addObject(Renderable(cube, glm::vec3(10, 0.0, 0.0)));	//add an instance of a renderable object with that data
-		sceneManager.addObject(Renderable(cube, glm::vec3(20, 0.0, 0.0)));	//add an instance of a renderable object with that data
 	}
 
 	void GameEngine::OnResize(int w, int h) {}
