@@ -244,7 +244,7 @@
 				window->OnClose();
 				break;
 			default:
-				return DefWindowProc(hWnd, message, wParam, lParam);
+				return DefWindowProcW(hWnd, message, wParam, lParam);
 			}
 		}
 		case WM_PAINT:
@@ -259,24 +259,24 @@
 			window->OnClose();
 			break;
 		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
+			return DefWindowProcW(hWnd, message, wParam, lParam);
 		}
 
-		return DefWindowProc(hWnd, message, wParam, lParam);
+		return DefWindowProcW(hWnd, message, wParam, lParam);
 	}
 
 	LRESULT CALLBACK GameEngine::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		if (_gWinInstances.empty())
 		{
-			return DefWindowProc(hWnd, message, wParam, lParam);
+			return DefWindowProcW(hWnd, message, wParam, lParam);
 		}
 		else
 		{
 			HWND CurrentWindow = GetActiveWindow();
 			if (!CurrentWindow)
 			{
-				return DefWindowProc(hWnd, message, wParam, lParam);
+				return DefWindowProcW(hWnd, message, wParam, lParam);
 			}
 
 			std::list<glWindow*>::iterator i = _gWinInstances.begin();
