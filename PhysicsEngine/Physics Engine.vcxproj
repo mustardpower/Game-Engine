@@ -42,8 +42,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\Paul\Documents\Programming\OpenGL\glut-3.7\include;C:\Users\Paul\Documents\Programming\OpenGL\glew-1.10.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Paul\Desktop\Code\Projects\C++\PhysicsEngine\PhysicsEngine\lib;C:\Users\Paul\Documents\Visual Studio 2010\Projects\C++\PhysicsEngine\PhysicsEngine\FreeImage;C:\Users\Paul\Documents\Programming\OpenGL\glew-1.10.0\lib;C:\Users\Paul\Documents\Programming\OpenGL\glut-3.7\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\PhysicsEngine\GL;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\PhysicsEngine\lib;$(SolutionDir)\PhysicsEngine\FreeImage;C:\Users\Paul\Documents\Programming\OpenGL\glew-1.10.0\lib;C:\Users\Paul\Documents\Programming\OpenGL\glut-3.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

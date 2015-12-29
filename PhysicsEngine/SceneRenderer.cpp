@@ -92,6 +92,7 @@ void SceneRenderer::createTexCoordsBuffer(std::vector<GLfloat> tex_coords)
 	if (tex_coords.empty())
 	{
 		printf("No texture coordinates - will not show object until alternative shader is defined");
+		return;
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, vbos[2]); // Bind our Vertex Buffer Object
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * tex_coords.size(), &tex_coords[0], GL_STATIC_DRAW); 
