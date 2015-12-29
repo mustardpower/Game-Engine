@@ -18,7 +18,7 @@ void GameEngine::OnRender(void)
 	void GameEngine::OnInit()
 	{
 		sceneRenderer.onInit();
-		GeoModel3D* cube = new GeoModel3D("Spider-Man_Modern");	// load the model from the file name
+		GeoModel3D* cube = new GeoModel3D("cube");	// load the model from the file name
 		sceneRenderer.createVAO(cube);				// upload model data to graphics card
 		sceneManager.addObject(Renderable(cube, glm::vec3(10, 0.0, 0.0)));	//add an instance of a renderable object with that data
 	}
@@ -27,8 +27,16 @@ void GameEngine::OnRender(void)
 	void GameEngine::OnClose(void)
 	{
 	}
-	void GameEngine::OnMouseDown(int button, int x, int y) {}    
-	void GameEngine::OnMouseUp(int button, int x, int y) {}
+	void GameEngine::OnMouseDown(int button, int x, int y) 
+	{
+		sceneManager.onMouseDown(button, x, y);
+		glutPostRedisplay();
+	}    
+	void GameEngine::OnMouseUp(int button, int x, int y) 
+	{
+		sceneManager.onMouseUp(button, x, y);
+		glutPostRedisplay();
+	}
 	void GameEngine::OnMouseWheel(int nWheelNumber, int nDirection, int x, int y){}
 	void GameEngine::OnKeyDown(int nKey, char cAscii)
 	{       
