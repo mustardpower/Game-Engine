@@ -1,12 +1,13 @@
 #include "GameEngine.h"
 #include "SceneManager.h"
 #include "tiny_obj_loader.h"
+#include "resource.h"
 
 	// When OnInit is called, a render context (in this case GLUT-GameEngine) 
 	// is already available!
 	void GameEngine::OnInit()
 	{
-		initializeMenu();
+		initializeMenus();
 		sceneRenderer.onInit();
 		GeoModel3D* cube = new GeoModel3D("cube");	// load the model from the file name
 		sceneRenderer.createVAO(cube);				// upload model data to graphics card
@@ -64,7 +65,7 @@
 		}
 	};
 
-	void GameEngine::OnMenuSelection(int menuOption)
+	void GameEngine::OnPopupMenuSelection(int menuOption)
 	{
 		switch (menuOption)
 		{
@@ -88,7 +89,44 @@
 		glutPostRedisplay();
 	}
 
-	void GameEngine::initializeMenu()
+	void GameEngine::OnMenuBarSelection(int menuOption)
+	{
+		switch (menuOption)
+		{
+		case 1:
+			glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+			break;
+		case 2:
+			glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
+			break;
+		case 3:
+			glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
+			break;
+		case 4:
+			glClearColor(1.0f, 0.5f, 0.0f, 0.0f);
+			break;
+		default:
+			glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+			break;
+		}
+
+		glutPostRedisplay();
+	}
+
+	void GameEngine::initializeMenus()
+	{
+		initializeMenuBar();
+		initializeMouseMenus();
+	}
+
+	void GameEngine::initializeMenuBar()
+	{
+		HWND hwnd = GetActiveWindow();
+		HMENU hMenu = LoadMenu(NULL, MAKEINTRESOURCE(IDR_MENU1));
+		SetMenu(hwnd, hMenu);
+	}
+
+	void GameEngine::initializeMouseMenus()
 	{
 		//add menu entries with their ID
 		glutAddMenuEntry("Red", 1);
@@ -98,4 +136,20 @@
 
 		// attach the menu to the right mouse button
 		glutAttachMenu(GLUT_RIGHT_BUTTON);
+	}
+
+	void GameEngine::sMenuBarFunc(int menuOption)
+	{
+		int CurrentWindow = glutGetWindow();
+		std::list<glutWindow*>::iterator i = _gWinInstances.begin();
+
+		while (i != _gWinInstances.end())
+		{
+			if ((*i)->getWindowHandle() == CurrentWindow)
+			{
+				(*i)->OnMenuBarSelection(menuOption);
+			}
+
+			i++;
+		}
 	}

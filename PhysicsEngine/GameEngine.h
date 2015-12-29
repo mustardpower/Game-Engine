@@ -2,6 +2,7 @@
 
 #include <GL\glew.h>
 #include <GL\glut.h>
+#include <Windows.h>
 
 #include "glutWindow.h"
 #include "glsl.h"
@@ -29,6 +30,12 @@ public:
 	virtual void OnMouseWheel(int nWheelNumber, int nDirection, int x, int y);
 	virtual void OnKeyDown(int nKey, char cAscii);
 	virtual void OnKeyUp(int nKey, char cAscii);
-	virtual void OnMenuSelection(int menuOption);
-	void initializeMenu();
+	virtual void OnPopupMenuSelection(int menuOption);
+	virtual void OnMenuBarSelection(int menuOption);
+	void initializeMenus();
+	void initializeMenuBar();
+	void initializeMouseMenus();
+
+	/* No menu bar functionality in GLUT so implement this using WIN32 API */
+	static void CALLBACK sMenuBarFunc(int menuOption);
 };

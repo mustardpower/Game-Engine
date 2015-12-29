@@ -39,7 +39,7 @@ glutWindow::glutWindow(char* windowTitle)
    glutReshapeFunc(sReshape);
    glutMouseFunc(sMouse);
    glutMotionFunc(sMotion);
-   glutCreateMenu(sMenuSelection);
+   glutCreateMenu(sPopupMenuSelection);
 #ifdef FREEGLUT
    glutMouseWheelFunc(sMouseWheel);
    glutCloseFunc(sClose);
@@ -49,7 +49,6 @@ glutWindow::glutWindow(char* windowTitle)
    glutKeyboardUpFunc(sKeyUp);
    glutSpecialUpFunc(sSpecialUp);
    glutIdleFunc(sIdle);
-   
   
 }
 
@@ -209,7 +208,7 @@ void glutWindow::sJoystick( unsigned int a, int b, int c, int d)
 {
 }
 
-void glutWindow::sMenuSelection(int menuOption)
+void glutWindow::sPopupMenuSelection(int menuOption)
 {
 	int CurrentWindow = glutGetWindow();
 	std::list<glutWindow*>::iterator i = _gWinInstances.begin();
@@ -218,7 +217,7 @@ void glutWindow::sMenuSelection(int menuOption)
 	{
 		if ((*i)->_gWindow == CurrentWindow)
 		{
-			(*i)->OnMenuSelection(menuOption);
+			(*i)->OnPopupMenuSelection(menuOption);
 		}
 
 		i++;
@@ -363,3 +362,8 @@ void  glutWindow::Close()
 }
 
 //-----------------------------------------------------------------------------
+
+int glutWindow::getWindowHandle()
+{
+	return _gWindow;
+}
