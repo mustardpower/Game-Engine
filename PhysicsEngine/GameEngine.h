@@ -29,4 +29,6 @@ public:
 	virtual void OnMouseWheel(int nWheelNumber, int nDirection, int x, int y);
 	virtual void OnKeyDown(int nKey, char cAscii);
 	virtual void OnKeyUp(int nKey, char cAscii);
+	virtual void OnMenuSelection(int menuOption);
+	void initializeMenu();
 };

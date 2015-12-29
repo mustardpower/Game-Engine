@@ -58,6 +58,8 @@ namespace cwc
       
       //! Called when a key is released on keyboard
       virtual void OnKeyUp(int nKey, char cAscii){}; 
+
+	  virtual void OnMenuSelection(int menuOption) {};
       
       // Commands:
       
@@ -97,6 +99,7 @@ namespace cwc
       static void sSpecialDown(int key, int x, int y);
       static void sKeyDown(unsigned char key, int x, int y);
       static void sIdle(void);
+	  static void sMenuSelection(int menuOption);
    };   
 }
 

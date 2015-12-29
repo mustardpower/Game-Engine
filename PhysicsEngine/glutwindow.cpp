@@ -39,6 +39,7 @@ glutWindow::glutWindow(char* windowTitle)
    glutReshapeFunc(sReshape);
    glutMouseFunc(sMouse);
    glutMotionFunc(sMotion);
+   glutCreateMenu(sMenuSelection);
 #ifdef FREEGLUT
    glutMouseWheelFunc(sMouseWheel);
    glutCloseFunc(sClose);
@@ -206,6 +207,22 @@ void glutWindow::sMouseWheel(int wheel_number, int direction, int x, int y)
 
 void glutWindow::sJoystick( unsigned int a, int b, int c, int d)
 {
+}
+
+void glutWindow::sMenuSelection(int menuOption)
+{
+	int CurrentWindow = glutGetWindow();
+	std::list<glutWindow*>::iterator i = _gWinInstances.begin();
+
+	while (i != _gWinInstances.end())
+	{
+		if ((*i)->_gWindow == CurrentWindow)
+		{
+			(*i)->OnMenuSelection(menuOption);
+		}
+
+		i++;
+	}
 }
 
 //-----------------------------------------------------------------------------
