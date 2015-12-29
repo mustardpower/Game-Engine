@@ -19,10 +19,12 @@
 using namespace cwc;
 using namespace std;
 
+std::list<glWindow*> glWindow::_gWinInstances;
 
 glWindow::glWindow()
 {
-   _bScriptAttached = false;
+	_gWindow = GetActiveWindow();
+	_bScriptAttached = false;
 }
 
 glWindow::~glWindow()
@@ -32,4 +34,9 @@ glWindow::~glWindow()
 bool glWindow::AttachScript(char* filename, bool bShowCompileErrors)
 {
    return false;
+}
+
+HWND glWindow::getWindowHandle()
+{
+	return _gWindow;
 }

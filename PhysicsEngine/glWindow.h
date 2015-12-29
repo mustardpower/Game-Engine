@@ -8,6 +8,7 @@
 #define GL_WINDOW_H
 
 #include <list>
+#include <Windows.h>
 
 namespace cwc
 {
@@ -15,9 +16,10 @@ namespace cwc
    class glWindow
    {
    public:
-      glWindow(void);
+      glWindow();
       virtual ~glWindow(void);
       
+	  HWND getWindowHandle();
       // Events:
       
       //! Called on idle. This should never be used to draw anything.
@@ -55,6 +57,8 @@ namespace cwc
       
       //! Called when a key is released on keyboard
       virtual void OnKeyUp(int nKey, char cAscii) = 0;
+
+	  virtual void OnMenuBarSelection(int menuOption) {};
       
       // Commands:
       
@@ -78,6 +82,8 @@ namespace cwc
 
    protected:
       bool  _bScriptAttached;
+	  static std::list<glWindow*> _gWinInstances;
+	  HWND _gWindow;  // Window Number
    };   
 }
 

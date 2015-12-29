@@ -1,22 +1,22 @@
 #include <iostream>
-
-#include <GL\glew.h>
-#include <GL\glut.h>
 #include <Windows.h>
 
-#include "glutWindow.h"
+#include "glWindow.h"
 #include "glsl.h"
 #include "SceneManager.h"
 #include "SceneRenderer.h"
 
-class GameEngine : public cwc::glutWindow
+class GameEngine : public cwc::glWindow
 {
-protected:
-   SceneManager sceneManager;
-   SceneRenderer sceneRenderer;
+private:
+	static HINSTANCE hInstance;
+	WNDCLASSEXW wcex;
+	SceneManager sceneManager;
+	SceneRenderer sceneRenderer;
 
 public:
-	GameEngine(char* GameEngineTitle) : cwc::glutWindow(GameEngineTitle){}
+	GameEngine(char* GameEngineTitle);
+	ATOM RegisterClass(HINSTANCE hInstance);
 
 	virtual void OnRender(void);
 	virtual void OnIdle();
@@ -28,14 +28,26 @@ public:
 	virtual void OnMouseDown(int button, int x, int y);    
 	virtual void OnMouseUp(int button, int x, int y);
 	virtual void OnMouseWheel(int nWheelNumber, int nDirection, int x, int y);
+	virtual void OnMouseMove(int x, int y);
+	virtual void OnLeftMouseDrag(int x, int y);
 	virtual void OnKeyDown(int nKey, char cAscii);
 	virtual void OnKeyUp(int nKey, char cAscii);
 	virtual void OnPopupMenuSelection(int menuOption);
 	virtual void OnMenuBarSelection(int menuOption);
+
+	// Commands:
+	virtual void Repaint(); //! Force Repaint
+	virtual void  SetFullscreen(bool bFullscreen); //! Sets window to fullscreen or windowed mode.
+	virtual void Hide(); //! Hide the window
+	virtual void Show(); //! Show the window
+	virtual void Close();
+
 	void initializeMenus();
 	void initializeMenuBar();
 	void initializeMouseMenus();
 
-	/* No menu bar functionality in GLUT so implement this using WIN32 API */
 	static void CALLBACK sMenuBarFunc(int menuOption);
+	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	static INT_PTR CALLBACK GameEngine::About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT handleWindowsMessage(cwc::glWindow* window, UINT message, WPARAM wParam, LPARAM lParam);
 };

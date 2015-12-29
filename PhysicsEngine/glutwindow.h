@@ -20,8 +20,6 @@ namespace cwc
    public:
       glutWindow(char* windowTitle);
       virtual ~glutWindow(void);
-
-	  int getWindowHandle();
       
       // Events:
       
@@ -62,8 +60,6 @@ namespace cwc
       virtual void OnKeyUp(int nKey, char cAscii){}; 
 
 	  virtual void OnPopupMenuSelection(int menuOption) {};
-
-	  virtual void OnMenuBarSelection(int menuOption) {};
       
       // Commands:
       

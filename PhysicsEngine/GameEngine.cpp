@@ -5,13 +5,59 @@
 
 	// When OnInit is called, a render context (in this case GLUT-GameEngine) 
 	// is already available!
+
+	#define MAX_LOADSTRING 100
+	WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
+	WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
+
+	HINSTANCE GameEngine::hInstance;
+
+	GameEngine::GameEngine(char* GameEngineTitle) : cwc::glWindow()
+	{
+		OnInit();
+	}
+
+	//
+	//  FUNCTION: MyRegisterClass()
+	//
+	//  PURPOSE: Registers the window class.
+	//
+	ATOM GameEngine::RegisterClass(HINSTANCE hInstance)
+	{
+		wcex.cbSize = sizeof(WNDCLASSEX);
+
+		wcex.style = CS_HREDRAW | CS_VREDRAW;
+		wcex.lpfnWndProc = GameEngine::WndProc;
+		wcex.cbClsExtra = 0;
+		wcex.cbWndExtra = 0;
+		wcex.hInstance = hInstance;
+		wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_GAMEENGINE));
+		wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+		wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+		wcex.lpszMenuName = NULL;
+		wcex.lpszClassName = szWindowClass;
+		wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+
+		return RegisterClassExW(&wcex);
+	}
+
 	void GameEngine::OnInit()
 	{
+		_gWinInstances.push_back(this);
+
+		// Initialize global strings
+		LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+		LoadStringW(hInstance, IDC_GAMEENGINE, szWindowClass, MAX_LOADSTRING);
+
+		hInstance = GetModuleHandle(NULL); // Store instance handle in our global variable
+		RegisterClass(hInstance);
+		_gWindow = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+
+		ShowWindow(_gWindow, SW_SHOW);
+		UpdateWindow(_gWindow);
 		initializeMenus();
 		sceneRenderer.onInit();
-		GeoModel3D* cube = new GeoModel3D("cube");	// load the model from the file name
-		sceneRenderer.createVAO(cube);				// upload model data to graphics card
-		sceneManager.addObject(Renderable(cube, glm::vec3(10, 0.0, 0.0)));	//add an instance of a renderable object with that data
 	}
 
 	void GameEngine::OnRender(void)
@@ -28,6 +74,8 @@
 	void GameEngine::OnResize(int w, int h) {}
 	void GameEngine::OnClose(void)
 	{
+		DestroyWindow(_gWindow);
+		PostQuitMessage(0);
 	}
 	void GameEngine::OnMouseDown(int button, int x, int y) 
 	{
@@ -122,26 +170,18 @@
 	void GameEngine::initializeMenuBar()
 	{
 		HWND hwnd = GetActiveWindow();
-		HMENU hMenu = LoadMenu(NULL, MAKEINTRESOURCE(IDR_MENU1));
+		HMENU hMenu = LoadMenu(NULL, MAKEINTRESOURCE(IDC_GAMEENGINE));
 		SetMenu(hwnd, hMenu);
 	}
 
 	void GameEngine::initializeMouseMenus()
 	{
-		//add menu entries with their ID
-		glutAddMenuEntry("Red", 1);
-		glutAddMenuEntry("Blue", 2);
-		glutAddMenuEntry("Green", 3);
-		glutAddMenuEntry("Orange", 4);
-
-		// attach the menu to the right mouse button
-		glutAttachMenu(GLUT_RIGHT_BUTTON);
 	}
 
 	void GameEngine::sMenuBarFunc(int menuOption)
 	{
-		int CurrentWindow = glutGetWindow();
-		std::list<glutWindow*>::iterator i = _gWinInstances.begin();
+		HWND CurrentWindow = GetActiveWindow();
+		std::list<glWindow*>::iterator i = _gWinInstances.begin();
 
 		while (i != _gWinInstances.end())
 		{
@@ -152,4 +192,123 @@
 
 			i++;
 		}
+	}
+
+	//! Called when Mouse is moved (without pressing any button)
+	void GameEngine::OnMouseMove(int x, int y)
+	{
+	}
+
+	void  GameEngine::SetFullscreen(bool bFullscreen)
+	{
+	}
+
+	void GameEngine::OnLeftMouseDrag(int x, int y)
+	{
+	}
+
+	void GameEngine::Repaint()
+	{
+	}
+
+	void GameEngine::Hide()
+	{
+
+	}
+
+	void GameEngine::Show()
+	{
+
+	}
+
+	void GameEngine::Close()
+	{
+
+	}
+
+	LRESULT GameEngine::handleWindowsMessage(cwc::glWindow* window, UINT message, WPARAM wParam, LPARAM lParam)
+	{
+		HWND hWnd = window->getWindowHandle();
+		switch (message)
+		{
+		case WM_COMMAND:
+		{
+			switch (wParam)
+			{
+			case IDM_ABOUT:
+			{
+				DialogBox(hInstance, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, GameEngine::About);
+			}
+			break;
+			case IDM_EXIT:
+				window->OnClose();
+				break;
+			default:
+				return DefWindowProc(hWnd, message, wParam, lParam);
+			}
+		}
+		case WM_PAINT:
+		{
+			PAINTSTRUCT ps;
+			HDC hdc = BeginPaint(hWnd, &ps);
+			// TODO: Add any drawing code that uses hdc here...
+			EndPaint(hWnd, &ps);
+		}
+		break;
+		case WM_CLOSE:
+			window->OnClose();
+			break;
+		default:
+			return DefWindowProc(hWnd, message, wParam, lParam);
+		}
+
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}
+
+	LRESULT CALLBACK GameEngine::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+	{
+		if (_gWinInstances.empty())
+		{
+			return DefWindowProc(hWnd, message, wParam, lParam);
+		}
+		else
+		{
+			HWND CurrentWindow = GetActiveWindow();
+			if (!CurrentWindow)
+			{
+				return DefWindowProc(hWnd, message, wParam, lParam);
+			}
+
+			std::list<glWindow*>::iterator i = _gWinInstances.begin();
+
+			while (i != _gWinInstances.end())
+			{
+				if ((*i)->getWindowHandle() == CurrentWindow)
+				{
+					return handleWindowsMessage(*i,message, wParam, lParam);
+				}
+				i++;
+			}
+		}
+		return 0;
+	}
+
+	// Message handler for about box.
+	INT_PTR CALLBACK GameEngine::About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+	{
+		UNREFERENCED_PARAMETER(lParam);
+		switch (message)
+		{
+		case WM_INITDIALOG:
+			return (INT_PTR)TRUE;
+
+		case WM_COMMAND:
+			if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+			{
+				EndDialog(hDlg, LOWORD(wParam));
+				return (INT_PTR)TRUE;
+			}
+			break;
+		}
+		return (INT_PTR)FALSE;
 	}

@@ -362,8 +362,3 @@ void  glutWindow::Close()
 }
 
 //-----------------------------------------------------------------------------
-
-int glutWindow::getWindowHandle()
-{
-	return _gWindow;
-}

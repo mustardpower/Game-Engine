@@ -47,18 +47,29 @@ glApplication::~glApplication(void)
 
 //-----------------------------------------------------------------------------
 
-void glApplication::run(void)
+LRESULT glApplication::run(HINSTANCE hInstance)
 {
    OnInit();
-   MainLoop();
+   LRESULT result = MainLoop(hInstance);
    OnExit();
+
+   return result;
 }
 
 //-----------------------------------------------------------------------------
 
-bool glApplication::MainLoop()
+bool glApplication::MainLoop(HINSTANCE hInstance)
 {
-   glutMainLoop();
+	MSG msg;
+	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GAMEENGINE));
+	while (GetMessage(&msg, nullptr, 0, 0))
+	{
+		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
    return true;
 }
 

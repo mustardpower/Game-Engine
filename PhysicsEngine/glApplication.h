@@ -9,6 +9,8 @@
 
 //! \defgroup app Application
 #include <list>
+#include <Windows.h>
+#include "Resource.h"
 
 namespace cwc
 {
@@ -31,12 +33,10 @@ namespace cwc
       //! Set Name of Application
       void SetAppName(char* sAppName);
       
-      //! Starts Application (OnInit() -> MainLoop() -> OnExit())
-      void run();
-      
-      //! The mainloop of the application, override if you want to specify your own, which is not recommended in
-      // most cases and may not even work properly with all implementations! [Basically reserved for future use]
-      virtual bool MainLoop();
+      //! Starts Application - Contains windows message loop
+	  LRESULT run(HINSTANCE hInstance);
+
+	  bool MainLoop(HINSTANCE hInstance);
       
       //! ShowConsole is for Windows only: Show a console where cout/printf etc are redirected. This should not be used
       // for productive applications, but is "nice to have" when developing certain small applications.
