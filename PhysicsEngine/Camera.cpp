@@ -12,9 +12,9 @@ void Camera::zoom(float increment)
 {
 	fov += increment;
 }
-void Camera::rotate(float increment)
+void Camera::rotate(float increment, glm::vec3 rotation_axis)
 {
-	model_matrix = glm::rotate(model_matrix,increment,glm::vec3(0,1,0));
+	model_matrix = glm::rotate(model_matrix, increment , rotation_axis);
 }
 
 void Camera::translateX(float increment)

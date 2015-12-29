@@ -8,14 +8,16 @@ SceneManager::SceneManager()
 void SceneManager::update()
 {
 	const int increment = 1.0;
+	glm::vec3 rotation_axis = glm::vec3(0.0, 1.0, 0.0);
+
 	if (mouseLeftDown)
 	{
-		glCamera.rotate(increment);
+		glCamera.rotate(increment, rotation_axis);
 		glutPostRedisplay();
 	}
 	if (mouseRightDown)
 	{
-		glCamera.rotate(-increment);
+		glCamera.rotate(-increment, rotation_axis);
 		glutPostRedisplay();
 	}
 
@@ -48,15 +50,7 @@ void SceneManager::onKeyPress(int nKey,char cAscii)
 {
 	const int increment = 1;
 
-	if (cAscii == 43) // +
-	{
-		glCamera.rotate(increment);
-	}
-	else if (cAscii == 45) // -
-	{
-		glCamera.rotate(-increment);
-	}
-	else if (nKey == GLUT_KEY_RIGHT)
+	if (nKey == GLUT_KEY_RIGHT)
 	{ 
 		glCamera.translateX(increment);
 	}
@@ -71,14 +65,6 @@ void SceneManager::onKeyPress(int nKey,char cAscii)
 	else if (nKey == GLUT_KEY_DOWN)
 	{
 		glCamera.translateY(-increment);
-	}
-	else if (cAscii == 97) // a
-	{
-		glCamera.rotate(increment);
-	}
-	else if (cAscii == 100) // d
-	{
-		glCamera.rotate(-increment);
 	}
 	else
 	{

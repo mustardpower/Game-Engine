@@ -17,7 +17,7 @@ private:
 public:
 	Camera();
 	void zoom(float increment);
-	void rotate(float increment);
+	void rotate(float increment, glm::vec3 rotation_axis);
 	void translateX(float increment);
 	void translateY(float increment);
 	void translateZ(float increment);
