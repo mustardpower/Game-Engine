@@ -54,9 +54,9 @@
 		_gWindow = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-		ShowWindow(_gWindow, SW_SHOW);
+		Show();
 		UpdateWindow(_gWindow);
-		initializeMenus();
+		initializeMenuBar();
 		sceneRenderer.onInit(_gWindow);
 	}
 
@@ -164,21 +164,11 @@
 		glutPostRedisplay();
 	}
 
-	void GameEngine::initializeMenus()
-	{
-		initializeMenuBar();
-		initializeMouseMenus();
-	}
-
 	void GameEngine::initializeMenuBar()
 	{
 		HWND hwnd = GetActiveWindow();
 		HMENU hMenu = LoadMenu(NULL, MAKEINTRESOURCE(IDC_GAMEENGINE));
 		SetMenu(hwnd, hMenu);
-	}
-
-	void GameEngine::initializeMouseMenus()
-	{
 	}
 
 	void GameEngine::sMenuBarFunc(int menuOption)
@@ -216,17 +206,17 @@
 
 	void GameEngine::Hide()
 	{
-
+		ShowWindow(_gWindow, SW_HIDE);
 	}
 
 	void GameEngine::Show()
 	{
-
+		ShowWindow(_gWindow, SW_SHOW);
 	}
 
 	void GameEngine::Close()
 	{
-
+		DestroyWindow(_gWindow);
 	}
 
 	LRESULT GameEngine::handleWindowsMessage(cwc::glWindow* window, UINT message, WPARAM wParam, LPARAM lParam)

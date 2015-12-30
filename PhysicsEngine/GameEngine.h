@@ -42,9 +42,7 @@ public:
 	virtual void Show(); //! Show the window
 	virtual void Close();
 
-	void initializeMenus();
 	void initializeMenuBar();
-	void initializeMouseMenus();
 
 	static void CALLBACK sMenuBarFunc(int menuOption);
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
