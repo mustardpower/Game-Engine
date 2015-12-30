@@ -57,16 +57,19 @@
 		ShowWindow(_gWindow, SW_SHOW);
 		UpdateWindow(_gWindow);
 		initializeMenus();
-		sceneRenderer.onInit();
+		sceneRenderer.onInit(_gWindow);
 	}
 
-	void GameEngine::OnRender(void)
+	void GameEngine::OnRender()
 {
+	PAINTSTRUCT ps;
+	HDC hdc = BeginPaint(_gWindow, &ps);
 	std::vector<GeoModel3D*> object_models;
 	std::vector<Renderable> objects = sceneManager.getObjects();
 	Camera camera = sceneManager.getCamera();
 	sceneManager.update();
-	sceneRenderer.renderScene(camera,objects);
+	sceneRenderer.renderScene(hdc,camera,objects);
+	EndPaint(_gWindow, &ps);
 }
 
 	void GameEngine::OnIdle() { }
@@ -249,10 +252,7 @@
 		}
 		case WM_PAINT:
 		{
-			PAINTSTRUCT ps;
-			HDC hdc = BeginPaint(hWnd, &ps);
-			// TODO: Add any drawing code that uses hdc here...
-			EndPaint(hWnd, &ps);
+			window->OnRender();
 		}
 		break;
 		case WM_CLOSE:

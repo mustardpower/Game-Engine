@@ -10,6 +10,9 @@
 class SceneRenderer
 {
 private:
+	HDC hDC;
+	HGLRC hRC;
+	HWND hwnd;
 	cwc::glShaderManager SM;
 	cwc::glShader *shader;
 	static GLuint NUMBER_OF_VAOS;
@@ -19,9 +22,13 @@ private:
 public:
 	SceneRenderer();
 	~SceneRenderer();
-	void onInit();
+	void onInit(HWND hWnd);
+
+	void EnableOpenGL(HWND hWnd);
+	void DisableOpenGL();
+
 	void createVAO(GeoModel3D* model);
-	void renderScene(Camera glCamera,std::vector<Renderable> objects);
+	void renderScene(HDC hDC, Camera glCamera,std::vector<Renderable> objects);
 	void createVertexBuffer(std::vector<GLfloat> vertices);
 	void createIndexBuffer(std::vector<unsigned int> indices);
 	void createNormalsBuffer(std::vector<GLfloat> normals);

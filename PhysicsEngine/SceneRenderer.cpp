@@ -9,20 +9,25 @@ SceneRenderer::SceneRenderer()
 }
 SceneRenderer::~SceneRenderer()
 {
+	DisableOpenGL();
 }
-void SceneRenderer::onInit()
+
+void SceneRenderer::onInit(HWND hWnd)
 {
+	hwnd = hWnd;
+	EnableOpenGL(hwnd);
 	glClearColor(0.5f, 0.5f, 1.0f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 	glShadeModel(GL_SMOOTH);
 
-	glClearDepth( 1.0f );
-	glDepthFunc( GL_LEQUAL );	
+	glClearDepth(1.0f);
+	glDepthFunc(GL_LEQUAL);
 
 	shader = SM.loadfromFile("vert_shader.vs","frag_shader.fs"); // load (and compile, link) shaders from file
 		if (shader==0) 
 			std::cout << "Error Loading, compiling or linking shader\n";
 }
+
 void SceneRenderer::createVAO(GeoModel3D* model)
 {
 	GLuint vao_new_id;
@@ -50,7 +55,7 @@ void SceneRenderer::createVAO(GeoModel3D* model)
 		glBindVertexArray(0); // Disable our Vertex Buffer Object
 	}
 }
-void SceneRenderer::renderScene(Camera glCamera,std::vector<Renderable> objects)
+void SceneRenderer::renderScene(HDC hDc,Camera glCamera,std::vector<Renderable> objects)
 {
 	glm::mat4 object_model_matrix;
 	glm::mat4 mvp_matrix;
@@ -67,7 +72,7 @@ void SceneRenderer::renderScene(Camera glCamera,std::vector<Renderable> objects)
 		renderModel(object->getModel());
 	}
 	if (shader) shader->end();
-    glutSwapBuffers();
+	SwapBuffers(hDc);
 }
 void SceneRenderer::createVertexBuffer(std::vector<GLfloat> vertices)
 {
@@ -123,4 +128,38 @@ void SceneRenderer::renderModel(GeoModel3D* model)
 		tinyobj::mesh_t mesh = m->getMeshData();
 		glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
 	}
+}
+
+void SceneRenderer::EnableOpenGL(HWND hWnd)
+{
+	// get the device context (DC)
+	hwnd = hWnd;
+	hDC = GetDC(hwnd);
+
+	// set the pixel format for the DC
+	PIXELFORMATDESCRIPTOR pfd;
+	ZeroMemory(&pfd, sizeof(pfd));
+	pfd.nSize = sizeof(pfd);
+	pfd.nVersion = 1;
+	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL |
+		PFD_DOUBLEBUFFER;
+	pfd.iPixelType = PFD_TYPE_RGBA;
+	pfd.cColorBits = 24;
+	pfd.cDepthBits = 16;
+	pfd.iLayerType = PFD_MAIN_PLANE;
+	int format = ChoosePixelFormat(hDC, &pfd);
+	SetPixelFormat(hDC, format, &pfd);
+
+	// create the render context (RC)
+	HGLRC mhRC = wglCreateContext(hDC);
+
+	// make it the current render context
+	wglMakeCurrent(hDC, mhRC);
+}
+
+void SceneRenderer::DisableOpenGL()
+{
+	wglMakeCurrent(NULL, NULL);
+	wglDeleteContext(hRC);
+	ReleaseDC(hwnd, hDC);
 }
