@@ -59,6 +59,10 @@ namespace cwc
       virtual void OnKeyUp(int nKey, char cAscii) = 0;
 
 	  virtual void OnMenuBarSelection(int menuOption) {};
+
+	  virtual void OnEngineReset() {};
+	  virtual void OnXMLLoad() {};
+	  virtual void OnXMLSave() {};
       
       // Commands:
       

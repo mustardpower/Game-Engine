@@ -23,6 +23,11 @@ void SceneManager::update()
 
 	// ALL PHYSICS HANDLING HERE!!!
 }
+
+void SceneManager::reset()
+{
+	objects.clear();
+}
 void SceneManager::onMouseDown(int button, int x, int y)
 {
 	if (button == GLUT_LEFT_BUTTON)
@@ -82,4 +87,14 @@ std::vector<Renderable> SceneManager::getObjects()
 Camera SceneManager::getCamera()
 {
 	return glCamera;
+}
+
+bool SceneManager::toXML(std::string file_name)
+{
+	return false;
+}
+
+bool SceneManager::fromXML(std::string file_name)
+{
+	return false;
 }

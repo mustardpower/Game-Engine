@@ -3,6 +3,8 @@
 #include "tiny_obj_loader.h"
 #include "resource.h"
 
+#include <string>
+
 	// When OnInit is called, a render context (in this case GLUT-GameEngine) 
 	// is already available!
 
@@ -58,6 +60,13 @@
 		UpdateWindow(_gWindow);
 		initializeMenuBar();
 		sceneRenderer.onInit(_gWindow);
+
+		GeoModel3D* model = new GeoModel3D("cube");
+		sceneRenderer.createVAO(model);
+		Renderable* cube1 = new Renderable(model, glm::vec3(0.0, 0.0, 0.0));
+		Renderable* cube2 = new Renderable(model, glm::vec3(10.0, 0.0, 0.0));
+		sceneManager.addObject(*cube1);
+		sceneManager.addObject(*cube2);
 	}
 
 	void GameEngine::OnRender()
@@ -200,6 +209,73 @@
 	{
 	}
 
+	void GameEngine::OnXMLLoad()
+	{
+		wchar_t buffer[MAX_PATH] = L"";
+		OPENFILENAMEW ofn = { 0 };  
+
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = _gWindow;
+		ofn.lpstrFilter = L"XMLFiles\0*.xml\0TextFiles\0*.txt\0All Files\0*.*\0";
+		ofn.nFilterIndex = 1; // for some reason this is 1-based not zero-based.
+
+		ofn.Flags = OFN_FILEMUSTEXIST;  // only allow the user to open files that actually exist
+		ofn.lpstrFile = buffer;
+		ofn.nMaxFile = MAX_PATH;  // size of our 'buffer' buffer
+
+								  // Now that we've prepped the struct, actually open the dialog:
+								  //  the below function call actually opens the "File Open" dialog box, and returns
+								  //  once the user exits out of it
+		if (GetOpenFileNameW(&ofn))
+		{
+			// code reaches here if the user hit 'OK'.  The full path of the file
+			//  they selected is now stored in 'buffer'
+			std::wstring ws(buffer);
+			std::string file_name(ws.begin(), ws.end());
+			bool success = sceneManager.fromXML(file_name);
+			if (!success)
+			{
+				MessageBoxW(_gWindow, L"Could not load XML", L"Error loading XML", MB_OK);
+			}
+		}
+	}
+
+	void GameEngine::OnXMLSave()
+	{
+		wchar_t buffer[MAX_PATH] = L"";
+		OPENFILENAMEW ofn = { 0 };
+
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = _gWindow;
+		ofn.lpstrFilter = L"XMLFiles\0*.xml\0TextFiles\0*.txt\0";
+		ofn.nFilterIndex = 1; // for some reason this is 1-based not zero-based.
+
+		ofn.Flags = NULL; 
+		ofn.lpstrFile = buffer;
+		ofn.nMaxFile = MAX_PATH;  // size of our 'buffer' buffer
+
+								  // Now that we've prepped the struct, actually open the dialog:
+								  //  the below function call actually opens the "File Save" dialog box, and returns
+								  //  once the user exits out of it
+		if (GetSaveFileNameW(&ofn))
+		{
+			// code reaches here if the user hit 'OK'.  The full path of the file
+			//  they selected is now stored in 'buffer'
+			std::wstring ws(buffer);
+			std::string file_name(ws.begin(), ws.end());
+			bool success = sceneManager.toXML(file_name);
+			if (!success)
+			{
+				MessageBoxW(_gWindow, L"Could not save as XML", L"Error saving XML", MB_OK);
+			}
+		}
+	}
+
+	void GameEngine::OnEngineReset()
+	{
+		sceneManager.reset();
+	}
+
 	void GameEngine::Repaint()
 	{
 	}
@@ -228,6 +304,15 @@
 		{
 			switch (wParam)
 			{
+			case ID_FILE_NEW:
+				window->OnEngineReset();
+				break;
+			case ID_FILE_LOAD:
+				window->OnXMLLoad();
+				break;
+			case ID_FILE_SAVE:
+				window->OnXMLSave();
+				break;
 			case IDM_ABOUT:
 			{
 				DialogBox(hInstance, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, GameEngine::About);

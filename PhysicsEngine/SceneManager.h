@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "QuadTree.h"
 #include "Renderable.h"
 #include "Camera.h"
@@ -29,4 +30,8 @@ public:
 	void onKeyPress(int nKey, char cAscii);
 	Camera getCamera();
 	void update();
+	void reset();
+
+	bool toXML(std::string file_name);
+	bool fromXML(std::string file_name);
 };
