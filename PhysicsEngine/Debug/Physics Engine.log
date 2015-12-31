@@ -1,73 +1,8 @@
-﻿  GameEngine.cpp
-  tiny_obj_loader.cc
-c:\users\paul\documents\github\game-engine\physicsengine\tiny_obj_loader.cc(336): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(2254): note: see declaration of 'sscanf'
-c:\users\paul\documents\github\game-engine\physicsengine\tiny_obj_loader.cc(625): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(2254): note: see declaration of 'sscanf'
-c:\users\paul\documents\github\game-engine\physicsengine\tiny_obj_loader.cc(645): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(2254): note: see declaration of 'sscanf'
-c:\users\paul\documents\github\game-engine\physicsengine\tiny_obj_loader.cc(705): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(2254): note: see declaration of 'sscanf'
-  SceneRenderer.cpp
-  SceneManager.cpp
-  Renderable.cpp
-  ModelImporter3D.cpp
-  main.cpp
-  lodepng.cpp
-  glWindow.cpp
-  glutwindow.cpp
-  glsl.cpp
-c:\users\paul\documents\github\game-engine\physicsengine\glsl.cpp(1355): warning C4244: 'initializing': conversion from 'std::streamoff' to 'unsigned long', possible loss of data
-c:\users\paul\documents\github\game-engine\physicsengine\glsl.cpp(1357): warning C4244: 'initializing': conversion from 'std::streamoff' to 'unsigned long', possible loss of data
-  glApplication.cpp
-  GeoModel3D.cpp
-  ConstraintsHandler.cpp
-  Camera.cpp
-  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  BoundingSphere.cpp
-  AABB.cpp
-  Generating Code...
-  stb_image_aug.c
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stb_image_aug.c(177): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stb_image_aug.c(251): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stb_image_aug.c(303): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stb_image_aug.c(1557): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stb_image_aug.c(2394): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stb_image_aug.c(2709): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stb_image_aug.c(2995): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stb_image_aug.c(3209): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stb_image_aug.c(3548): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stb_image_aug.c(3644): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stbi_dds_aug_c.h(362): warning C4018: '>': signed/unsigned mismatch
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stbi_dds_aug_c.h(366): warning C4018: '>': signed/unsigned mismatch
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stbi_dds_aug_c.h(390): warning C4018: '<': signed/unsigned mismatch
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stbi_dds_aug_c.h(427): warning C4018: '<': signed/unsigned mismatch
-c:\users\paul\documents\github\game-engine\physicsengine\soil\stbi_dds_aug_c.h(498): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-  SOIL.c
-c:\users\paul\documents\github\game-engine\physicsengine\soil\soil.c(1729): warning C4018: '<=': signed/unsigned mismatch
-c:\users\paul\documents\github\game-engine\physicsengine\soil\soil.c(1739): warning C4018: '<': signed/unsigned mismatch
-c:\users\paul\documents\github\game-engine\physicsengine\soil\soil.c(1852): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-  image_helper.c
-c:\users\paul\documents\github\game-engine\physicsengine\soil\image_helper.c(325): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\paul\documents\github\game-engine\physicsengine\soil\image_helper.c(366): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\paul\documents\github\game-engine\physicsengine\soil\image_helper.c(373): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\paul\documents\github\game-engine\physicsengine\soil\image_helper.c(415): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\paul\documents\github\game-engine\physicsengine\soil\image_helper.c(422): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  image_DXT.c
-c:\users\paul\documents\github\game-engine\physicsengine\soil\image_dxt.c(92): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-  Generating Code...
+﻿  glApplication.cpp
+c:\users\paul\documents\github\game-engine\physicsengine\glapplication.cpp(84): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+c:\users\paul\documents\github\game-engine\physicsengine\glapplication.cpp(85): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+c:\users\paul\documents\github\game-engine\physicsengine\glapplication.cpp(86): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
   Physics Engine.vcxproj -> C:\Users\paul\Documents\GitHub\Game-Engine\Debug\Physics Engine.exe

@@ -18,7 +18,10 @@ std::list<glApplication*> glApplication::_gAppInstances;
 glApplication::glApplication(void)
 {
    _gAppInstances.push_back(this);
-   ShowConsole();
+
+	#ifdef _DEBUG
+		   ShowConsole();
+	#endif
 }
 
 //-----------------------------------------------------------------------------

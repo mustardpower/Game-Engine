@@ -281,7 +281,9 @@
 
 	void GameEngine::Repaint()
 	{
+		printf("Update window\n");
 		InvalidateRect(_gWindow,NULL, TRUE);
+		UpdateWindow(_gWindow);
 	}
 
 	void GameEngine::Hide()
@@ -296,6 +298,7 @@
 
 	void GameEngine::Update()
 	{
+		printf("Update window\n");
 		UpdateWindow(_gWindow);
 	}
 
@@ -374,6 +377,7 @@
 		break;
 		case WM_PAINT:
 		{
+			printf("WM_PAINT sent\n");
 			window->OnRender();
 		}
 		break;
