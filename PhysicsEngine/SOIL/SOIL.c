@@ -1167,7 +1167,7 @@ unsigned int
     tex_id = reuse_texture_ID;
     if( tex_id == 0 )
     {
-		printf("glGenTextures");
+		printf("glGenTextures\n");
 		glGenTextures( 1, &tex_id );
     }
 	check_for_GL_errors( "glGenTextures" );
@@ -1211,7 +1211,7 @@ unsigned int
 		}
 		/*  bind an OpenGL texture ID	*/
 
-		printf("glBindTexture");
+		printf("glBindTexture\n");
 		glBindTexture( opengl_texture_type, tex_id );
 		check_for_GL_errors( "glBindTexture" );
 		/*  upload the main image	*/
@@ -1241,7 +1241,7 @@ unsigned int
 			} else
 			{
 				/*	my compression failed, try the OpenGL driver's version	*/
-				printf("glTexImage2D");
+				printf("glTexImage2D\n");
 				glTexImage2D(
 					opengl_texture_target, 0,
 					internal_texture_format, width, height, 0,
@@ -1252,7 +1252,7 @@ unsigned int
 		} else
 		{
 			/*	user want OpenGL to do all the work!	*/
-			printf("glTexImage2D");
+			printf("glTexImage2D\n");
 			glTexImage2D(
 				opengl_texture_target, 0,
 				internal_texture_format, width, height, 0,
@@ -1302,7 +1302,7 @@ unsigned int
 					} else
 					{
 						/*	my compression failed, try the OpenGL driver's version	*/
-						printf("glTexImage2D");
+						printf("glTexImage2D\n");
 						glTexImage2D(
 							opengl_texture_target, MIPlevel,
 							internal_texture_format, MIPwidth, MIPheight, 0,
@@ -1312,7 +1312,7 @@ unsigned int
 				} else
 				{
 					/*	user want OpenGL to do all the work!	*/
-					printf("glTexImage2D");
+					printf("glTexImage2D\n");
 					glTexImage2D(
 						opengl_texture_target, MIPlevel,
 						internal_texture_format, MIPwidth, MIPheight, 0,

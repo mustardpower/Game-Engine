@@ -55,7 +55,6 @@
 		RegisterClass(hInstance);
 		_gWindow = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
 		Show();
 		UpdateWindow(_gWindow);
 		initializeMenuBar();

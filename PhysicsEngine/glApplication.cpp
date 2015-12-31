@@ -18,12 +18,7 @@ std::list<glApplication*> glApplication::_gAppInstances;
 glApplication::glApplication(void)
 {
    _gAppInstances.push_back(this);
-   
-   int argc = 1;
-   char* argv = "CWCApp";
-   
-   printf("glutInit");
-   glutInit(&argc, &argv);
+   ShowConsole();
 }
 
 //-----------------------------------------------------------------------------
@@ -74,3 +69,18 @@ bool glApplication::MainLoop(HINSTANCE hInstance)
 }
 
 //-----------------------------------------------------------------------------
+
+void glApplication::ShowConsole()
+{
+	AllocConsole();
+
+	// attach the new console to this application's process
+	AttachConsole(GetCurrentProcessId());
+
+	// reopen the std I/O streams to redirect I/O to the new console
+	freopen("CON", "w", stdout);
+	freopen("CON", "w", stderr);
+	freopen("CON", "r", stdin);
+
+	// use the console just like a normal one - printf(), getchar(), ...
+}
