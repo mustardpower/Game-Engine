@@ -20,14 +20,15 @@ private:
 	std::vector<Renderable> objects;
 	/*QuadTree quadtree;*/
 	Camera glCamera;
-	bool mouseLeftDown, mouseRightDown;
 public:
 	SceneManager();
 
 	std::vector<Renderable> getObjects();
 	void addObject(Renderable object);
-	void onMouseDown(int button, int x, int y);
-	void onMouseUp(int button, int x, int y);
+	void onLeftMouseDown(int x, int y);
+	void onRightMouseDown(int x, int y);
+	void onLeftMouseUp(int x, int y);
+	void onRightMouseUp(int x, int y);
 	void onKeyPress(int nKey);
 	Camera getCamera();
 	void update();

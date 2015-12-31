@@ -2,25 +2,9 @@
 
 SceneManager::SceneManager()
 {
-	mouseLeftDown = false;
-	mouseRightDown = false;
 }
 void SceneManager::update()
 {
-	const int increment = 1.0;
-	glm::vec3 rotation_axis = glm::vec3(0.0, 1.0, 0.0);
-
-	if (mouseLeftDown)
-	{
-		glCamera.rotate(increment, rotation_axis);
-		glutPostRedisplay();
-	}
-	if (mouseRightDown)
-	{
-		glCamera.rotate(-increment, rotation_axis);
-		glutPostRedisplay();
-	}
-
 	// ALL PHYSICS HANDLING HERE!!!
 }
 
@@ -28,28 +12,26 @@ void SceneManager::reset()
 {
 	objects.clear();
 }
-void SceneManager::onMouseDown(int button, int x, int y)
+void SceneManager::onLeftMouseDown(int x, int y)
 {
-	if (button == GLUT_LEFT_BUTTON)
-	{
-		mouseLeftDown = true;
-	}
-	if (button == GLUT_RIGHT_BUTTON)
-	{
-		mouseRightDown = true;
-	}
+	const int increment = 1.0;
+	glm::vec3 rotation_axis = glm::vec3(0.0, 1.0, 0.0);
+	glCamera.rotate(increment, rotation_axis);
 }
 
-void SceneManager::onMouseUp(int button, int x, int y)
+void SceneManager::onRightMouseDown(int x, int y)
 {
-	if (button == GLUT_LEFT_BUTTON)
-	{
-		mouseLeftDown = false;
-	}
-	if (button == GLUT_RIGHT_BUTTON)
-	{
-		mouseRightDown = false;
-	}
+	const int increment = 1.0;
+	glm::vec3 rotation_axis = glm::vec3(0.0, 1.0, 0.0);
+	glCamera.rotate(-increment, rotation_axis);
+}
+
+void SceneManager::onLeftMouseUp(int x, int y)
+{
+}
+
+void SceneManager::onRightMouseUp(int x, int y)
+{
 }
 void SceneManager::onKeyPress(int nKey)
 {

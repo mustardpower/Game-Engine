@@ -70,16 +70,16 @@
 	}
 
 	void GameEngine::OnRender()
-{
-	PAINTSTRUCT ps;
-	HDC hdc = BeginPaint(_gWindow, &ps);
-	std::vector<GeoModel3D*> object_models;
-	std::vector<Renderable> objects = sceneManager.getObjects();
-	Camera camera = sceneManager.getCamera();
-	sceneManager.update();
-	sceneRenderer.renderScene(hdc,camera,objects);
-	EndPaint(_gWindow, &ps);
-}
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(_gWindow, &ps);
+		std::vector<GeoModel3D*> object_models;
+		std::vector<Renderable> objects = sceneManager.getObjects();
+		Camera camera = sceneManager.getCamera();
+		sceneManager.update();
+		sceneRenderer.renderScene(hdc,camera,objects);
+		EndPaint(_gWindow, &ps);
+	}
 
 	void GameEngine::OnIdle() { }
 
@@ -89,15 +89,21 @@
 		DestroyWindow(_gWindow);
 		PostQuitMessage(0);
 	}
-	void GameEngine::OnMouseDown(int button, int x, int y) 
+	void GameEngine::OnLeftMouseDown(int x, int y) 
 	{
-		sceneManager.onMouseDown(button, x, y);
-		glutPostRedisplay();
-	}    
-	void GameEngine::OnMouseUp(int button, int x, int y) 
+		sceneManager.onLeftMouseDown(x, y);
+	}  
+	void GameEngine::OnRightMouseDown(int x, int y)
 	{
-		sceneManager.onMouseUp(button, x, y);
-		glutPostRedisplay();
+		sceneManager.onRightMouseDown(x, y);
+	}
+	void GameEngine::OnLeftMouseUp(int x, int y) 
+	{
+		sceneManager.onLeftMouseUp(x, y);
+	}
+	void GameEngine::OnRightMouseUp(int x, int y)
+	{
+		sceneManager.onRightMouseUp(x, y);
 	}
 	void GameEngine::OnMouseWheel(int nWheelNumber, int nDirection, int x, int y){}
 	void GameEngine::OnKeyDown(int nKey, char cAscii)
@@ -289,6 +295,11 @@
 		ShowWindow(_gWindow, SW_SHOW);
 	}
 
+	void GameEngine::Update()
+	{
+		UpdateWindow(_gWindow);
+	}
+
 	void GameEngine::Close()
 	{
 		DestroyWindow(_gWindow);
@@ -324,10 +335,44 @@
 				return DefWindowProcW(hWnd, message, wParam, lParam);
 			}
 		}
+		case WM_LBUTTONDOWN:
+		{
+			int xPos = GET_X_LPARAM(lParam);
+			int yPos = GET_Y_LPARAM(lParam);
+			window->OnLeftMouseDown(xPos, yPos);
+			window->Repaint();
+		}
+		break;
+		case WM_RBUTTONDOWN:
+		{
+			int xPos = GET_X_LPARAM(lParam);
+			int yPos = GET_Y_LPARAM(lParam);
+			window->OnRightMouseDown(xPos, yPos);
+			window->Repaint();
+		}
+		break;
+		case WM_LBUTTONUP:
+		{
+			int xPos = GET_X_LPARAM(lParam);
+			int yPos = GET_Y_LPARAM(lParam);
+			window->OnLeftMouseUp(xPos, yPos);
+			window->Repaint();
+		}
+		break;
+		case WM_RBUTTONUP:
+		{
+			int xPos = GET_X_LPARAM(lParam);
+			int yPos = GET_Y_LPARAM(lParam);
+			window->OnRightMouseUp(xPos, yPos);
+			window->Repaint();
+		}
+		break;
 		case WM_KEYDOWN:
+		{
 			window->OnKeyDown(wParam, lParam);
 			window->Repaint();
-			break;
+		}
+		break;
 		case WM_PAINT:
 		{
 			window->OnRender();

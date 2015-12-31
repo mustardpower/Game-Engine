@@ -37,11 +37,17 @@ namespace cwc
       //! Called when Window is closed.
       virtual void OnClose(void) = 0;
       
-      //! Called when Mouse button is pressed
-      virtual void OnMouseDown(int button, int x, int y) = 0;
+      //! Called when Left Mouse button is pressed
+      virtual void OnLeftMouseDown(int x, int y) = 0;
+
+	  //! Called when Right Mouse button is pressed
+	  virtual void OnRightMouseDown(int x, int y) = 0;
       
-      //! Called when Mouse button is released
-      virtual void OnMouseUp(int button, int x, int y) = 0;
+      //! Called when Left Mouse button is released
+      virtual void OnLeftMouseUp(int x, int y) = 0;
+
+	  //! Called when Left Mouse button is released
+	  virtual void OnRightMouseUp(int x, int y) = 0;
       
       //! Called when Mouse is moved (without pressing any button)
       virtual void OnMouseMove(int x, int y) = 0;
@@ -68,6 +74,8 @@ namespace cwc
       
       //! Force Repaint
       virtual void Repaint() = 0;
+
+	  virtual void Update() = 0;
       
       //! Switch window to fullscreen (true) or windowed mode (false).
       virtual void SetFullscreen(bool bFullscreen) = 0;

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <Windows.h>
+#include <windowsx.h>
 
 #include "glWindow.h"
 #include "glsl.h"
@@ -25,8 +26,10 @@ public:
 	virtual void OnInit();
 	virtual void OnResize(int w, int h);
 	virtual void OnClose(void);
-	virtual void OnMouseDown(int button, int x, int y);    
-	virtual void OnMouseUp(int button, int x, int y);
+	virtual void OnLeftMouseDown(int x, int y); 
+	virtual void OnRightMouseDown(int x, int y);
+	virtual void OnLeftMouseUp(int x, int y);
+	virtual void OnRightMouseUp(int x, int y);
 	virtual void OnMouseWheel(int nWheelNumber, int nDirection, int x, int y);
 	virtual void OnMouseMove(int x, int y);
 	virtual void OnLeftMouseDrag(int x, int y);
@@ -39,7 +42,8 @@ public:
 	virtual void OnXMLSave();
 
 	// Commands:
-	virtual void Repaint(); //! Force Repaint
+	virtual void Repaint(); //! Queue repaint of window
+	virtual void Update(); //! Force immediate repaint
 	virtual void  SetFullscreen(bool bFullscreen); //! Sets window to fullscreen or windowed mode.
 	virtual void Hide(); //! Hide the window
 	virtual void Show(); //! Show the window
