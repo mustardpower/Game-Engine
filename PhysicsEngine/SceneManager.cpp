@@ -51,28 +51,25 @@ void SceneManager::onMouseUp(int button, int x, int y)
 		mouseRightDown = false;
 	}
 }
-void SceneManager::onKeyPress(int nKey,char cAscii)
+void SceneManager::onKeyPress(int nKey)
 {
 	const int increment = 1;
 
-	if (nKey == GLUT_KEY_RIGHT)
-	{ 
-		glCamera.translateX(increment);
-	}
-	else if (nKey == GLUT_KEY_LEFT)
+	switch (nKey)
 	{
+	case VK_LEFT:
 		glCamera.translateX(-increment);
-	}
-	else if (nKey == GLUT_KEY_UP)
-	{
+		break;
+	case VK_RIGHT:
+		glCamera.translateX(increment);
+		break;
+	case VK_UP:
 		glCamera.translateY(increment);
-	}
-	else if (nKey == GLUT_KEY_DOWN)
-	{
+		break;
+	case VK_DOWN:
 		glCamera.translateY(-increment);
-	}
-	else
-	{
+		break;
+	default:
 		glCamera.translateZ(-increment);
 	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <Windows.h>
 #include "QuadTree.h"
 #include "Renderable.h"
 #include "Camera.h"
@@ -27,7 +28,7 @@ public:
 	void addObject(Renderable object);
 	void onMouseDown(int button, int x, int y);
 	void onMouseUp(int button, int x, int y);
-	void onKeyPress(int nKey, char cAscii);
+	void onKeyPress(int nKey);
 	Camera getCamera();
 	void update();
 	void reset();

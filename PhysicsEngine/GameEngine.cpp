@@ -108,10 +108,8 @@
 		}
 		else
 		{
-			sceneManager.onKeyPress(nKey,cAscii);
+			sceneManager.onKeyPress(nKey);
 		}
-
-		glutPostRedisplay();
 	};
 	void GameEngine::OnKeyUp(int nKey, char cAscii)
 	{
@@ -278,6 +276,7 @@
 
 	void GameEngine::Repaint()
 	{
+		InvalidateRect(_gWindow,NULL, TRUE);
 	}
 
 	void GameEngine::Hide()
@@ -325,6 +324,10 @@
 				return DefWindowProcW(hWnd, message, wParam, lParam);
 			}
 		}
+		case WM_KEYDOWN:
+			window->OnKeyDown(wParam, lParam);
+			window->Repaint();
+			break;
 		case WM_PAINT:
 		{
 			window->OnRender();
