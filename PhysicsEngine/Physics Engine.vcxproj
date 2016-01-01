@@ -96,7 +96,9 @@
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelImporter3D.cpp" />
+    <ClCompile Include="PhysicsHandler.cpp" />
     <ClCompile Include="Renderable.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneRenderer.cpp" />
     <ClCompile Include="SOIL\image_DXT.c" />
@@ -124,8 +126,10 @@
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="ModelImporter3D.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="PhysicsHandler.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="RigidBody.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneRenderer.h" />
     <ClInclude Include="SOIL\image_DXT.h" />

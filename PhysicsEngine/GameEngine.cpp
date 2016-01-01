@@ -135,30 +135,7 @@
 
 	void GameEngine::OnPopupMenuSelection(int menuOption)
 	{
-		switch (menuOption)
-		{
-		case 1:
-			glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-			break;
-		case 2:
-			glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
-			break;
-		case 3:
-			glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
-			break;
-		case 4:
-			glClearColor(1.0f, 0.5f, 0.0f, 0.0f);
-			break;
-		default:
-			glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-			break;
-		}
-
-		glutPostRedisplay();
-	}
-
-	void GameEngine::OnMenuBarSelection(int menuOption)
-	{
+		// NEED TO REMOVE GLUT FUNCTION
 		switch (menuOption)
 		{
 		case 1:

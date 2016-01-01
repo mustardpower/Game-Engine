@@ -36,7 +36,6 @@ public:
 	virtual void OnKeyDown(int nKey, char cAscii);
 	virtual void OnKeyUp(int nKey, char cAscii);
 	virtual void OnPopupMenuSelection(int menuOption);
-	virtual void OnMenuBarSelection(int menuOption);
 	virtual void OnEngineReset();
 	virtual void OnXMLLoad();
 	virtual void OnXMLSave();

@@ -5,6 +5,7 @@
 #include "QuadTree.h"
 #include "Renderable.h"
 #include "Camera.h"
+#include "PhysicsHandler.h"
 
 //-----------------------------------------------------------------------------
 // Name:		SceneManager
@@ -20,6 +21,7 @@ private:
 	std::vector<Renderable> objects;
 	/*QuadTree quadtree;*/
 	Camera glCamera;
+	PhysicsHandler physicsHandler;
 public:
 	SceneManager();
 

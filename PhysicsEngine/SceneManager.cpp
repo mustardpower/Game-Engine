@@ -5,7 +5,7 @@ SceneManager::SceneManager()
 }
 void SceneManager::update()
 {
-	// ALL PHYSICS HANDLING HERE!!!
+	physicsHandler.updateFrame();
 }
 
 void SceneManager::reset()
