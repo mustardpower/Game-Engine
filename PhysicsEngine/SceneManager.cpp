@@ -14,7 +14,7 @@ void SceneManager::reset()
 }
 void SceneManager::onLeftMouseDown(int x, int y)
 {
-	const int increment = 1.0;
+	const float increment = 1.0f;
 	glm::vec3 rotation_axis = glm::vec3(0.0, 1.0, 0.0);
 	glCamera.rotate(increment, rotation_axis);
 }
@@ -32,6 +32,19 @@ void SceneManager::onLeftMouseUp(int x, int y)
 
 void SceneManager::onRightMouseUp(int x, int y)
 {
+}
+void SceneManager::onMouseWheel(int nWheelNumber, int nDirection, int x, int y)
+{
+	const int increment = 5;
+	glm::vec3 translation_vec(0.0, 0.0, increment);
+	if (nDirection > 0)
+	{
+		glCamera.translate(translation_vec);
+	}
+	if (nDirection < 0)
+	{
+		glCamera.translate(-translation_vec);
+	}
 }
 void SceneManager::onKeyPress(int nKey)
 {

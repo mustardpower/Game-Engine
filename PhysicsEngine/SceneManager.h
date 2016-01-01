@@ -25,6 +25,7 @@ public:
 
 	std::vector<Renderable> getObjects();
 	void addObject(Renderable object);
+	void onMouseWheel(int nWheelNumber, int nDirection, int x, int y);
 	void onLeftMouseDown(int x, int y);
 	void onRightMouseDown(int x, int y);
 	void onLeftMouseUp(int x, int y);

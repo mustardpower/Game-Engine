@@ -17,6 +17,10 @@ void Camera::rotate(float increment, glm::vec3 rotation_axis)
 	model_matrix = glm::rotate(model_matrix, increment , rotation_axis);
 }
 
+void Camera::translate(glm::vec3 translation)
+{
+	model_matrix = glm::translate(model_matrix, translation);
+}
 void Camera::translateX(float increment)
 {
 	model_matrix = glm::translate(model_matrix,glm::vec3(increment,0,0));

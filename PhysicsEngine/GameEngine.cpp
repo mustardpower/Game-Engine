@@ -106,7 +106,10 @@
 	{
 		sceneManager.onRightMouseUp(x, y);
 	}
-	void GameEngine::OnMouseWheel(int nWheelNumber, int nDirection, int x, int y){}
+	void GameEngine::OnMouseWheel(int nWheelNumber, int nDirection, int x, int y)
+	{
+		sceneManager.onMouseWheel(nWheelNumber, nDirection, x, y);
+	}
 	void GameEngine::OnKeyDown(int nKey, char cAscii)
 	{       
 		if (cAscii == 27) // 0x1b = ESC
@@ -336,20 +339,44 @@
 				return DefWindowProcW(hWnd, message, wParam, lParam);
 			}
 		}
+		case WM_MOUSEWHEEL:
+		{
+			int fwKeys = GET_KEYSTATE_WPARAM(wParam);
+			int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+			int xPos = GET_X_LPARAM(lParam);
+			int yPos = GET_Y_LPARAM(lParam);
+			window->OnMouseWheel(fwKeys, zDelta, xPos, yPos);
+			window->Repaint();
+		}
+		break;
 		case WM_LBUTTONDOWN:
 		{
 			int xPos = GET_X_LPARAM(lParam);
 			int yPos = GET_Y_LPARAM(lParam);
+			HWND hwnd = window->getWindowHandle();
 			window->OnLeftMouseDown(xPos, yPos);
-			window->Repaint();
+			window->OnRender();
+			// if still held down then trigger another WM_LBUTTONDOWN event 
+			//to get effect of repeated action on holding mouse down
+			if (GetAsyncKeyState(VK_LBUTTON))
+			{
+				PostMessage(hwnd, WM_LBUTTONDOWN, wParam, lParam);	
+			}
 		}
 		break;
 		case WM_RBUTTONDOWN:
 		{
 			int xPos = GET_X_LPARAM(lParam);
 			int yPos = GET_Y_LPARAM(lParam);
+			HWND hwnd = window->getWindowHandle();
 			window->OnRightMouseDown(xPos, yPos);
-			window->Repaint();
+			window->OnRender();
+			// if still held down then trigger another WM_RBUTTONDOWN event 
+			//to get effect of repeated action on holding mouse down
+			if (GetAsyncKeyState(VK_RBUTTON))
+			{
+				PostMessage(hwnd, WM_RBUTTONDOWN, wParam, lParam);
+			}
 		}
 		break;
 		case WM_LBUTTONUP:
