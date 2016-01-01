@@ -118,6 +118,7 @@ void SceneRenderer::renderModel(GeoModel3D* model)
 	std::vector<GLModel3DData> modelData = model->retrieveMeshes();
 	for (std::vector<GLModel3DData>::iterator m = modelData.begin(); m != modelData.end(); m++)
 	{
+		// if errors here ensure to create VAOs
 		GLuint vaoID = object_vao_map.at(m->getMeshID());
 		glBindVertexArray(vaoID); // Bind our Vertex Array Object
 

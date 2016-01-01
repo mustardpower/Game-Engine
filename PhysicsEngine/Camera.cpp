@@ -5,7 +5,7 @@ Camera::Camera()
 {
 	fov = 60.0;
 	nearZ = 1.0f;
-	farZ  = 1000.0f;
+	farZ  = 4000.0f;
 	model_matrix = glm::translate(model_matrix,glm::vec3(0,0,-30));
 }
 void Camera::zoom(float increment)

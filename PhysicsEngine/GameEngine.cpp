@@ -60,12 +60,14 @@
 		initializeMenuBar();
 		sceneRenderer.onInit(_gWindow);
 
-		GeoModel3D* model = new GeoModel3D("cube");
-		sceneRenderer.createVAO(model);
-		Renderable* cube1 = new Renderable(model, glm::vec3(0.0, 0.0, 0.0));
-		Renderable* cube2 = new Renderable(model, glm::vec3(10.0, 0.0, 0.0));
+		GeoModel3D* city = new GeoModel3D("Sci-fi Tropical city");
+		GeoModel3D* cube = new GeoModel3D("cube");
+		sceneRenderer.createVAO(city);
+		sceneRenderer.createVAO(cube);
+		Renderable* the_city = new Renderable(city, glm::vec3(0.0, -200.0, -450.0));
+		Renderable* cube1 = new Renderable(cube, glm::vec3(0.0, -200.0, -15.0));
+		sceneManager.addObject(*the_city);
 		sceneManager.addObject(*cube1);
-		sceneManager.addObject(*cube2);
 	}
 
 	void GameEngine::OnRender()
@@ -281,9 +283,7 @@
 
 	void GameEngine::Repaint()
 	{
-		printf("Update window\n");
-		InvalidateRect(_gWindow,NULL, TRUE);
-		UpdateWindow(_gWindow);
+		RedrawWindow(_gWindow, NULL, NULL, RDW_INVALIDATE);
 	}
 
 	void GameEngine::Hide()
@@ -298,7 +298,6 @@
 
 	void GameEngine::Update()
 	{
-		printf("Update window\n");
 		UpdateWindow(_gWindow);
 	}
 
@@ -377,7 +376,6 @@
 		break;
 		case WM_PAINT:
 		{
-			printf("WM_PAINT sent\n");
 			window->OnRender();
 		}
 		break;
