@@ -1,4 +1,5 @@
 #include "Renderable.h"
+#include <utility>
 
 GLuint Renderable::NUMBER_OF_OBJECTS = 0;
 
@@ -19,7 +20,22 @@ glm::mat4 Renderable::getModelMatrix()
 	return object.getModelMatrix();
 }
 
+void Renderable::storeFrame()
+{
+	frame_store = object.getModelMatrix();
+}
+
 void Renderable::updateFrame(float dt)
 {
 	object.updatePosition(dt);
+}
+
+void Renderable::previousFrame()
+{
+	object.setModelMatrix(frame_store);
+}
+
+void Renderable::serialize(tinyxml2::XMLDocument &xmlDocument)
+{
+	object.serialize(xmlDocument);
 }

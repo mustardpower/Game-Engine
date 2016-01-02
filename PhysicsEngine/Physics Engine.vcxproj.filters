@@ -73,6 +73,12 @@
     <Filter Include="Source Files\Data Handling\SOIL">
       <UniqueIdentifier>{8ba128f0-5821-4621-879a-0ed86012039c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Data Handling\TinyXML2">
+      <UniqueIdentifier>{360d0cbc-246d-4e94-81de-410190413533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data Handling\TinyXML2">
+      <UniqueIdentifier>{246284e0-20a3-4f02-989f-1ddead40ade2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -140,6 +146,12 @@
     </ClCompile>
     <ClCompile Include="RigidBody.cpp">
       <Filter>Source Files\Physics Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml2\tinyxml2.cpp">
+      <Filter>Source Files\Data Handling\TinyXML2</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml2\xmltest.cpp">
+      <Filter>Source Files\Data Handling\TinyXML2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="RigidBody.h">
       <Filter>Header Files\Physics Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml2\tinyxml2.h">
+      <Filter>Header Files\Data Handling\TinyXML2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

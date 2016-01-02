@@ -11,7 +11,13 @@ void SceneManager::update()
 	
 	for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 	{
-		object->updateFrame(dt);
+		object->storeFrame();				// store the position, velocity, inertia etc
+		object->updateFrame(dt);			// update the position based on the velocity etc
+		if (collisionsDetected(*object))		
+		{
+			object->previousFrame();		// if the new position is in collision with another object
+											// revert to previous position and use more accurate handling
+		}
 	}
 
 	last_time_step = current_time_step;
@@ -91,12 +97,43 @@ Camera SceneManager::getCamera()
 	return glCamera;
 }
 
-bool SceneManager::toXML(std::string file_name)
+bool SceneManager::collisionsDetected(Renderable obj)
 {
+	printf("collisionsDetected has not been implemented yet\n");
 	return false;
 }
 
-bool SceneManager::fromXML(std::string file_name)
+int SceneManager::toXML(std::string file_name)
 {
-	return false;
+	tinyxml2::XMLDocument aDoc;
+	tinyxml2::XMLDeclaration* decl = aDoc.NewDeclaration();
+	aDoc.LinkEndChild(decl);
+
+	// this may need modifying to deal with nested elements
+	for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+	{
+		object->serialize(aDoc);
+	}
+
+	tinyxml2::XMLError error = aDoc.SaveFile(file_name.c_str());
+	if (error)
+	{
+		aDoc.PrintError();
+		return error;
+	}
+
+	return error;
+}
+
+int SceneManager::fromXML(std::string file_name)
+{
+	tinyxml2::XMLDocument aDoc;
+	tinyxml2::XMLError error = aDoc.LoadFile(file_name.c_str());
+	if (error)
+	{
+		aDoc.PrintError();
+		return error;
+	}
+	
+	return error;
 }

@@ -57,12 +57,18 @@
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 		Show();
 		UpdateWindow(_gWindow);
+
 		initializeMenuBar();
 		sceneRenderer.onInit(_gWindow);
 
+		SetTimer(_gWindow,             // handle to main window 
+			IDT_TIMER1,            // timer identifier 
+			16,                 // approx 60 fps
+			(TIMERPROC)NULL);     // no timer callback 
+
 		GeoModel3D* cube = new GeoModel3D("cube");
 		sceneRenderer.createVAO(cube);
-		Renderable* cube1 = new Renderable(cube, glm::vec3(0.0, 0.0, -15.0));
+		Renderable* cube1 = new Renderable(cube, glm::vec3(0.0, 0.0, 0.0));
 		sceneManager.addObject(*cube1);
 	}
 
@@ -73,7 +79,6 @@
 		std::vector<GeoModel3D*> object_models;
 		std::vector<Renderable> objects = sceneManager.getObjects();
 		Camera camera = sceneManager.getCamera();
-		sceneManager.update();
 		sceneRenderer.renderScene(hdc,camera,objects);
 		EndPaint(_gWindow, &ps);
 	}
@@ -213,8 +218,8 @@
 			//  they selected is now stored in 'buffer'
 			std::wstring ws(buffer);
 			std::string file_name(ws.begin(), ws.end());
-			bool success = sceneManager.fromXML(file_name);
-			if (!success)
+			int error_code = sceneManager.fromXML(file_name);
+			if (error_code)
 			{
 				MessageBoxW(_gWindow, L"Could not load XML", L"Error loading XML", MB_OK);
 			}
@@ -244,8 +249,8 @@
 			//  they selected is now stored in 'buffer'
 			std::wstring ws(buffer);
 			std::string file_name(ws.begin(), ws.end());
-			bool success = sceneManager.toXML(file_name);
-			if (!success)
+			int error_code = sceneManager.toXML(file_name);
+			if (error_code)
 			{
 				MessageBoxW(_gWindow, L"Could not save as XML", L"Error saving XML", MB_OK);
 			}
@@ -274,7 +279,8 @@
 
 	void GameEngine::Update()
 	{
-		UpdateWindow(_gWindow);
+		sceneManager.update();
+		Repaint();
 	}
 
 	void GameEngine::Close()
@@ -312,6 +318,18 @@
 				return DefWindowProcW(hWnd, message, wParam, lParam);
 			}
 		}
+		case WM_TIMER:
+		{
+			switch (wParam)
+			{
+			case IDT_TIMER1:
+				window->Update();
+				break;
+			default:
+				return DefWindowProcW(hWnd, message, wParam, lParam);
+			}
+		}
+		break;
 		case WM_MOUSEWHEEL:
 		{
 			int fwKeys = GET_KEYSTATE_WPARAM(wParam);

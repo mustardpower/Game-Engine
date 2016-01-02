@@ -104,6 +104,8 @@
     <ClCompile Include="SOIL\image_helper.c" />
     <ClCompile Include="SOIL\SOIL.c" />
     <ClCompile Include="SOIL\stb_image_aug.c" />
+    <ClCompile Include="tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="tinyxml2\xmltest.cpp" />
     <ClCompile Include="tiny_obj_loader.cc" />
     <ClCompile Include="GameEngine.cpp" />
   </ItemGroup>
@@ -138,6 +140,7 @@
     <ClInclude Include="SOIL\stbi_DDS_aug_c.h" />
     <ClInclude Include="SOIL\stb_image_aug.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="tinyxml2\tinyxml2.h" />
     <ClInclude Include="tiny_obj_loader.h" />
     <ClInclude Include="GameEngine.h" />
   </ItemGroup>

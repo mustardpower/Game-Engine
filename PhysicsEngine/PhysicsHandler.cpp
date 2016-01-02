@@ -6,3 +6,8 @@ void PhysicsHandler::calculatePosition(glm::mat4 &modelmat, glm::vec3 velocity,f
 {
 	modelmat = glm::translate(modelmat, velocity * dt);
 }
+
+glm::vec3 totalMomentum(float mass1, glm::vec3 velocity1, float mass2, glm::vec3 velocity2)
+{
+	return mass1 * velocity1 + mass2 * velocity2;
+}

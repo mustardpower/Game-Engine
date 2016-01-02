@@ -3,7 +3,7 @@
 #include <string>
 #include <time.h>
 #include <Windows.h>
-#include "QuadTree.h"
+#include "tinyxml2\tinyxml2.h"
 #include "Renderable.h"
 #include "Camera.h"
 #include "PhysicsHandler.h"
@@ -20,7 +20,7 @@ class SceneManager
 {
 private:
 	std::vector<Renderable> objects;
-	/*QuadTree quadtree;*/
+	// QuadTree quadtree;
 	Camera glCamera;
 	clock_t last_time_step;
 public:
@@ -37,7 +37,8 @@ public:
 	Camera getCamera();
 	void update();
 	void reset();
+	bool collisionsDetected(Renderable obj);
 
-	bool toXML(std::string file_name);
-	bool fromXML(std::string file_name);
+	int toXML(std::string file_name);
+	int fromXML(std::string file_name);
 };
