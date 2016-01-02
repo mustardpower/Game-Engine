@@ -87,7 +87,6 @@
     <ClCompile Include="AABB.cpp" />
     <ClCompile Include="BoundingSphere.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="ConstraintsHandler.cpp" />
     <ClCompile Include="GeoModel3D.cpp" />
     <ClCompile Include="glApplication.cpp" />
     <ClCompile Include="glsl.cpp" />

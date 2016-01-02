@@ -3,6 +3,7 @@
 #include "glsl.h"
 #include "glm\glm.hpp"
 #include "glm\gtc\matrix_transform.hpp"
+#include "PhysicsHandler.h"
 
 //-----------------------------------------------------------------------------
 // Name:		Renderable
@@ -20,9 +21,11 @@ private:
 	glm::vec3 inertia; // in kgm^2
 	glm::vec3 velocity;	// in m / s
 	glm::vec3 angular_velocity; // radians / s
+	static PhysicsHandler physicsHandler;
 public:
 	RigidBody() {};
 	RigidBody(glm::vec3 position);
 	glm::mat4 getModelMatrix();
 	void translate(glm::vec3 translation);
+	void updatePosition(float dt);
 };

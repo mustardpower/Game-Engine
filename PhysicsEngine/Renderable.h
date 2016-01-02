@@ -18,7 +18,8 @@ private:
 	GeoModel3D* model;
 	RigidBody object;
 public:
-	Renderable(GeoModel3D* model, glm::vec3 position);
+	Renderable(GeoModel3D* model, glm::vec3 position = glm::vec3(0.0, 0.0, 0.0));
 	GeoModel3D* getModel();
 	glm::mat4 getModelMatrix();
+	void Renderable::updateFrame(float dt);
 };

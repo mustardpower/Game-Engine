@@ -6,7 +6,7 @@ Renderable::Renderable(GeoModel3D* the_model, glm::vec3 position)
 {
 	object_id = ++NUMBER_OF_OBJECTS;
 	model = the_model;
-	object.translate(position);
+	object = RigidBody(position);
 }
 
 GeoModel3D* Renderable::getModel()
@@ -17,4 +17,9 @@ GeoModel3D* Renderable::getModel()
 glm::mat4 Renderable::getModelMatrix()
 {
 	return object.getModelMatrix();
+}
+
+void Renderable::updateFrame(float dt)
+{
+	object.updatePosition(dt);
 }

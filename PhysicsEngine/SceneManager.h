@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <time.h>
 #include <Windows.h>
 #include "QuadTree.h"
 #include "Renderable.h"
@@ -12,7 +13,7 @@
 // Variables:	objects - vector of all objects within the world
 //				quadtree - a quadtree data structure to minimize unneccessary updating of the screen
 //				glCamera - a wrapper class for the camera data (positioning, focus point etc)
-//				mouseLeftDown, mouseRightDown - stores mouse state
+//				last_time_step - stores the time at each frame - the next frame uses this to calculate the time difference between frames
 // Desc:		This class manages all the scene object data 
 //-----------------------------------------------------------------------------
 class SceneManager
@@ -21,7 +22,7 @@ private:
 	std::vector<Renderable> objects;
 	/*QuadTree quadtree;*/
 	Camera glCamera;
-	PhysicsHandler physicsHandler;
+	clock_t last_time_step;
 public:
 	SceneManager();
 

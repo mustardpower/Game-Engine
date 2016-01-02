@@ -78,9 +78,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConstraintsHandler.cpp">
-      <Filter>Source Files\Physics Handling</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Source Files\SceneManagement</Filter>
     </ClCompile>
@@ -138,11 +135,11 @@
     <ClCompile Include="SceneRenderer.cpp">
       <Filter>Source Files\SceneManagement</Filter>
     </ClCompile>
-    <ClCompile Include="RigidBody.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicsHandler.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Physics Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Source Files\Physics Handling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,11 +233,11 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RigidBody.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicsHandler.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Physics Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Header Files\Physics Handling</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

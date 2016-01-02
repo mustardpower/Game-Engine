@@ -60,13 +60,9 @@
 		initializeMenuBar();
 		sceneRenderer.onInit(_gWindow);
 
-		GeoModel3D* city = new GeoModel3D("Sci-fi Tropical city");
 		GeoModel3D* cube = new GeoModel3D("cube");
-		sceneRenderer.createVAO(city);
 		sceneRenderer.createVAO(cube);
-		Renderable* the_city = new Renderable(city, glm::vec3(0.0, -200.0, -450.0));
-		Renderable* cube1 = new Renderable(cube, glm::vec3(0.0, -200.0, -15.0));
-		sceneManager.addObject(*the_city);
+		Renderable* cube1 = new Renderable(cube, glm::vec3(0.0, 0.0, -15.0));
 		sceneManager.addObject(*cube1);
 	}
 

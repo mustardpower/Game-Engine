@@ -2,10 +2,19 @@
 
 SceneManager::SceneManager()
 {
+	last_time_step = clock();
 }
 void SceneManager::update()
 {
-	physicsHandler.updateFrame();
+	clock_t current_time_step = clock();
+	float dt = float(clock() - last_time_step) / CLOCKS_PER_SEC;
+	
+	for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+	{
+		object->updateFrame(dt);
+	}
+
+	last_time_step = current_time_step;
 }
 
 void SceneManager::reset()
@@ -76,6 +85,7 @@ std::vector<Renderable> SceneManager::getObjects()
 {
 	return objects;
 }
+
 Camera SceneManager::getCamera()
 {
 	return glCamera;
