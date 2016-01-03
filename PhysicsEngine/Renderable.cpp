@@ -35,7 +35,10 @@ void Renderable::previousFrame()
 	object.setModelMatrix(frame_store);
 }
 
-void Renderable::serialize(tinyxml2::XMLDocument &xmlDocument)
+void Renderable::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent)
 {
-	object.serialize(xmlDocument);
+	tinyxml2::XMLElement* objElement = xmlDocument.NewElement("Renderable");
+	model->serialize(xmlDocument, objElement);
+	object.serialize(xmlDocument, objElement);
+	parent->LinkEndChild(objElement);
 }

@@ -70,6 +70,9 @@
 		sceneRenderer.createVAO(cube);
 		Renderable* cube1 = new Renderable(cube, glm::vec3(0.0, 0.0, 0.0));
 		sceneManager.addObject(*cube1);
+
+		Renderable* cube2 = new Renderable(cube, glm::vec3(10.0, 0.0, 0.0));
+		sceneManager.addObject(*cube2);
 	}
 
 	void GameEngine::OnRender()

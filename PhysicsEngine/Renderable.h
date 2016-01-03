@@ -26,7 +26,7 @@ public:
 	GeoModel3D* getModel();
 	glm::mat4 getModelMatrix();
 
-	void serialize(tinyxml2::XMLDocument &xmlDocument);
+	void serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent);
 
 	void storeFrame();
 	void previousFrame();

@@ -34,10 +34,9 @@ glm::vec3 RigidBody::momentum()
 	return mass * velocity;
 }
 
-void RigidBody::serialize(tinyxml2::XMLDocument &xmlDocument)
-{
-	tinyxml2::XMLElement* objElement = xmlDocument.NewElement("Object");
-	objElement->SetAttribute("classtype", "RigidBody");
+void RigidBody::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent)
+{	
+	tinyxml2::XMLElement* objElement = xmlDocument.NewElement("RigidBody");
 
 	// --------------------- Position ----------------------------//
 	tinyxml2::XMLElement* positionElement = xmlDocument.NewElement("Position");
@@ -52,5 +51,5 @@ void RigidBody::serialize(tinyxml2::XMLDocument &xmlDocument)
 	velocityElement->LinkEndChild(velocityText);
 	objElement->LinkEndChild(velocityElement);
 
-	xmlDocument.LinkEndChild(objElement);
+	parent->LinkEndChild(objElement);
 }

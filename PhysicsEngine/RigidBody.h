@@ -31,5 +31,6 @@ public:
 	glm::vec3 momentum();
 	void translate(glm::vec3 translation);
 	void updatePosition(float dt);
-	void serialize(tinyxml2::XMLDocument &xmlDocument);
+
+	void serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent);
 };

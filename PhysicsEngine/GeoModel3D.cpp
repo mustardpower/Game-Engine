@@ -6,11 +6,12 @@ GLuint GeoModel3D::NUMBER_OF_MODELS = 0;
 GLuint GLModel3DData::NUMBER_OF_MESHES = 0;
 GeoModel3D::GeoModel3D(std::string file_name)
 {
+	geo_file_name = file_name;
 	model_id = ++NUMBER_OF_MODELS;
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
 
-	std::string err = tinyobj::LoadObj(shapes, materials, (file_name+".obj").c_str());
+	std::string err = tinyobj::LoadObj(shapes, materials, (geo_file_name +".obj").c_str());
 	std::cout<<err<<std::endl;
 
 	for(size_t i = 0;i<shapes.size();i++ )
@@ -52,6 +53,11 @@ GLuint GeoModel3D::getModelID()
 {
 	return model_id;
 }
+
+std::string GeoModel3D::getFileName()
+{
+	return geo_file_name;
+}
 std::vector<GLModel3DData> GeoModel3D::retrieveMeshes()
 {
 	return meshes;
@@ -79,4 +85,17 @@ GLuint GeoModel3D::loadTexture (std::string file_name)
     }
 
 	return tex_id;
+}
+
+void GeoModel3D::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent)
+{
+	tinyxml2::XMLElement* objElement = xmlDocument.NewElement("GEOModel");
+
+	// --------------------- GEOModel3D file name  ----------------------------//
+	tinyxml2::XMLElement* fileElement = xmlDocument.NewElement("file_name");
+	tinyxml2::XMLText* fileNameText = xmlDocument.NewText(geo_file_name.c_str());
+	fileElement->LinkEndChild(fileNameText);
+	objElement->LinkEndChild(fileElement);
+
+	parent->LinkEndChild(objElement);
 }

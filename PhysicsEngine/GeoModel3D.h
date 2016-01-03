@@ -11,6 +11,7 @@
 #include "lodepng.h"
 #include <map>
 #include "SOIL\SOIL.h"
+#include "tinyxml2\tinyxml2.h"
 
 struct GLModel3DData		// this is model data to be uploaded to the graphics card - we do not need multiple versions for objects that share data
 	{
@@ -31,9 +32,12 @@ private:
 	std::vector<GLModel3DData> meshes;
 	int model_id;			//this is unique to an instance of the object
 	static GLuint NUMBER_OF_MODELS;
+	std::string geo_file_name;
 public:
 	GLuint getModelID();
+	std::string getFileName();
 	GeoModel3D(std::string file_name);
 	std::vector<GLModel3DData> retrieveMeshes();
 	GLuint loadTexture(std::string file_name);
+	void serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent);
 };

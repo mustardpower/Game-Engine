@@ -109,10 +109,13 @@ int SceneManager::toXML(std::string file_name)
 	tinyxml2::XMLDeclaration* decl = aDoc.NewDeclaration();
 	aDoc.LinkEndChild(decl);
 
+	tinyxml2::XMLNode* root = aDoc.NewElement("root");
+	aDoc.LinkEndChild(root);
+
 	// this may need modifying to deal with nested elements
 	for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 	{
-		object->serialize(aDoc);
+		object->serialize(aDoc, root);
 	}
 
 	tinyxml2::XMLError error = aDoc.SaveFile(file_name.c_str());
@@ -129,11 +132,10 @@ int SceneManager::fromXML(std::string file_name)
 {
 	tinyxml2::XMLDocument aDoc;
 	tinyxml2::XMLError error = aDoc.LoadFile(file_name.c_str());
-	if (error)
-	{
-		aDoc.PrintError();
-		return error;
-	}
+	tinyxml2::XMLNode * pRoot = aDoc.FirstChild();
+	if (pRoot == nullptr) return tinyxml2::XML_ERROR_FILE_READ_ERROR;
+
+	// load into C++ objects here!!!!
 	
 	return error;
 }
