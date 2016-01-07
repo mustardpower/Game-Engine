@@ -23,21 +23,30 @@ struct GLModel3DData		// this is model data to be uploaded to the graphics card 
 		GLuint getMeshID() { return meshID; }
 		tinyobj::mesh_t getMeshData() { return mesh;  }
 		GLModel3DData() { meshID = ++NUMBER_OF_MESHES; }
+		~GLModel3DData();
 		void addMeshData(tinyobj::mesh_t new_mesh) { mesh = new_mesh; }
 		void addTexture(GLuint tex_id) { texture = tex_id; }
 	};
 class GeoModel3D
 {
 private:
+	static std::string modelDirectory;
+	static std::string texturesDirectory;
 	std::vector<GLModel3DData> meshes;
 	int model_id;			//this is unique to an instance of the object
 	static GLuint NUMBER_OF_MODELS;
 	std::string geo_file_name;
 public:
+	GeoModel3D();
+	~GeoModel3D();
+	GeoModel3D(const GeoModel3D& model);
 	GLuint getModelID();
-	std::string getFileName();
-	GeoModel3D(std::string file_name);
-	std::vector<GLModel3DData> retrieveMeshes();
+	std::string getFileName() const;
+	void loadFromFile(std::string file_name);
+	std::vector<GLModel3DData> retrieveMeshes() const;
+	static void setModelDirectory(std::string directoryPath);
+	static void setTexturesDirectory(std::string directoryPath);
 	GLuint loadTexture(std::string file_name);
 	void serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent);
+	static GeoModel3D deserialize(tinyxml2::XMLNode* parent);
 };

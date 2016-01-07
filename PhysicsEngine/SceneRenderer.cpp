@@ -114,12 +114,22 @@ void SceneRenderer::createIndexBuffer(std::vector<unsigned int> indices)
 
 void SceneRenderer::renderModel(GeoModel3D* model)
 {
+	GLuint vaoID;
 	GLuint sampler_loc = 4;
 	std::vector<GLModel3DData> modelData = model->retrieveMeshes();
+
 	for (std::vector<GLModel3DData>::iterator m = modelData.begin(); m != modelData.end(); m++)
 	{
-		// if errors here ensure to create VAOs
-		GLuint vaoID = object_vao_map.at(m->getMeshID());
+		try
+		{
+			vaoID = object_vao_map.at(m->getMeshID());
+		}
+		catch (std::out_of_range ex)
+		{
+			// if errors here ensure to create VAOs
+			createVAO(model);
+			vaoID = object_vao_map.at(m->getMeshID());
+		}
 		glBindVertexArray(vaoID); // Bind our Vertex Array Object
 
 		glActiveTexture(GL_TEXTURE0);

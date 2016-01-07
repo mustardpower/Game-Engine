@@ -6,7 +6,7 @@ Ka 0 0 0
 Kd 1 1 1
 Ks 1 1 1
 Km 0
-map_Kd textures\cty1.png
+map_Kd cty1.png
 
 newmtl default_sidewalks
 d 1
@@ -16,7 +16,7 @@ Ka 0 0 0
 Kd 1 1 1
 Ks 1 1 1
 Km 0
-map_Kd textures\ang1.png
+map_Kd ang1.png
 
 newmtl default_bldgs2
 d 1
@@ -26,8 +26,8 @@ Ka 0 0 0
 Kd 1 1 1
 Ks 1 1 1
 Km 0
-map_Kd textures\cty2x.png
-map_Bump textures\default_b.png
+map_Kd cty2x.png
+map_Bump default_b.png
 
 newmtl Default
 d 1

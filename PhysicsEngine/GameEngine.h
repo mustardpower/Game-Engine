@@ -14,15 +14,23 @@ private:
 	WNDCLASSEXW wcex;
 	SceneManager sceneManager;
 	SceneRenderer sceneRenderer;
+	static std::string applicationDirectory;
+	static std::string modelDirectory;
+	static std::string texturesDirectory;
 
 public:
 	GameEngine(char* GameEngineTitle);
-	ATOM RegisterClass(HINSTANCE hInstance);
+	ATOM RegisterWindow(HINSTANCE hInstance);
+	static std::string getApplicationDirectory();
+	static std::string getModelDirectory();
+	static std::string getTexturesDirectory();
+
 
 	virtual void OnRender(void);
 	virtual void OnIdle();
 	// When OnInit is called, a render context (in this case GLUT-GameEngine) 
 	// is already available!
+
 	virtual void OnInit();
 	virtual void OnResize(int w, int h);
 	virtual void OnClose(void);

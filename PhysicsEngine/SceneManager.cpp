@@ -130,12 +130,18 @@ int SceneManager::toXML(std::string file_name)
 
 int SceneManager::fromXML(std::string file_name)
 {
+	Renderable scene_object;
 	tinyxml2::XMLDocument aDoc;
 	tinyxml2::XMLError error = aDoc.LoadFile(file_name.c_str());
 	tinyxml2::XMLNode * pRoot = aDoc.FirstChild();
 	if (pRoot == nullptr) return tinyxml2::XML_ERROR_FILE_READ_ERROR;
-
-	// load into C++ objects here!!!!
+	tinyxml2::XMLNode * pRenderable = pRoot->NextSibling()->FirstChild();
+	while (pRenderable != nullptr)
+	{
+		scene_object = Renderable::deserialize(pRenderable);
+		objects.push_back(scene_object);
+		pRenderable = pRenderable->NextSibling();
+	}
 	
 	return error;
 }

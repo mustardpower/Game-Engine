@@ -1,15 +1,1 @@
-﻿  Camera.cpp
-  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GameEngine.cpp
-  GeoModel3D.cpp
-  Renderable.cpp
-  SceneManager.cpp
-  SceneRenderer.cpp
-  main.cpp
-  Generating code
-  6 of 2684 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    3 functions were new in current compilation
-    13 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  Physics Engine.vcxproj -> C:\Users\paul\Documents\GitHub\Game-Engine\Release\Physics Engine.exe
+﻿  Physics Engine.vcxproj -> C:\Users\paul\Documents\GitHub\Game-Engine\Release\Physics Engine.exe

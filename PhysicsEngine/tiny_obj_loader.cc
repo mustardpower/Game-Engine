@@ -417,54 +417,54 @@ std::string LoadMtl (
     // dissolve
     if ((token[0] == 'd' && isSpace(token[1]))) {
       token += 1;
-      material.dissolve = parseFloat(token);
-      continue;
-    }
-    if (token[0] == 'T' && token[1] == 'r' && isSpace(token[2])) {
-      token += 2;
-      material.dissolve = parseFloat(token);
-      continue;
-    }
+material.dissolve = parseFloat(token);
+continue;
+	}
+	if (token[0] == 'T' && token[1] == 'r' && isSpace(token[2])) {
+		token += 2;
+		material.dissolve = parseFloat(token);
+		continue;
+	}
 
-    // ambient texture
-    if ((0 == strncmp(token, "map_Ka", 6)) && isSpace(token[6])) {
-      token += 7;
-      material.ambient_texname = token;
-      continue;
-    }
+	// ambient texture
+	if ((0 == strncmp(token, "map_Ka", 6)) && isSpace(token[6])) {
+		token += 7;
+		material.ambient_texname = token;
+		continue;
+	}
 
-    // diffuse texture
-    if ((0 == strncmp(token, "map_Kd", 6)) && isSpace(token[6])) {
-      token += 7;
-      material.diffuse_texname = token;
-      continue;
-    }
+	// diffuse texture
+	if ((0 == strncmp(token, "map_Kd", 6)) && isSpace(token[6])) {
+		token += 7;
+		material.diffuse_texname = token;
+		continue;
+	}
 
-    // specular texture
-    if ((0 == strncmp(token, "map_Ks", 6)) && isSpace(token[6])) {
-      token += 7;
-      material.specular_texname = token;
-      continue;
-    }
+	// specular texture
+	if ((0 == strncmp(token, "map_Ks", 6)) && isSpace(token[6])) {
+		token += 7;
+		material.specular_texname = token;
+		continue;
+	}
 
-    // normal texture
-    if ((0 == strncmp(token, "map_Ns", 6)) && isSpace(token[6])) {
-      token += 7;
-      material.normal_texname = token;
-      continue;
-    }
+	// normal texture
+	if ((0 == strncmp(token, "map_Ns", 6)) && isSpace(token[6])) {
+		token += 7;
+		material.normal_texname = token;
+		continue;
+	}
 
-    // unknown parameter
-    const char* _space = strchr(token, ' ');
-    if(!_space) {
-      _space = strchr(token, '\t');
-    }
-    if(_space) {
-      int len = _space - token;
-      std::string key(token, len);
-      std::string value = _space + 1;
-      material.unknown_parameter.insert(std::pair<std::string, std::string>(key, value));
-    }
+	// unknown parameter
+	const char* _space = strchr(token, ' ');
+	if (!_space) {
+		_space = strchr(token, '\t');
+	}
+	if (_space) {
+		int len = _space - token;
+		std::string key(token, len);
+		std::string value = _space + 1;
+		material.unknown_parameter.insert(std::pair<std::string, std::string>(key, value));
+	}
   }
   // flush last material.
   material_map.insert(std::pair<std::string, int>(material.name, materials.size()));
@@ -474,47 +474,52 @@ std::string LoadMtl (
 }
 
 std::string MaterialFileReader::operator() (
-    const std::string& matId,
-    std::vector<material_t>& materials,
-    std::map<std::string, int>& matMap)
+	const std::string& matId,
+	std::vector<material_t>& materials,
+	std::map<std::string, int>& matMap)
 {
-  std::string filepath;
+	std::string filepath;
 
-  if (!m_mtlBasePath.empty()) {
-    filepath = std::string(m_mtlBasePath) + matId;
-  } else {
-    filepath = matId;
-  }
+	if (!m_mtlBasePath.empty()) {
+		filepath = std::string(m_mtlBasePath) + matId;
+	}
+	else {
+		filepath = matId;
+	}
 
-  std::ifstream matIStream(filepath.c_str());
-  return LoadMtl(matMap, materials, matIStream);
+	std::ifstream matIStream(filepath.c_str());
+	return LoadMtl(matMap, materials, matIStream);
 }
 
 std::string
 LoadObj(
-  std::vector<shape_t>& shapes,
-  std::vector<material_t>& materials,   // [output]
-  const char* filename,
-  const char* mtl_basepath)
+	std::vector<shape_t>& shapes,
+	std::vector<material_t>& materials,   // [output]
+	const char* filename,
+	const char* mtl_basepath)
 {
 
-  shapes.clear();
+	shapes.clear();
 
-  std::stringstream err;
+	std::stringstream err;
+	std::ifstream ifs;
+	ifs.open(filename);
 
-  std::ifstream ifs(filename);
-  if (!ifs) {
-    err << "Cannot open file [" << filename << "]" << std::endl;
-    return err.str();
-  }
+	if (!ifs.is_open()) {
+		err << "Cannot open file [" << filename << "]" << std::endl;
+		return err.str();
+	}
 
-  std::string basePath;
-  if (mtl_basepath) {
-    basePath = mtl_basepath;
-  }
-  MaterialFileReader matFileReader( basePath );
-  
-  return LoadObj(shapes, materials, ifs, matFileReader);
+	std::string basePath;
+	if (mtl_basepath) {
+		basePath = mtl_basepath;
+	}
+	MaterialFileReader matFileReader(basePath);
+
+   std::string result = LoadObj(shapes, materials, ifs, matFileReader);
+   ifs.close();
+
+   return result;
 }
 
 std::string LoadObj(

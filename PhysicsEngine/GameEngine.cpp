@@ -13,6 +13,9 @@
 	WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
 	HINSTANCE GameEngine::hInstance;
+	std::string GameEngine::applicationDirectory = GameEngine::getApplicationDirectory();
+	std::string GameEngine::modelDirectory = GameEngine::getModelDirectory();
+	std::string GameEngine::texturesDirectory = GameEngine::getTexturesDirectory();
 
 	GameEngine::GameEngine(char* GameEngineTitle) : cwc::glWindow()
 	{
@@ -24,8 +27,9 @@
 	//
 	//  PURPOSE: Registers the window class.
 	//
-	ATOM GameEngine::RegisterClass(HINSTANCE hInstance)
+	ATOM GameEngine::RegisterWindow(HINSTANCE hInstance)
 	{
+		LoadStringW(hInstance, IDC_GAMEENGINE, szWindowClass, MAX_LOADSTRING);
 		wcex.cbSize = sizeof(WNDCLASSEX);
 
 		wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -33,30 +37,50 @@
 		wcex.cbClsExtra = 0;
 		wcex.cbWndExtra = 0;
 		wcex.hInstance = hInstance;
-		wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_GAMEENGINE));
-		wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+		wcex.hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_GAMEENGINE));
+		wcex.hCursor = LoadCursorW(nullptr, MAKEINTRESOURCEW(IDC_ARROW));
 		wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 		wcex.lpszMenuName = NULL;
 		wcex.lpszClassName = szWindowClass;
-		wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
-
+		wcex.hIconSm = (HICON)LoadImageW(hInstance, // small class icon 
+			MAKEINTRESOURCEW(IDI_SMALL),
+			IMAGE_ICON,
+			GetSystemMetrics(SM_CXSMICON),
+			GetSystemMetrics(SM_CYSMICON),
+			LR_DEFAULTCOLOR);
 		return RegisterClassExW(&wcex);
+	}
+
+	std::string GameEngine::getApplicationDirectory()
+	{
+		if (applicationDirectory.empty())
+		{
+			TCHAR pathBuffer[MAX_PATH];
+			GetCurrentDirectory(MAX_PATH, pathBuffer);
+			applicationDirectory = std::string(pathBuffer);
+		}
+		return applicationDirectory;
+	}
+
+	std::string GameEngine::getModelDirectory()
+	{
+		return getApplicationDirectory() + "\\models\\";
+	}
+
+	std::string GameEngine::getTexturesDirectory()
+	{
+		return getApplicationDirectory() + "\\textures\\";
 	}
 
 	void GameEngine::OnInit()
 	{
 		_gWinInstances.push_back(this);
 
-		// Initialize global strings
-		LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-		LoadStringW(hInstance, IDC_GAMEENGINE, szWindowClass, MAX_LOADSTRING);
-
 		hInstance = GetModuleHandle(NULL); // Store instance handle in our global variable
-		RegisterClass(hInstance);
+		RegisterWindow(hInstance);
 		_gWindow = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 		Show();
-		UpdateWindow(_gWindow);
 
 		initializeMenuBar();
 		sceneRenderer.onInit(_gWindow);
@@ -64,15 +88,7 @@
 		SetTimer(_gWindow,             // handle to main window 
 			IDT_TIMER1,            // timer identifier 
 			16,                 // approx 60 fps
-			(TIMERPROC)NULL);     // no timer callback 
-
-		GeoModel3D* cube = new GeoModel3D("cube");
-		sceneRenderer.createVAO(cube);
-		Renderable* cube1 = new Renderable(cube, glm::vec3(0.0, 0.0, 0.0));
-		sceneManager.addObject(*cube1);
-
-		Renderable* cube2 = new Renderable(cube, glm::vec3(10.0, 0.0, 0.0));
-		sceneManager.addObject(*cube2);
+			(TIMERPROC)NULL);     // no timer callback
 	}
 
 	void GameEngine::OnRender()
@@ -215,6 +231,7 @@
 								  // Now that we've prepped the struct, actually open the dialog:
 								  //  the below function call actually opens the "File Open" dialog box, and returns
 								  //  once the user exits out of it
+
 		if (GetOpenFileNameW(&ofn))
 		{
 			// code reaches here if the user hit 'OK'.  The full path of the file
@@ -246,6 +263,7 @@
 								  // Now that we've prepped the struct, actually open the dialog:
 								  //  the below function call actually opens the "File Save" dialog box, and returns
 								  //  once the user exits out of it
+
 		if (GetSaveFileNameW(&ofn))
 		{
 			// code reaches here if the user hit 'OK'.  The full path of the file
@@ -298,7 +316,7 @@
 		{
 		case WM_COMMAND:
 		{
-			switch (wParam)
+			switch (LOWORD(wParam))
 			{
 			case ID_FILE_NEW:
 				window->OnEngineReset();
@@ -321,6 +339,7 @@
 				return DefWindowProcW(hWnd, message, wParam, lParam);
 			}
 		}
+		break;
 		case WM_TIMER:
 		{
 			switch (wParam)

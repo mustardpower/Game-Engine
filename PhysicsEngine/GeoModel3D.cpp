@@ -1,48 +1,86 @@
 #include <Windows.h>
 #include <WinGDI.h>
 #include "GeoModel3D.h"
+#include "GameEngine.h"
 
 GLuint GeoModel3D::NUMBER_OF_MODELS = 0;
 GLuint GLModel3DData::NUMBER_OF_MESHES = 0;
-GeoModel3D::GeoModel3D(std::string file_name)
+std::string GeoModel3D::modelDirectory = GameEngine::getApplicationDirectory() + "\\models\\";
+std::string GeoModel3D::texturesDirectory = GameEngine::getApplicationDirectory() + "\\textures\\";
+
+GLModel3DData::~GLModel3DData()
+{
+}
+
+GeoModel3D::GeoModel3D()
+{
+	geo_file_name = "";
+	model_id = ++NUMBER_OF_MODELS;
+}
+
+GeoModel3D::~GeoModel3D()
+{
+}
+
+GeoModel3D::GeoModel3D(const GeoModel3D& model)
+{
+	geo_file_name = model.getFileName();
+	model_id = ++NUMBER_OF_MODELS;
+	meshes = model.retrieveMeshes();
+}
+
+void GeoModel3D::setModelDirectory(std::string directoryPath)
+{
+	modelDirectory = directoryPath;
+}
+
+void GeoModel3D::setTexturesDirectory(std::string directoryPath)
+{
+	texturesDirectory = directoryPath;
+}
+
+void GeoModel3D::loadFromFile(std::string file_name)
 {
 	geo_file_name = file_name;
-	model_id = ++NUMBER_OF_MODELS;
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
+	std::string absolutePath = modelDirectory + file_name;
+	fopen(absolutePath.c_str(), "r");
+	int error = GetLastError();
+	std::string err = tinyobj::LoadObj(shapes, materials, absolutePath.c_str(), modelDirectory.c_str());
+	std::cout << err << std::endl;
 
-	std::string err = tinyobj::LoadObj(shapes, materials, (geo_file_name +".obj").c_str());
-	std::cout<<err<<std::endl;
+	GLModel3DData new_mesh;
+	std::cout << "shapes size: " << shapes.size() << std::endl;
 
-	for(size_t i = 0;i<shapes.size();i++ )
+	for (size_t i = 0; i<shapes.size(); i++)
 	{
-		GLModel3DData new_mesh;
 		GLuint texture;
 
 		// each mesh is made up of a number of shapes	
 		tinyobj::mesh_t current_mesh = shapes[i].mesh;
 
-		if(current_mesh.material_ids[0]>=0) // no texture = -1 in material ids
+		if (current_mesh.material_ids[0] >= 0) // no texture = -1 in material ids
 		{
-            tinyobj::material_t& material = materials[current_mesh.material_ids[0]];
+			tinyobj::material_t& material = materials[current_mesh.material_ids[0]];
 			std::string color_map = material.diffuse_texname;
-			if (!color_map.empty()) 
+			if (!color_map.empty())
 			{
-				std::cout<<"Loading texture: "<<color_map<<std::endl;
+				std::cout << "Loading texture: " << color_map << std::endl;
 				texture = loadTexture(color_map);
 				new_mesh.addTexture(texture);
 			}
 			else
 			{
-				std::cout<<"Could not find a diffuse texture!"<<std::endl;
+				std::cout << "Could not find a diffuse texture!" << std::endl;
 			}
-        }
+		}
 
 		new_mesh.addMeshData(current_mesh);
 		meshes.push_back(new_mesh);
 	}
 
-	if(err.empty())
+	if (err.empty())
 	{
 		std::cout << "# of shapes    : " << shapes.size() << std::endl;
 		std::cout << "# of materials : " << materials.size() << std::endl;
@@ -54,11 +92,11 @@ GLuint GeoModel3D::getModelID()
 	return model_id;
 }
 
-std::string GeoModel3D::getFileName()
+std::string GeoModel3D::getFileName() const
 {
 	return geo_file_name;
 }
-std::vector<GLModel3DData> GeoModel3D::retrieveMeshes()
+std::vector<GLModel3DData> GeoModel3D::retrieveMeshes() const
 {
 	return meshes;
 }
@@ -70,10 +108,10 @@ GLuint GeoModel3D::loadTexture (std::string file_name)
 		printf("No OpenGL context\n");
 	}
 
+	std::string absolutePath = texturesDirectory + file_name;
 	glEnable(GL_TEXTURE_2D);
-
 	GLuint tex_id = SOIL_load_OGL_texture(
-					file_name.c_str(),
+					absolutePath.c_str(),
 					SOIL_LOAD_AUTO,
 					SOIL_CREATE_NEW_ID,
 					NULL
@@ -98,4 +136,13 @@ void GeoModel3D::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode
 	objElement->LinkEndChild(fileElement);
 
 	parent->LinkEndChild(objElement);
+}
+
+GeoModel3D GeoModel3D::deserialize(tinyxml2::XMLNode* parent)
+{
+	GeoModel3D cube;
+	const char* elementText = parent->FirstChildElement("file_name")->GetText();
+	std::string file_name(elementText);
+	cube.loadFromFile(file_name);
+	return cube;
 }
