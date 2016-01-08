@@ -28,11 +28,11 @@ void SceneRenderer::onInit(HWND hWnd)
 			std::cout << "Error Loading, compiling or linking shader\n";
 }
 
-void SceneRenderer::createVAO(GeoModel3D* model)
+void SceneRenderer::createVAO(GeoModel3D model)
 {
 	GLuint vao_new_id;
 
-	std::vector<GLModel3DData> modelData = model->retrieveMeshes();
+	std::vector<GLModel3DData> modelData = model.retrieveMeshes();
 
 	for (std::vector<GLModel3DData>::iterator mesh = modelData.begin(); mesh != modelData.end(); mesh++)
 	{ 
@@ -112,11 +112,11 @@ void SceneRenderer::createIndexBuffer(std::vector<unsigned int> indices)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * indices.size(), &indices[0], GL_STATIC_DRAW);
 }
 
-void SceneRenderer::renderModel(GeoModel3D* model)
+void SceneRenderer::renderModel(GeoModel3D model)
 {
 	GLuint vaoID;
 	GLuint sampler_loc = 4;
-	std::vector<GLModel3DData> modelData = model->retrieveMeshes();
+	std::vector<GLModel3DData> modelData = model.retrieveMeshes();
 
 	for (std::vector<GLModel3DData>::iterator m = modelData.begin(); m != modelData.end(); m++)
 	{

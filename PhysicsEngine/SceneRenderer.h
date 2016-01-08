@@ -27,12 +27,12 @@ public:
 	void EnableOpenGL(HWND hWnd);
 	void DisableOpenGL();
 
-	void createVAO(GeoModel3D* model);
+	void createVAO(GeoModel3D model);
 	void renderScene(HDC hDC, Camera glCamera,std::vector<Renderable> objects);
 	void createVertexBuffer(std::vector<GLfloat> vertices);
 	void createIndexBuffer(std::vector<unsigned int> indices);
 	void createNormalsBuffer(std::vector<GLfloat> normals);
 	void createTexCoordsBuffer(std::vector<GLfloat> tex_coords);
-	void renderModel(GeoModel3D* model);
+	void renderModel(GeoModel3D model);
 	void setTextureUnit(int unit);
 };

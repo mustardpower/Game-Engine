@@ -18,15 +18,15 @@ class Renderable
 private:
 	static GLuint NUMBER_OF_OBJECTS;
 	GLuint object_id;
-	GeoModel3D* model;
+	GeoModel3D model;
 	RigidBody object;
 	glm::mat4 frame_store;
 public:
 	Renderable();
 	Renderable(const Renderable& other);
 	Renderable & operator= (const Renderable & other);
-	Renderable(GeoModel3D* model, glm::vec3 position = glm::vec3(0.0, 0.0, 0.0));
-	GeoModel3D* getModel() const;
+	Renderable(GeoModel3D model, glm::vec3 position = glm::vec3(0.0, 0.0, 0.0));
+	GeoModel3D getModel() const;
 	glm::mat4 getModelMatrix();
 
 	void serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent);

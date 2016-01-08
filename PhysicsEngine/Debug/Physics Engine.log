@@ -1,5 +1,1 @@
-﻿  main.cpp
-  GameEngine.cpp
-c:\users\paul\documents\github\game-engine\physicsengine\gameengine.cpp(41): warning C4302: 'type cast': truncation from 'LPSTR' to 'WORD'
-  Generating Code...
-  Physics Engine.vcxproj -> C:\Users\paul\Documents\GitHub\Game-Engine\Debug\Physics Engine.exe
+﻿  Physics Engine.vcxproj -> C:\Users\paul\Documents\GitHub\Game-Engine\Debug\Physics Engine.exe

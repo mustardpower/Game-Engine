@@ -5,17 +5,15 @@ GLuint Renderable::NUMBER_OF_OBJECTS = 0;
 
 Renderable::Renderable()
 {
-	model = new GeoModel3D();
 }
 
 Renderable::Renderable(const Renderable &other)
 {
-	GeoModel3D copyModel = *(other.getModel());
-	model = new GeoModel3D(copyModel);
+	model = other.getModel();
 	object_id = ++NUMBER_OF_OBJECTS;
 	object = other.object;
 }
-Renderable::Renderable(GeoModel3D* the_model, glm::vec3 position)
+Renderable::Renderable(GeoModel3D the_model, glm::vec3 position)
 {
 	object_id = ++NUMBER_OF_OBJECTS;
 	model = the_model;
@@ -31,7 +29,7 @@ Renderable & Renderable::operator= (const Renderable & other)
 	return *this;
 }
 
-GeoModel3D* Renderable::getModel() const
+GeoModel3D Renderable::getModel() const
 {
 	return model;
 }
@@ -59,16 +57,15 @@ void Renderable::previousFrame()
 void Renderable::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent)
 {
 	tinyxml2::XMLElement* objElement = xmlDocument.NewElement("Renderable");
-	model->serialize(xmlDocument, objElement);
+	model.serialize(xmlDocument, objElement);
 	object.serialize(xmlDocument, objElement);
 	parent->LinkEndChild(objElement);
 }
 
 Renderable Renderable::deserialize(tinyxml2::XMLNode* parent)
 {
-	// TO DO: FROM THE PARENT NODE OF EACH RENDERABLE OBJECT, DESERIALIZE THE MODEL AND THE RIGID BODY
 	tinyxml2::XMLNode* pGeoModel = parent->FirstChildElement("GEOModel");
 	GeoModel3D model = GeoModel3D::deserialize(pGeoModel);
-	Renderable object(&model);
+	Renderable object(model);
 	return object;
 }
