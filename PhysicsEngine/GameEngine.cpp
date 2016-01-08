@@ -76,6 +76,9 @@
 	{
 		_gWinInstances.push_back(this);
 
+		LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+		wcex.cbSize = sizeof(WNDCLASSEX);
+
 		hInstance = GetModuleHandle(NULL); // Store instance handle in our global variable
 		RegisterWindow(hInstance);
 		_gWindow = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
