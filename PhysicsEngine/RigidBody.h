@@ -25,12 +25,20 @@ private:
 	glm::vec3 angular_velocity; // radians / s
 	static PhysicsHandler physicsHandler;
 public:
+
 	RigidBody(glm::vec3 position = glm::vec3(0.0,0.0,0.0));
+
+	// getters
 	glm::mat4 getModelMatrix();
+	glm::vec3 getMomentum();
+
+	// setters
 	void setModelMatrix(glm::mat4 matrix);
-	glm::vec3 momentum();
+	void setVelocity(glm::vec3 v);
+
 	void translate(glm::vec3 translation);
 	void updatePosition(float dt);
 
 	void serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent);
+	static RigidBody deserialize(tinyxml2::XMLNode* parent);
 };

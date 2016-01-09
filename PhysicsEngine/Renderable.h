@@ -25,7 +25,7 @@ public:
 	Renderable();
 	Renderable(const Renderable& other);
 	Renderable & operator= (const Renderable & other);
-	Renderable(GeoModel3D model, glm::vec3 position = glm::vec3(0.0, 0.0, 0.0));
+	Renderable(GeoModel3D model, RigidBody rigidBody);
 	GeoModel3D getModel() const;
 	glm::mat4 getModelMatrix();
 

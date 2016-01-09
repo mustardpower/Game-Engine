@@ -95,7 +95,7 @@
 	}
 
 	void GameEngine::OnRender()
-	{
+	{ 
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(_gWindow, &ps);
 		std::vector<GeoModel3D*> object_models;

@@ -13,11 +13,11 @@ Renderable::Renderable(const Renderable &other)
 	object_id = ++NUMBER_OF_OBJECTS;
 	object = other.object;
 }
-Renderable::Renderable(GeoModel3D the_model, glm::vec3 position)
+Renderable::Renderable(GeoModel3D the_model, RigidBody rb)
 {
 	object_id = ++NUMBER_OF_OBJECTS;
 	model = the_model;
-	object = RigidBody(position);
+	object = rb;
 }
 
 Renderable & Renderable::operator= (const Renderable & other)
@@ -66,6 +66,8 @@ Renderable Renderable::deserialize(tinyxml2::XMLNode* parent)
 {
 	tinyxml2::XMLNode* pGeoModel = parent->FirstChildElement("GEOModel");
 	GeoModel3D model = GeoModel3D::deserialize(pGeoModel);
-	Renderable object(model);
+	tinyxml2::XMLNode* pRigidBody = parent->FirstChildElement("RigidBody");
+	RigidBody rigidBody = RigidBody::deserialize(pRigidBody);
+	Renderable object(model,rigidBody);
 	return object;
 }

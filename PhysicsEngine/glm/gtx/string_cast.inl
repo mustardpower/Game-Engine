@@ -441,4 +441,27 @@ namespace detail
 			x[3][0], x[3][1], x[3][2], x[3][3]);
 	}
 
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// from_string methods
+
+	GLM_FUNC_QUALIFIER glm::vec3 from_string_vec3
+	(
+		std::string vec3_string
+	)
+	{
+		//TO DO: return vector3 from the string
+		return glm::vec3();
+	}
+
+	GLM_FUNC_QUALIFIER glm::mat4x4 from_string_mat4x4
+	(
+		std::string vec4x4_string
+	)
+	{
+		//TO DO: return matrix4x4 from the string
+		return glm::mat4();
+	}
+
+
 }//namespace glm
