@@ -47,4 +47,4 @@ Temporary Items
 *.obj
 *.tlog
 *.tlog
-*\Release\*.obj
+.\PhysicsEngine\Release\*.obj
