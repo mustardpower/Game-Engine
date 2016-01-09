@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <Renderable>
+        <GEOModel>
+            <file_name>The City.obj</file_name>
+        </GEOModel>
+        <RigidBody>
+            <Position>mat4x4((1.000000, 0.000000, 0.000000, 0.000000), (0.000000, 1.000000, 0.000000, 0.000000), (0.000000, 0.000000, 1.000000, 0.000000), (0.000000, 0.000000, 0.000000, 1.000000))</Position>
+            <Velocity>fvec3(0.000000, 0.000000, 0.000000)</Velocity>
+        </RigidBody>
+    </Renderable>
+</root>
