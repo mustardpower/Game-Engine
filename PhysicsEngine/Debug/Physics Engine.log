@@ -1,1 +1,16 @@
-﻿  Physics Engine.vcxproj -> C:\Users\paul\Documents\GitHub\Game-Engine\Debug\Physics Engine.exe
+﻿  LINK : C:\Users\paul\Documents\GitHub\Game-Engine\Debug\Physics Engine.exe not found or not built by the last incremental link; performing full link
+tiny_obj_loader.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'tiny_obj_loader.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+stb_image_aug.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'stb_image_aug.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+SOIL.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'SOIL.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+image_helper.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'image_helper.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+image_DXT.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'image_DXT.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+SceneManager.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'SceneManager.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+Renderable.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'Renderable.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+ModelImporter3D.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'ModelImporter3D.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+lodepng.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'lodepng.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+glsl.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'glsl.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+GeoModel3D.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'GeoModel3D.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+Camera.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'Camera.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+BoundingSphere.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'BoundingSphere.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+AABB.obj : warning LNK4099: PDB 'vc140.pdb' was not found with 'AABB.obj' or at 'C:\Users\paul\Documents\GitHub\Game-Engine\Debug\vc140.pdb'; linking object as if no debug info
+  Physics Engine.vcxproj -> C:\Users\paul\Documents\GitHub\Game-Engine\Debug\Physics Engine.exe
