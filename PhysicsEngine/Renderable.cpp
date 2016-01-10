@@ -39,6 +39,11 @@ glm::mat4 Renderable::getModelMatrix()
 	return object.getModelMatrix();
 }
 
+glm::vec3 Renderable::getVelocity()
+{
+	return object.getVelocity();
+}
+
 void Renderable::storeFrame()
 {
 	frame_store = object.getModelMatrix();

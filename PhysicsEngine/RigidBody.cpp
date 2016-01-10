@@ -24,6 +24,11 @@ glm::vec3 RigidBody::getMomentum()
 	return mass * velocity;
 }
 
+glm::vec3 RigidBody::getVelocity()
+{
+	return velocity;
+}
+
 void RigidBody::setModelMatrix(glm::mat4 matrix)
 {
 	model_matrix = matrix;
@@ -68,12 +73,11 @@ RigidBody RigidBody::deserialize(tinyxml2::XMLNode* parent)
 	elementText = parent->FirstChildElement("Position")->GetText();
 	std::string position(elementText);
 
-	// NEED TO WRITE CONSTRUCTOR FOR MATRIX FROM STRING
 	rb.setModelMatrix(glm::from_string_mat4x4(position));
 
 	elementText = parent->FirstChildElement("Velocity")->GetText();
 	std::string velocity(elementText);
-	// NEED TO WRITE CONSTRUCTOR FOR VEC3 FROM STRING
+	
 	rb.setVelocity(glm::from_string_vec3(velocity));
 	return rb;
 }

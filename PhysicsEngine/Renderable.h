@@ -28,6 +28,7 @@ public:
 	Renderable(GeoModel3D model, RigidBody rigidBody);
 	GeoModel3D getModel() const;
 	glm::mat4 getModelMatrix();
+	glm::vec3 getVelocity();
 
 	void serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent);
 	static Renderable deserialize(tinyxml2::XMLNode* parent);

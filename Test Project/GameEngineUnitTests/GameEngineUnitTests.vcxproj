@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\paul\Documents\GitHub\Game-Engine\PhysicsEngine\googletest-master\googletest\include;C:\Users\paul\Documents\GitHub\Game-Engine\PhysicsEngine\googletest-master\googletest;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\paul\Documents\GitHub\Game-Engine\PhysicsEngine;C:\Users\paul\Documents\GitHub\Game-Engine\PhysicsEngine\googletest-master\googletest\include;C:\Users\paul\Documents\GitHub\Game-Engine\PhysicsEngine\googletest-master\googletest;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\paul\Documents\GitHub\Game-Engine\PhysicsEngine\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -80,7 +80,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>C:\Users\paul\Documents\GitHub\Game-Engine\PhysicsEngine\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\paul\Documents\GitHub\Game-Engine\PhysicsEngine\googletest-master\googletest\include;C:\Users\paul\Documents\GitHub\Game-Engine\PhysicsEngine\googletest-master\googletest;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\paul\Documents\GitHub\Game-Engine\PhysicsEngine;C:\Users\paul\Documents\GitHub\Game-Engine\PhysicsEngine\googletest-master\googletest\include;C:\Users\paul\Documents\GitHub\Game-Engine\PhysicsEngine\googletest-master\googletest;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -96,10 +96,12 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>gtestd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gtestd.lib;Physics Engine.lib;opengl32.lib;glu32.lib;glew32d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\paul\Documents\GitHub\Game-Engine\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>"$(TargetDir)$(TargetFileName)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

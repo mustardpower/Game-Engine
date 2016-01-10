@@ -31,6 +31,7 @@ public:
 	// getters
 	glm::mat4 getModelMatrix();
 	glm::vec3 getMomentum();
+	glm::vec3 getVelocity();
 
 	// setters
 	void setModelMatrix(glm::mat4 matrix);

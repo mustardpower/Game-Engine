@@ -9,6 +9,8 @@
 
 #include <cstdarg>
 #include <cstdio>
+#include <algorithm>
+#include <sstream>
 
 namespace glm{
 namespace detail
@@ -450,17 +452,36 @@ namespace detail
 		std::string vec3_string
 	)
 	{
-		//TO DO: return vector3 from the string
-		return glm::vec3();
+		float x, y, z;
+
+		vec3_string.erase(vec3_string.begin(), vec3_string.begin() + 6);
+		vec3_string.erase(std::remove(vec3_string.begin(), vec3_string.end(), '('), vec3_string.end());
+		vec3_string.erase(std::remove(vec3_string.begin(), vec3_string.end(), ')'), vec3_string.end());
+		vec3_string.erase(std::remove(vec3_string.begin(), vec3_string.end(), ','), vec3_string.end());
+
+		std::stringstream values(vec3_string);
+		values >> x >> y >> z;
+		return glm::vec3(x , y ,z);
 	}
 
 	GLM_FUNC_QUALIFIER glm::mat4x4 from_string_mat4x4
-	(
-		std::string vec4x4_string
-	)
+		(
+			std::string vec4x4_string
+			)
 	{
-		//TO DO: return matrix4x4 from the string
-		return glm::mat4();
+		float x[4];
+		float y[4];
+		float z[4];
+		float w[4];
+
+		vec4x4_string.erase(vec4x4_string.begin(), vec4x4_string.begin() + 6);
+		vec4x4_string.erase(std::remove(vec4x4_string.begin(), vec4x4_string.end(), '('), vec4x4_string.end());
+		vec4x4_string.erase(std::remove(vec4x4_string.begin(), vec4x4_string.end(), ')'), vec4x4_string.end());
+		vec4x4_string.erase(std::remove(vec4x4_string.begin(), vec4x4_string.end(), ','), vec4x4_string.end());
+
+		std::stringstream values(vec4x4_string);
+		values >> x[0] >> x[1] >> x[2] >> x[3] >> y[0] >> y[1] >> y[2] >> y[3] >> z[0] >> z[1] >> z[2] >> z[3] >> w[0] >> w[1] >> w[2] >> w[3];
+		return glm::mat4(x[0],x[1],x[2],x[3],y[0],y[1],y[2],y[3],z[0],z[1],z[2],z[3],w[0],w[1],w[2],w[3]);
 	}
 
 
