@@ -3,11 +3,12 @@
 
 #include "stdafx.h"
 #include <conio.h>
+#include <string>
 
 // This header file defines the public API for Google Test.
 //It should be included by any test program that uses Google Test.
 #include "gtest/gtest.h"
-#include <SceneManager.h>
+#include "testSceneManager.h"
 
 /* TEST(test_case_name, test_name) is a predefined macro.
 These are ordinary C++ functions that don't return a value.
@@ -16,30 +17,6 @@ use the various Google Test assertions to check values.
 The test's result is determined by the assertions;
 if any assertion in the test fails (either fatally or non-fatally),
 or if the test crashes, the entire test fails. Otherwise, it succeeds.
-*/
-
-std::string testFileDirectory = "C:\\Users\\paul\\Documents\\GitHub\\Game-Engine\\Test Project\\GameEngineUnitTests\\Test Files";
-
-TEST(testSceneManager, testXMLRead)
-{
-	SceneManager sceneManager;
-	sceneManager.fromXML(testFileDirectory + "\\SceneRendering\\test_cube.xml");
-	std::vector<Renderable> objects = sceneManager.getObjects();
-	EXPECT_EQ(1, objects.size());
-	Renderable object = objects.at(0);
-
-	glm::mat4 modelMatrix(1.00000, 0.00000, 0.00000, 0.00000, 0.00000, 1.00000, 0.00000, 0.00000, 0.00000, 0.00000, 1.00000, 0.00000, 0.00000, 0.00000, 0.00000, 1.00000);
-	EXPECT_EQ(modelMatrix, object.getModelMatrix());
-
-	glm::vec3 velocity(15.00000, -7.00000, 12.5000);
-	EXPECT_EQ(velocity, object.getVelocity());
-}
-
-/* Test No. 2
-TEST(testCalc, MySecondTest)
-{
-...
-}
 */
 
 int _tmain(int argc, _TCHAR* argv[])
