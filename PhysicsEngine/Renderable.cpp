@@ -44,6 +44,11 @@ glm::vec3 Renderable::getVelocity()
 	return object.getVelocity();
 }
 
+void Renderable::setModelMatrix(glm::mat4x4 modelMatrix)
+{
+	object.setModelMatrix(modelMatrix);
+}
+
 void Renderable::storeFrame()
 {
 	frame_store = object.getModelMatrix();
@@ -75,4 +80,13 @@ Renderable Renderable::deserialize(tinyxml2::XMLNode* parent)
 	RigidBody rigidBody = RigidBody::deserialize(pRigidBody);
 	Renderable object(model,rigidBody);
 	return object;
+}
+
+bool Renderable::intersects(glm::vec3 origin, glm::vec3 dir)
+{
+	glm::vec3 vecMin(-1, -1, -1);
+	glm::vec3 vecMax(1, 1, 1);
+	AABB test(vecMin, vecMax);
+	boundingBox = test;
+	return boundingBox.intersects(origin, dir);
 }

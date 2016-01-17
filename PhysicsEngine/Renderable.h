@@ -21,14 +21,18 @@ private:
 	GeoModel3D model;
 	RigidBody object;
 	glm::mat4 frame_store;
+	AABB boundingBox;
 public:
 	Renderable();
 	Renderable(const Renderable& other);
 	Renderable & operator= (const Renderable & other);
 	Renderable(GeoModel3D model, RigidBody rigidBody);
+
 	GeoModel3D getModel() const;
 	glm::mat4 getModelMatrix();
 	glm::vec3 getVelocity();
+
+	void setModelMatrix(glm::mat4x4 modelMatrix);
 
 	void serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent);
 	static Renderable deserialize(tinyxml2::XMLNode* parent);
@@ -36,4 +40,6 @@ public:
 	void storeFrame();
 	void previousFrame();
 	void updateFrame(float dt);
+
+	bool Renderable::intersects(glm::vec3 p, glm::vec3 dir);
 };

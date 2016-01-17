@@ -27,11 +27,35 @@ void SceneManager::reset()
 {
 	objects.clear();
 }
-void SceneManager::onLeftMouseDown(int x, int y)
+void SceneManager::onLeftMouseDown(int xPos, int yPos, int screen_width, int screen_height)
 {
-	const float increment = 1.0f;
-	glm::vec3 rotation_axis = glm::vec3(0.0, 1.0, 0.0);
-	glCamera.rotate(increment, rotation_axis);
+	// start with mouse pixel coordinates in range [ 0 : screen_width , screen_height : x ]
+
+	// Convert to normalized device coordinates - each component in range [ -1 : 1 ]
+	glm::vec3 ray_nds = viewportToNormalizedDeviceCoordinates(xPos, yPos, screen_width, screen_height);
+
+	glm::vec4 ray_eye = normalizedDeviceCoordinatesToEyeCoordinates(ray_nds);
+
+	//Convert to 4d world coordinates
+	glm::vec3 ray_world = eyeCoordinatesToWorldCoordinates(ray_eye);
+
+	// don't forget to normalise the vector at some point
+	ray_world = glm::normalize(ray_world);
+
+	// Now check for intersection
+
+	glm::vec3 origin(0, 0, -30);
+	for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+	{
+		if (object->intersects(origin, ray_world))
+		{
+			std::cout << "This object collides!!!!! CONGRATULATIONS" << std::endl;
+		}
+		else
+		{
+			std::cout << "This object does not collide!!!!!" << std::endl;
+		}
+	}
 }
 
 void SceneManager::onRightMouseDown(int x, int y)
@@ -99,7 +123,6 @@ Camera SceneManager::getCamera()
 
 bool SceneManager::collisionsDetected(Renderable obj)
 {
-	printf("collisionsDetected has not been implemented yet\n");
 	return false;
 }
 
@@ -144,4 +167,37 @@ int SceneManager::fromXML(std::string file_name)
 	}
 	
 	return error;
+}
+
+glm::vec3 SceneManager::viewportToNormalizedDeviceCoordinates(int xPos, int yPos, int screen_width, int screen_height)
+{
+	float x = (2.0f * xPos) / screen_width - 1.0f;
+	float y = 1.0f - (2.0f * yPos) / screen_height;
+	float z = 1.0f;
+	return glm::vec3(x, y, z);
+}
+
+glm::vec2 SceneManager::normalizedDeviceCoordinatesToViewport(glm::vec3 ndc, int screen_width, int screen_height)
+{
+	float x = ((ndc.x + 1) * screen_width) / 2;
+	float y = ((1.0f - ndc.y) * screen_height) / 2;
+	return glm::vec2(x, y);
+}
+
+glm::vec4 SceneManager::normalizedDeviceCoordinatesToEyeCoordinates(glm::vec3 ray_nds)
+{
+	//Convert to 4d homogeneous clip coordinates also in range [ -1 : 1 ] - we want ray z component to point forwards ( -ve in OpenGL )
+	glm::vec4 ray_clip = glm::vec4(ray_nds.x, ray_nds.y, -1.0, 1.0);
+
+	//Convert to 4d eye (camera) coordinates 
+	glm::mat4x4 projection_matrix = glCamera.getProjectionMatrix();
+	glm::vec4 ray_eye = glm::inverse(projection_matrix) * ray_clip;
+	return glm::vec4(ray_eye.x, ray_eye.y, 1.0, 0.0);
+}
+
+glm::vec3 SceneManager::eyeCoordinatesToWorldCoordinates(glm::vec4 ray_eye)
+{
+	//Convert to 4d world coordinates
+	glm::mat4x4 view_matrix = glCamera.getViewMatrix();
+	return glm::vec3(glm::inverse(view_matrix) * ray_eye);
 }

@@ -45,13 +45,10 @@ void GeoModel3D::loadFromFile(std::string file_name)
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
 	std::string absolutePath = modelDirectory + file_name;
-	fopen(absolutePath.c_str(), "r");
-	int error = GetLastError();
+	
 	std::string err = tinyobj::LoadObj(shapes, materials, absolutePath.c_str(), modelDirectory.c_str());
-	std::cout << err << std::endl;
 
 	GLModel3DData new_mesh;
-	std::cout << "shapes size: " << shapes.size() << std::endl;
 
 	for (size_t i = 0; i<shapes.size(); i++)
 	{

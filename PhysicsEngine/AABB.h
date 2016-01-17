@@ -11,4 +11,5 @@ public:
 	AABB(glm::vec3 a,glm::vec3 b) { vecMin = a; vecMax = b; }
 	bool contains(glm::vec3 point);
 	bool intersects(AABB* aBoundingBox);
+	bool intersects(glm::vec3 origin, glm::vec3 dir);
 };

@@ -29,7 +29,7 @@ public:
 	std::vector<Renderable> getObjects();
 	void addObject(Renderable object);
 	void onMouseWheel(int nWheelNumber, int nDirection, int x, int y);
-	void onLeftMouseDown(int x, int y);
+	void onLeftMouseDown(int xPos, int yPos, int screen_width, int screen_height);
 	void onRightMouseDown(int x, int y);
 	void onLeftMouseUp(int x, int y);
 	void onRightMouseUp(int x, int y);
@@ -38,6 +38,12 @@ public:
 	void update();
 	void reset();
 	bool collisionsDetected(Renderable obj);
+
+	glm::vec3 viewportToNormalizedDeviceCoordinates(int xPos, int yPos,int screen_width, int screen_height);
+	glm::vec2 normalizedDeviceCoordinatesToViewport(glm::vec3 ndc, int screen_width, int screen_height);
+
+	glm::vec4 normalizedDeviceCoordinatesToEyeCoordinates(glm::vec3 ray_nds); 
+	glm::vec3 eyeCoordinatesToWorldCoordinates(glm::vec4 ray_eye);
 
 	int toXML(std::string file_name);
 	int fromXML(std::string file_name);

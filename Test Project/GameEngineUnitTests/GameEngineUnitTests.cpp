@@ -9,6 +9,7 @@
 //It should be included by any test program that uses Google Test.
 #include "gtest/gtest.h"
 #include "testSceneManager.h"
+#include "testPhysicsHandler.h"
 
 /* TEST(test_case_name, test_name) is a predefined macro.
 These are ordinary C++ functions that don't return a value.
