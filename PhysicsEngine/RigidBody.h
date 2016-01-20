@@ -8,9 +8,9 @@
 #include "tinyxml2\tinyxml2.h"
 
 //-----------------------------------------------------------------------------
-// Name:		Renderable
-// Variables:	model - the object model
-// Desc:		Groups the behavioural functions of the object with its geometry model
+// Name:		RigidBody
+// Variables:	
+// Desc:		The physical properties of the object
 //-----------------------------------------------------------------------------
 
 class RigidBody

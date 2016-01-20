@@ -3,6 +3,16 @@
 
 using namespace std;
 
+AABB::AABB()
+{
+	vecMin = glm::vec3(-1.0, -1.0, -1.0);
+	vecMax = glm::vec3(1.0, 1.0, 1.0);
+}
+AABB::AABB(glm::vec3 a, glm::vec3 b)
+{
+	vecMin = a;
+	vecMax = b;
+}
 bool AABB::contains(glm::vec3 point)
 {
 	// check point x,y,z values are within the axis-aligned bounding box - return true if they are, false if not

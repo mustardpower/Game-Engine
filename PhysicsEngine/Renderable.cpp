@@ -84,9 +84,5 @@ Renderable Renderable::deserialize(tinyxml2::XMLNode* parent)
 
 bool Renderable::intersects(glm::vec3 origin, glm::vec3 dir)
 {
-	glm::vec3 vecMin(-1, -1, -1);
-	glm::vec3 vecMax(1, 1, 1);
-	AABB test(vecMin, vecMax);
-	boundingBox = test;
 	return boundingBox.intersects(origin, dir);
 }

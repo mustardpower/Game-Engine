@@ -116,7 +116,7 @@
 	void GameEngine::OnLeftMouseDown(int x, int y) 
 	{
 		RECT windowRect;
-		GetWindowRect(_gWindow, &windowRect);
+		GetClientRect(_gWindow, &windowRect);
 		int screen_width = windowRect.right - windowRect.left;
 		int screen_height = windowRect.bottom - windowRect.top;
 		sceneManager.onLeftMouseDown(x, y, screen_width, screen_height);

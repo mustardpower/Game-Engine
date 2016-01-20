@@ -3,10 +3,16 @@
 
 Camera::Camera()
 {
-	fov = 60.0;
-	nearZ = 1.0f;
-	farZ  = 20.0f;
-	model_matrix = glm::translate(model_matrix,glm::vec3(0,0,-10));
+	fov = 45.0;
+	nearZ = 4.0f;
+	farZ  = 60.0f;
+
+	glm::vec3 cameraPos = glm::vec3(0.0,0.0,-10.0);
+	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+	view_matrix = glm::lookAt(cameraPos,cameraTarget,glm::vec3(0.0f, 1.0f, 0.0f));
+
+	float aspect = 1.0f;
+	projection_matrix = glm::perspective(fov, aspect, nearZ, farZ);
 }
 void Camera::zoom(float increment)
 {
@@ -38,7 +44,7 @@ void Camera::translateZ(float increment)
 
 glm::mat4 Camera::getMVPMatrix()
 {
-	return getProjectionMatrix() * view_matrix * model_matrix;
+	return projection_matrix * view_matrix * model_matrix;
 }
 glm::mat4 Camera::getModelMatrix()
 {
@@ -50,6 +56,5 @@ glm::mat4 Camera::getViewMatrix()
 }
 glm::mat4 Camera::getProjectionMatrix()
 {
-	float aspect = 1.0f;
-	return glm::perspective(fov,aspect,nearZ,farZ);
+	return projection_matrix;
 }

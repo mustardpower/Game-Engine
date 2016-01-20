@@ -42,9 +42,6 @@ public:
 	glm::vec3 viewportToNormalizedDeviceCoordinates(int xPos, int yPos,int screen_width, int screen_height);
 	glm::vec2 normalizedDeviceCoordinatesToViewport(glm::vec3 ndc, int screen_width, int screen_height);
 
-	glm::vec4 normalizedDeviceCoordinatesToEyeCoordinates(glm::vec3 ray_nds); 
-	glm::vec3 eyeCoordinatesToWorldCoordinates(glm::vec4 ray_eye);
-
 	int toXML(std::string file_name);
 	int fromXML(std::string file_name);
 };

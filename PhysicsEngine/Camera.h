@@ -14,6 +14,7 @@ private:
 	float nearZ, farZ, fov;
 	glm::mat4 model_matrix;
 	glm::mat4 view_matrix;
+	glm::mat4 projection_matrix;
 public:
 	Camera();
 	void zoom(float increment);

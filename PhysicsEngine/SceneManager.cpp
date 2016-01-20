@@ -29,25 +29,25 @@ void SceneManager::reset()
 }
 void SceneManager::onLeftMouseDown(int xPos, int yPos, int screen_width, int screen_height)
 {
-	// start with mouse pixel coordinates in range [ 0 : screen_width , screen_height : x ]
+	glm::vec3 screenPos;
+	glm::vec4 viewport = glm::vec4(0.0f, 0.0f, screen_width, screen_height);
+	glm::mat4x4 modelView = glCamera.getViewMatrix() * glCamera.getModelMatrix();
 
-	// Convert to normalized device coordinates - each component in range [ -1 : 1 ]
-	glm::vec3 ray_nds = viewportToNormalizedDeviceCoordinates(xPos, yPos, screen_width, screen_height);
+	// calculate point on near plane
+	screenPos = glm::vec3((float)xPos, (float)(screen_height - yPos), 0.0f);
+	glm::vec3 worldPosNear = glm::unProject(screenPos, modelView, glCamera.getProjectionMatrix(), viewport);
+	std::cout << "worldPosNear at: (" << worldPosNear.x << "," << worldPosNear.y << "," << worldPosNear.z << ")" << std::endl;
 
-	glm::vec4 ray_eye = normalizedDeviceCoordinatesToEyeCoordinates(ray_nds);
+	// calculate point on far plane
+	screenPos = glm::vec3((float)xPos, (float)(screen_height - yPos), 1.0f);
+	glm::vec3 worldPosFar = glm::unProject(screenPos, modelView, glCamera.getProjectionMatrix(), viewport);
+	std::cout << "worldPosFar at: (" << worldPosFar.x << "," << worldPosFar.y << "," << worldPosFar.z << ")" << std::endl;
 
-	//Convert to 4d world coordinates
-	glm::vec3 ray_world = eyeCoordinatesToWorldCoordinates(ray_eye);
-
-	// don't forget to normalise the vector at some point
-	ray_world = glm::normalize(ray_world);
-
-	// Now check for intersection
-
-	glm::vec3 origin(0, 0, -30);
+	glm::vec3 ray_direction = glm::normalize(worldPosFar - worldPosNear);
+	std::cout << "ray direction: (" << ray_direction.x << "," << ray_direction.y << "," << ray_direction.z << ")" << std::endl;
 	for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 	{
-		if (object->intersects(origin, ray_world))
+		if (object->intersects(worldPosNear, ray_direction))
 		{
 			std::cout << "This object collides!!!!! CONGRATULATIONS" << std::endl;
 		}
@@ -55,6 +55,12 @@ void SceneManager::onLeftMouseDown(int xPos, int yPos, int screen_width, int scr
 		{
 			std::cout << "This object does not collide!!!!!" << std::endl;
 		}
+
+		PhysicsHandler phyHandler;
+		glm::vec3 ppoint(0.0, 0.0, -1.0);
+		glm::vec3 pnormal(0.0, 0.0, -1.0);
+		glm::vec3 collisionPoint = phyHandler.linePlaneCollisionPoint(worldPosNear, ray_direction, ppoint, pnormal);
+		std::cout << "collision with plane at: (" << collisionPoint.x << "," << collisionPoint.y << "," << collisionPoint.z << ")" << std::endl;
 	}
 }
 
@@ -182,22 +188,4 @@ glm::vec2 SceneManager::normalizedDeviceCoordinatesToViewport(glm::vec3 ndc, int
 	float x = ((ndc.x + 1) * screen_width) / 2;
 	float y = ((1.0f - ndc.y) * screen_height) / 2;
 	return glm::vec2(x, y);
-}
-
-glm::vec4 SceneManager::normalizedDeviceCoordinatesToEyeCoordinates(glm::vec3 ray_nds)
-{
-	//Convert to 4d homogeneous clip coordinates also in range [ -1 : 1 ] - we want ray z component to point forwards ( -ve in OpenGL )
-	glm::vec4 ray_clip = glm::vec4(ray_nds.x, ray_nds.y, -1.0, 1.0);
-
-	//Convert to 4d eye (camera) coordinates 
-	glm::mat4x4 projection_matrix = glCamera.getProjectionMatrix();
-	glm::vec4 ray_eye = glm::inverse(projection_matrix) * ray_clip;
-	return glm::vec4(ray_eye.x, ray_eye.y, 1.0, 0.0);
-}
-
-glm::vec3 SceneManager::eyeCoordinatesToWorldCoordinates(glm::vec4 ray_eye)
-{
-	//Convert to 4d world coordinates
-	glm::mat4x4 view_matrix = glCamera.getViewMatrix();
-	return glm::vec3(glm::inverse(view_matrix) * ray_eye);
 }

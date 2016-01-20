@@ -1,1 +1,21 @@
-﻿  GameEngineUnitTests.vcxproj -> C:\Users\paul\Documents\GitHub\Game-Engine\Test Project\Debug\GameEngineUnitTests.exe
+﻿  GameEngineUnitTests.cpp
+c:\users\paul\documents\github\game-engine\physicsengine\googletest-master\googletest\include\gtest\gtest.h(1392): warning C4805: '==': unsafe mix of type 'const int' and type 'const bool' in operation
+  c:\users\paul\documents\github\game-engine\physicsengine\googletest-master\googletest\include\gtest\gtest.h(1423): note: see reference to function template instantiation 'testing::AssertionResult testing::internal::CmpHelperEQ<T1,T2>(const char *,const char *,const T1 &,const T2 &)' being compiled
+          with
+          [
+              T1=int,
+              T2=bool
+          ]
+  c:\users\paul\documents\github\game-engine\test project\gameengineunittests\testscenemanager.h(34): note: see reference to function template instantiation 'testing::AssertionResult testing::internal::EqHelper<false>::Compare<int,bool>(const char *,const char *,const T1 &,const T2 &)' being compiled
+          with
+          [
+              T1=int,
+              T2=bool
+          ]
+  c:\users\paul\documents\github\game-engine\test project\gameengineunittests\testscenemanager.h(34): note: see reference to function template instantiation 'testing::AssertionResult testing::internal::EqHelper<false>::Compare<int,bool>(const char *,const char *,const T1 &,const T2 &)' being compiled
+          with
+          [
+              T1=int,
+              T2=bool
+          ]
+  GameEngineUnitTests.vcxproj -> C:\Users\paul\Documents\GitHub\Game-Engine\Test Project\Debug\GameEngineUnitTests.exe
