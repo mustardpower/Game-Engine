@@ -1,6 +1,13 @@
 #pragma once
 #include "BoundingObject.h"
 
+//-----------------------------------------------------------------------------
+// Name:		AABB
+// Variables:	vecMin - the minimum point in 3d space that the box is bounding
+//				vecMax - the maximum point in 3d space that the box is bounding
+// Desc:		Represents an axis aligned bounding box, note that there is no model matrix
+//				as some transformations would cause the box to no longer be axis aligned
+//-----------------------------------------------------------------------------
 class AABB : public BoundingObject
 {
 private:

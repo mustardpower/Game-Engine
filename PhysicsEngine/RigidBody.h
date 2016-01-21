@@ -9,7 +9,11 @@
 
 //-----------------------------------------------------------------------------
 // Name:		RigidBody
-// Variables:	
+// Variables:	NUMBER_OF_OBJECTS - number of objects still active
+//				objectID - the unique id associated with the object
+//				model_matrix - stores any transformations applied to the model
+//				mass, inertia, velocity etc - self explanatory	
+//				physicsHandler - used to calculate any collisions and physical interactions
 // Desc:		The physical properties of the object
 //-----------------------------------------------------------------------------
 

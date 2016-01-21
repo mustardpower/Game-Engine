@@ -3,6 +3,12 @@
 #include "glm\glm.hpp"
 #include "glm\gtc\matrix_transform.hpp"
 
+//-----------------------------------------------------------------------------
+// Name:		PhysicsHandler
+// Variables:	gravity - the magical constant that keeps us stuck to the floor
+// Desc:		Used to calculate all interaction and geometry calculations
+//				that impact on physical objects
+//-----------------------------------------------------------------------------
 class PhysicsHandler
 {
 private:

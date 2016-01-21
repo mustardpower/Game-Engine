@@ -1,13 +1,1 @@
-﻿  AABB.cpp
-  Generating Code...
-  Compiling...
-  Renderable.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
-  SceneRenderer.cpp
-  SceneManager.cpp
-  GeoModel3D.cpp
-  GameEngine.cpp
-LINK : warning LNK4068: /MACHINE not specified; defaulting to X86
-  Physics Engine.vcxproj -> C:\Users\paul\Documents\GitHub\Game-Engine\Debug\Physics Engine.lib
+﻿  Physics Engine.vcxproj -> C:\Users\paul\Documents\GitHub\Game-Engine\Debug\Physics Engine.lib
