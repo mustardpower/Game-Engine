@@ -56,7 +56,7 @@ namespace cwc
       virtual void OnLeftMouseDrag(int x, int y) = 0;
       
       //! Called when mouse wheel is used
-      virtual void OnMouseWheel(int nWheelNumber, int nDirection, int x, int y) = 0;
+      virtual void OnMouseWheel(int nWheelNumber, int nDirection) = 0;
       
       //! Called when a key is pressed on keyboard
       virtual void OnKeyDown(int nKey, char cAscii) = 0;

@@ -133,9 +133,13 @@
 	{
 		sceneManager.onRightMouseUp(x, y);
 	}
-	void GameEngine::OnMouseWheel(int nWheelNumber, int nDirection, int x, int y)
+	void GameEngine::OnMouseWheel(int nWheelNumber, int nDirection)
 	{
-		sceneManager.onMouseWheel(nWheelNumber, nDirection, x, y);
+		RECT windowRect;
+		GetClientRect(_gWindow, &windowRect);
+		int screen_width = windowRect.right - windowRect.left;
+		int screen_height = windowRect.bottom - windowRect.top;
+		sceneManager.onMouseWheel(nWheelNumber, nDirection, screen_width, screen_height);
 	}
 	void GameEngine::OnKeyDown(int nKey, char cAscii)
 	{       
@@ -363,9 +367,7 @@
 		{
 			int fwKeys = GET_KEYSTATE_WPARAM(wParam);
 			int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
-			int xPos = GET_X_LPARAM(lParam);
-			int yPos = GET_Y_LPARAM(lParam);
-			window->OnMouseWheel(fwKeys, zDelta, xPos, yPos);
+			window->OnMouseWheel(fwKeys, zDelta);
 			window->Repaint();
 		}
 		break;

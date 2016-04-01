@@ -38,7 +38,7 @@ public:
 	virtual void OnRightMouseDown(int x, int y);
 	virtual void OnLeftMouseUp(int x, int y);
 	virtual void OnRightMouseUp(int x, int y);
-	virtual void OnMouseWheel(int nWheelNumber, int nDirection, int x, int y);
+	virtual void OnMouseWheel(int nWheelNumber, int nDirection);
 	virtual void OnMouseMove(int x, int y);
 	virtual void OnLeftMouseDrag(int x, int y);
 	virtual void OnKeyDown(int nKey, char cAscii);

@@ -186,7 +186,7 @@ void glutWindow::sMotion(int x, int y)
 
 //-----------------------------------------------------------------------------
 
-void glutWindow::sMouseWheel(int wheel_number, int direction, int x, int y)
+void glutWindow::sMouseWheel(int wheel_number, int direction)
 {
    int CurrentWindow = glutGetWindow();
    std::list<glutWindow*>::iterator i = _gWinInstances.begin();
@@ -195,7 +195,7 @@ void glutWindow::sMouseWheel(int wheel_number, int direction, int x, int y)
    {
       if ((*i)->_gWindow == CurrentWindow)
       {
-         (*i)->OnMouseWheel(wheel_number, direction, x, y);
+         (*i)->OnMouseWheel(wheel_number, direction);
       }
       
       i++;

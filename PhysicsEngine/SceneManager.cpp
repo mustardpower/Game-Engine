@@ -78,18 +78,34 @@ void SceneManager::onLeftMouseUp(int x, int y)
 void SceneManager::onRightMouseUp(int x, int y)
 {
 }
-void SceneManager::onMouseWheel(int nWheelNumber, int nDirection, int x, int y)
+void SceneManager::onMouseWheel(int nWheelNumber, int nDirection, int window_width, int window_height)
 {
 	const int increment = 5;
-	glm::vec3 translation_vec(0.0, 0.0, increment);
+
+	printf("window width: %d window height: %d\n", window_width, window_height);
+
+	glm::vec3 screenPos;
+	glm::vec4 viewport = glm::vec4(0.0f, 0.0f, window_width, window_height);
+	glm::mat4x4 modelView = glCamera.getViewMatrix() * glCamera.getModelMatrix();
+
+	// calculate point on near plane
+	screenPos = glm::vec3((float)window_width / 2.0, (float)(window_height / 2.0), 0.0f);
+	glm::vec3 worldPosNear = glm::unProject(screenPos, modelView, glCamera.getProjectionMatrix(), viewport);
+
+	// calculate point on far plane
+	screenPos = glm::vec3((float)window_width / 2.0, (float)(window_height / 2.0), 1.0f);
+	glm::vec3 worldPosFar = glm::unProject(screenPos, modelView, glCamera.getProjectionMatrix(), viewport);
+
+	glm::vec3 ray_direction = glm::normalize(worldPosFar - worldPosNear);
+
 	if (nDirection > 0)
 	{
-		glCamera.translate(translation_vec);
+		glCamera.translate(ray_direction);
 	}
 	if (nDirection < 0)
 	{
-		glCamera.translate(-translation_vec);
-	}
+		glCamera.translate(-ray_direction);
+	} 
 }
 void SceneManager::onKeyPress(int nKey)
 {

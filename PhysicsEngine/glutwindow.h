@@ -51,7 +51,7 @@ namespace cwc
       virtual void OnLeftMouseDrag(int x, int y){};
       
       //! Called when mouse wheel is used
-      virtual void OnMouseWheel(int nWheelNumber, int nDirection, int x, int y){};
+      virtual void OnMouseWheel(int nWheelNumber, int nDirection){};
       
       //! Called when a key is pressed on keyboard
       virtual void OnKeyDown(int nKey, char cAscii){};
@@ -91,7 +91,7 @@ namespace cwc
       static void sReshape(int w, int h);
       static void sDisplay(void);
       static void sMouse(int button, int updown, int x, int y);
-      static void sMouseWheel(int wheel_number, int direction, int x, int y);
+      static void sMouseWheel(int wheel_number, int direction);
       static void sMotion(int x, int y);
       static void sJoystick( unsigned int buttonMask, int x, int y, int z); // GLUT_JOYSTICK_BUTTON_A
       static void sSpecialUp(int key, int x, int y);
