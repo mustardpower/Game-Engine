@@ -29,19 +29,11 @@ void SceneManager::reset()
 }
 void SceneManager::onLeftMouseDown(int xPos, int yPos, int screen_width, int screen_height)
 {
-	glm::vec3 screenPos;
 	glm::vec4 viewport = glm::vec4(0.0f, 0.0f, screen_width, screen_height);
-	glm::mat4x4 modelView = glCamera.getViewMatrix() * glCamera.getModelMatrix();
 
-	// calculate point on near plane
-	screenPos = glm::vec3((float)xPos, (float)(screen_height - yPos), 0.0f);
-	glm::vec3 worldPosNear = glm::unProject(screenPos, modelView, glCamera.getProjectionMatrix(), viewport);
-	std::cout << "worldPosNear at: (" << worldPosNear.x << "," << worldPosNear.y << "," << worldPosNear.z << ")" << std::endl;
-
-	// calculate point on far plane
-	screenPos = glm::vec3((float)xPos, (float)(screen_height - yPos), 1.0f);
-	glm::vec3 worldPosFar = glm::unProject(screenPos, modelView, glCamera.getProjectionMatrix(), viewport);
-	std::cout << "worldPosFar at: (" << worldPosFar.x << "," << worldPosFar.y << "," << worldPosFar.z << ")" << std::endl;
+	// calculate point on near and far plane
+	glm::vec3 worldPosNear = glCamera.pointOnNearPlane(xPos, screen_height - yPos, viewport);
+	glm::vec3 worldPosFar = glCamera.pointOnFarPlane(xPos, screen_height - yPos, viewport);
 
 	glm::vec3 ray_direction = glm::normalize(worldPosFar - worldPosNear);
 	std::cout << "ray direction: (" << ray_direction.x << "," << ray_direction.y << "," << ray_direction.z << ")" << std::endl;
@@ -82,20 +74,11 @@ void SceneManager::onMouseWheel(int nWheelNumber, int nDirection, int window_wid
 {
 	const int increment = 5;
 
-	printf("window width: %d window height: %d\n", window_width, window_height);
-
-	glm::vec3 screenPos;
 	glm::vec4 viewport = glm::vec4(0.0f, 0.0f, window_width, window_height);
-	glm::mat4x4 modelView = glCamera.getViewMatrix() * glCamera.getModelMatrix();
 
-	// calculate point on near plane
-	screenPos = glm::vec3((float)window_width / 2.0, (float)(window_height / 2.0), 0.0f);
-	glm::vec3 worldPosNear = glm::unProject(screenPos, modelView, glCamera.getProjectionMatrix(), viewport);
-
-	// calculate point on far plane
-	screenPos = glm::vec3((float)window_width / 2.0, (float)(window_height / 2.0), 1.0f);
-	glm::vec3 worldPosFar = glm::unProject(screenPos, modelView, glCamera.getProjectionMatrix(), viewport);
-
+	// calculate point on near and far plane
+	glm::vec3 worldPosNear = glCamera.pointOnNearPlane(window_width / 2.0, window_height / 2.0, viewport);
+	glm::vec3 worldPosFar =  glCamera.pointOnFarPlane(window_width / 2.0, window_height / 2.0, viewport);
 	glm::vec3 ray_direction = glm::normalize(worldPosFar - worldPosNear);
 
 	if (nDirection > 0)

@@ -39,6 +39,8 @@ public:
 	void reset();
 	bool collisionsDetected(Renderable obj);
 
+	glm::vec3 pointOnNearPlane(float x, float y);
+	glm::vec3 pointOnFarPlane(float x, float y);
 	glm::vec3 viewportToNormalizedDeviceCoordinates(int xPos, int yPos,int screen_width, int screen_height);
 	glm::vec2 normalizedDeviceCoordinatesToViewport(glm::vec3 ndc, int screen_width, int screen_height);
 

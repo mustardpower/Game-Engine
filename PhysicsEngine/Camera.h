@@ -23,6 +23,8 @@ public:
 	void translateX(float increment);
 	void translateY(float increment);
 	void translateZ(float increment);
+	glm::vec3 pointOnNearPlane(float x, float y, glm::vec4 viewport);
+	glm::vec3 pointOnFarPlane(float x, float y, glm::vec4 viewport);
 
 	glm::mat4 getMVPMatrix();
 	glm::mat4 getModelMatrix();
