@@ -1,6 +1,5 @@
 #include "Camera.h"
 
-
 Camera::Camera()
 {
 	fov = 45.0;
@@ -57,4 +56,22 @@ glm::mat4 Camera::getViewMatrix()
 glm::mat4 Camera::getProjectionMatrix()
 {
 	return projection_matrix;
+}
+
+glm::vec3 Camera::pointOnNearPlane(float x, float y, glm::vec4 viewport)
+{
+	glm::vec3 worldPosNear;
+	glm::mat4 modelView = view_matrix * model_matrix;
+	glm::vec3 screenPos = glm::vec3(x, y, 0.0f);
+	worldPosNear = glm::unProject(screenPos, modelView, projection_matrix, viewport);
+	return worldPosNear;
+}
+
+glm::vec3 Camera::pointOnFarPlane(float x, float y, glm::vec4 viewport)
+{
+	glm::vec3 worldPosFar;
+	glm::mat4 modelView = view_matrix * model_matrix;
+	glm::vec3 screenPos = glm::vec3(x, y, 1.0f);
+	worldPosFar = glm::unProject(screenPos, modelView, projection_matrix, viewport);
+	return worldPosFar;
 }
