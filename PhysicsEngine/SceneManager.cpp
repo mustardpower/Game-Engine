@@ -36,7 +36,6 @@ void SceneManager::onLeftMouseDown(int xPos, int yPos, int screen_width, int scr
 	glm::vec3 worldPosFar = glCamera.pointOnFarPlane(xPos, screen_height - yPos, viewport);
 
 	glm::vec3 ray_direction = glm::normalize(worldPosFar - worldPosNear);
-	std::cout << "ray direction: (" << ray_direction.x << "," << ray_direction.y << "," << ray_direction.z << ")" << std::endl;
 	for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 	{
 		if (object->intersects(worldPosNear, ray_direction))
@@ -46,13 +45,7 @@ void SceneManager::onLeftMouseDown(int xPos, int yPos, int screen_width, int scr
 		else
 		{
 			std::cout << "This object does not collide!!!!!" << std::endl;
-		}
-
-		PhysicsHandler phyHandler;
-		glm::vec3 ppoint(0.0, 0.0, -1.0);
-		glm::vec3 pnormal(0.0, 0.0, -1.0);
-		glm::vec3 collisionPoint = phyHandler.linePlaneCollisionPoint(worldPosNear, ray_direction, ppoint, pnormal);
-		std::cout << "collision with plane at: (" << collisionPoint.x << "," << collisionPoint.y << "," << collisionPoint.z << ")" << std::endl;
+		}		
 	}
 }
 

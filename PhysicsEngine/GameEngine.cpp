@@ -215,6 +215,7 @@
 	//! Called when Mouse is moved (without pressing any button)
 	void GameEngine::OnMouseMove(int x, int y)
 	{
+		printf("Mouse move\n");
 	}
 
 	void  GameEngine::SetFullscreen(bool bFullscreen)
@@ -223,6 +224,7 @@
 
 	void GameEngine::OnLeftMouseDrag(int x, int y)
 	{
+		printf("Left mouse drag\n");
 	}
 
 	void GameEngine::OnXMLLoad()
@@ -368,6 +370,18 @@
 			int fwKeys = GET_KEYSTATE_WPARAM(wParam);
 			int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
 			window->OnMouseWheel(fwKeys, zDelta);
+			window->Repaint();
+		}
+		break;
+		case WM_MOUSEMOVE:
+		{
+			int xPos = GET_X_LPARAM(lParam);
+			int yPos = GET_Y_LPARAM(lParam);
+
+			if (GetKeyState(VK_LBUTTON) & 0x100)
+				window->OnLeftMouseDrag(xPos, yPos);
+
+			window->OnMouseMove(xPos, yPos);
 			window->Repaint();
 		}
 		break;
