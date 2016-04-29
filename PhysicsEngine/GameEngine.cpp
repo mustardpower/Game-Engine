@@ -215,7 +215,6 @@
 	//! Called when Mouse is moved (without pressing any button)
 	void GameEngine::OnMouseMove(int x, int y)
 	{
-		printf("Mouse move\n");
 	}
 
 	void  GameEngine::SetFullscreen(bool bFullscreen)
@@ -224,7 +223,6 @@
 
 	void GameEngine::OnLeftMouseDrag(int x, int y)
 	{
-		printf("Left mouse drag\n");
 	}
 
 	void GameEngine::OnXMLLoad()
