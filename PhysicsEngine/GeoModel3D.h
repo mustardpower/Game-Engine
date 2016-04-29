@@ -57,16 +57,22 @@ private:
 	static GLuint NUMBER_OF_MODELS;
 	std::string geo_file_name;
 public:
+
+	static void setModelDirectory(std::string directoryPath);
+	static void setTexturesDirectory(std::string directoryPath);
+
 	GeoModel3D();
 	~GeoModel3D();
 	GeoModel3D(const GeoModel3D& model);
+
+	void print();
+
 	GLuint getModelID();
 	std::string getFileName() const;
 	void loadFromFile(std::string file_name);
 	std::vector<GLModel3DData> retrieveMeshes() const;
-	static void setModelDirectory(std::string directoryPath);
-	static void setTexturesDirectory(std::string directoryPath);
 	GLuint loadTexture(std::string file_name);
+
 	void serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent);
 	static GeoModel3D deserialize(tinyxml2::XMLNode* parent);
 };

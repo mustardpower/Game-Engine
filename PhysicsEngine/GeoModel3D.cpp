@@ -39,6 +39,11 @@ void GeoModel3D::setTexturesDirectory(std::string directoryPath)
 	texturesDirectory = directoryPath;
 }
 
+void GeoModel3D::print()
+{
+	std::cout << "Model ID: " << model_id << std::endl;
+}
+
 void GeoModel3D::loadFromFile(std::string file_name)
 {
 	geo_file_name = file_name;

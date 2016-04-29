@@ -5,6 +5,7 @@ GLuint Renderable::NUMBER_OF_OBJECTS = 0;
 
 Renderable::Renderable()
 {
+	selected = false;
 }
 
 Renderable::Renderable(const Renderable &other)
@@ -12,12 +13,14 @@ Renderable::Renderable(const Renderable &other)
 	model = other.getModel();
 	object_id = ++NUMBER_OF_OBJECTS;
 	object = other.object;
+	selected = false;
 }
 Renderable::Renderable(GeoModel3D the_model, RigidBody rb)
 {
 	object_id = ++NUMBER_OF_OBJECTS;
 	model = the_model;
 	object = rb;
+	selected = false;
 }
 
 Renderable & Renderable::operator= (const Renderable & other)
@@ -25,6 +28,7 @@ Renderable & Renderable::operator= (const Renderable & other)
 	model = other.model;
 	object_id = ++NUMBER_OF_OBJECTS;
 	object = other.object;
+	selected = other.selected;
 
 	return *this;
 }
@@ -85,4 +89,20 @@ Renderable Renderable::deserialize(tinyxml2::XMLNode* parent)
 bool Renderable::intersects(glm::vec3 origin, glm::vec3 dir)
 {
 	return boundingBox.intersects(origin, dir);
+}
+
+void Renderable::setSelection(bool is_selected)
+{
+	selected = is_selected;
+}
+
+bool Renderable::isSelected()
+{
+	return selected;
+}
+
+void Renderable::print()
+{
+	std::cout << "Object ID: " << object_id << std::endl;
+	model.print();
 }
