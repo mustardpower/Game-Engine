@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <windowsx.h>
+#include <CommCtrl.h>
 
 #include "glWindow.h"
 #include "glsl.h"
@@ -11,6 +12,7 @@ class GameEngine : public cwc::glWindow
 {
 private:
 	static HINSTANCE hInstance;
+	HIMAGELIST hImageList;
 	WNDCLASSEXW wcex;
 	SceneManager sceneManager;
 	SceneRenderer sceneRenderer;
@@ -56,6 +58,7 @@ public:
 	virtual void Show(); //! Show the window
 	virtual void Close();
 
+	HWND createSimpleToolbar(HWND hWndParent);
 	void initializeMenuBar();
 
 	static void CALLBACK sMenuBarFunc(int menuOption);

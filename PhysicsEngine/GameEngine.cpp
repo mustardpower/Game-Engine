@@ -74,6 +74,14 @@
 
 	void GameEngine::OnInit()
 	{
+		// Ensure that the common control DLL is loaded, and then create 
+		// the header control. 
+		INITCOMMONCONTROLSEX icex;  //declare an INITCOMMONCONTROLSEX Structure
+		icex.dwSize = sizeof(INITCOMMONCONTROLSEX);
+		icex.dwICC = ICC_BAR_CLASSES;   //set dwICC member to ICC_LISTVIEW_CLASSES    
+											 // this loads list-view and header control classes.
+		InitCommonControlsEx(&icex);
+
 		_gWinInstances.push_back(this);
 
 		LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -81,11 +89,11 @@
 
 		hInstance = GetModuleHandle(NULL); // Store instance handle in our global variable
 		RegisterWindow(hInstance);
-		_gWindow = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+		_gWindow = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 		Show();
 
-		initializeMenuBar();
+		createSimpleToolbar(_gWindow);
 		sceneRenderer.onInit(_gWindow);
 
 		SetTimer(_gWindow,             // handle to main window 
@@ -318,6 +326,42 @@
 	void GameEngine::Close()
 	{
 		DestroyWindow(_gWindow);
+	}
+
+	HWND GameEngine::createSimpleToolbar(HWND hWndParent)
+	{
+		// Define the buttons.
+		// IDM_NEW, IDM_0PEN, and IDM_SAVE are application-defined command IDs.
+
+		const int numButtons = 3;
+		TBBUTTON tbButtons3[numButtons] =
+		{
+			{ STD_FILENEW,  ID_FILE_NEW,  TBSTATE_ENABLED | TBSTATE_WRAP, BTNS_BUTTON,{ 0 }, 0L, 0 },
+			{ STD_FILEOPEN, ID_FILE_LOAD, TBSTATE_ENABLED | TBSTATE_WRAP, BTNS_BUTTON,{ 0 }, 0L, 0 },
+			{ STD_FILESAVE, ID_FILE_SAVE, TBSTATE_ENABLED | TBSTATE_WRAP, BTNS_BUTTON,{ 0 }, 0L, 0 }
+		};
+
+		// Create the toolbar window.
+		HWND hWndToolbar = CreateWindowEx(0, TOOLBARCLASSNAME, NULL,
+			WS_CHILD | WS_VISIBLE | CCS_VERT | WS_BORDER, 0, 0, 0, 0,
+			hWndParent, NULL, hInstance, NULL);
+
+		// Create the image list.
+		hImageList = ImageList_Create(24, 24,                   // Dimensions of individual bitmaps.  
+			ILC_COLOR16 | ILC_MASK,   // Ensures transparent background.
+			numButtons, 0);
+
+		// Set the image list.
+		SendMessage(hWndToolbar, TB_SETIMAGELIST, 0, (LPARAM)hImageList);
+
+		// Load the button images.
+		SendMessage(hWndToolbar, TB_LOADIMAGES, (WPARAM)IDB_STD_LARGE_COLOR, (LPARAM)HINST_COMMCTRL);
+
+		// Add them to the toolbar.
+		SendMessage(hWndToolbar, TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
+		SendMessage(hWndToolbar, TB_ADDBUTTONS, numButtons, (LPARAM)&tbButtons3);
+
+		return hWndToolbar;
 	}
 
 	LRESULT GameEngine::handleWindowsMessage(cwc::glWindow* window, UINT message, WPARAM wParam, LPARAM lParam)
