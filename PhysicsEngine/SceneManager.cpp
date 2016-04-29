@@ -40,20 +40,13 @@ void SceneManager::onLeftMouseDown(int xPos, int yPos, int screen_width, int scr
 	{
 		if (object->intersects(worldPosNear, ray_direction))
 		{
-			std::cout << "This object collides!!!!! CONGRATULATIONS" << std::endl;
-		}
-		else
-		{
-			std::cout << "This object does not collide!!!!!" << std::endl;
+			object->setSelection(true);
 		}		
 	}
 }
 
 void SceneManager::onRightMouseDown(int x, int y)
 {
-	const int increment = 1.0;
-	glm::vec3 rotation_axis = glm::vec3(0.0, 1.0, 0.0);
-	glCamera.rotate(-increment, rotation_axis);
 }
 
 void SceneManager::onLeftMouseUp(int x, int y)
@@ -62,6 +55,7 @@ void SceneManager::onLeftMouseUp(int x, int y)
 
 void SceneManager::onRightMouseUp(int x, int y)
 {
+	clearSelection();
 }
 void SceneManager::onMouseWheel(int nWheelNumber, int nDirection, int window_width, int window_height)
 {
@@ -180,4 +174,12 @@ glm::vec2 SceneManager::normalizedDeviceCoordinatesToViewport(glm::vec3 ndc, int
 	float x = ((ndc.x + 1) * screen_width) / 2;
 	float y = ((1.0f - ndc.y) * screen_height) / 2;
 	return glm::vec2(x, y);
+}
+
+void SceneManager::clearSelection()
+{
+	for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+	{
+		object->setSelection(false);
+	}
 }

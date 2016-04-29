@@ -46,4 +46,6 @@ public:
 
 	int toXML(std::string file_name);
 	int fromXML(std::string file_name);
+
+	void clearSelection();
 };

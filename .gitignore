@@ -48,3 +48,4 @@ Temporary Items
 *.tlog
 *.tlog
 .\PhysicsEngine\Release\*.obj
+PhysicsEngine/Debug/Physics Engine.log

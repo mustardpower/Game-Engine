@@ -22,6 +22,7 @@ private:
 	RigidBody object;
 	glm::mat4 frame_store;
 	AABB boundingBox;
+	bool selected;
 public:
 	Renderable();
 	Renderable(const Renderable& other);
@@ -42,4 +43,9 @@ public:
 	void updateFrame(float dt);
 
 	bool Renderable::intersects(glm::vec3 p, glm::vec3 dir);
+
+	void setSelection(bool is_selected);
+	bool isSelected();
+
+	void print();
 };
