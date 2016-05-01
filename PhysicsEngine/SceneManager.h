@@ -3,6 +3,7 @@
 #include <string>
 #include <time.h>
 #include <Windows.h>
+#include <chrono>
 #include "tinyxml2\tinyxml2.h"
 #include "Renderable.h"
 #include "Camera.h"
@@ -22,7 +23,7 @@ private:
 	std::vector<Renderable> objects;
 	// QuadTree quadtree;
 	Camera glCamera;
-	clock_t last_time_step;
+	std::chrono::steady_clock::time_point last_time_step;
 public:
 	SceneManager();
 
