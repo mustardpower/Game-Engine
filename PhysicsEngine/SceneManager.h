@@ -8,6 +8,7 @@
 #include "Renderable.h"
 #include "Camera.h"
 #include "PhysicsHandler.h"
+#include "UnitsManager.h"
 
 //-----------------------------------------------------------------------------
 // Name:		SceneManager
@@ -23,6 +24,7 @@ private:
 	std::vector<Renderable> objects;
 	// QuadTree quadtree;
 	Camera glCamera;
+	static UnitsManager unitsManager;
 	std::chrono::steady_clock::time_point last_time_step;
 public:
 	SceneManager();

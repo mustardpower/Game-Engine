@@ -1,4 +1,5 @@
 #include "RigidBody.h"
+#include "SceneManager.h"
 
 GLuint RigidBody::NUMBER_OF_OBJECTS = 0;
 PhysicsHandler RigidBody::physicsHandler;
@@ -57,8 +58,10 @@ void RigidBody::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode*
 
 	// --------------------- Velocity ----------------------------//
 
+	std::string velocityUnit = UnitsManager::currentUnit(UNIT_LENGTH);
 	tinyxml2::XMLElement* velocityElement = xmlDocument.NewElement("Velocity");
 	tinyxml2::XMLText* velocityText = xmlDocument.NewText(glm::to_string(velocity).c_str());
+	velocityElement->SetAttribute("unit", velocityUnit.c_str());
 	velocityElement->LinkEndChild(velocityText);
 	objElement->LinkEndChild(velocityElement);
 
@@ -69,13 +72,16 @@ RigidBody RigidBody::deserialize(tinyxml2::XMLNode* parent)
 {
 	RigidBody rb;
 	const char* elementText;
+	const char* velocityUnit;
 
 	elementText = parent->FirstChildElement("Position")->GetText();
 	std::string position(elementText);
 
 	rb.setModelMatrix(glm::from_string_mat4x4(position));
 
-	elementText = parent->FirstChildElement("Velocity")->GetText();
+	tinyxml2::XMLElement* velocityElement = parent->FirstChildElement("Velocity");
+	elementText = velocityElement->GetText();
+	velocityUnit = velocityElement->Attribute("unit");
 	std::string velocity(elementText);
 	
 	rb.setVelocity(glm::from_string_vec3(velocity));
