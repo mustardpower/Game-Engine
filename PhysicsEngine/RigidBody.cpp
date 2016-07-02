@@ -60,24 +60,11 @@ void RigidBody::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode*
 
 	std::string velocityUnit = UnitsManager::currentUnit(UNIT_LENGTH);
 	tinyxml2::XMLElement* velocityElement = xmlDocument.NewElement("Velocity");
+	tinyxml2::XMLText* velocityText = xmlDocument.NewText(glm::to_string(velocity).c_str());
 	velocityElement->SetAttribute("unit", velocityUnit.c_str());
-
-	tinyxml2::XMLElement* velocityXElement = xmlDocument.NewElement("X");
-	tinyxml2::XMLText* velocityXText = xmlDocument.NewText(std::to_string(velocity.x).c_str());
-	velocityXElement->LinkEndChild(velocityXText);
-	velocityElement->LinkEndChild(velocityXElement);
-
-	tinyxml2::XMLElement* velocityYElement = xmlDocument.NewElement("Y");
-	tinyxml2::XMLText* velocityYText = xmlDocument.NewText(std::to_string(velocity.y).c_str());
-	velocityYElement->LinkEndChild(velocityYText);
-	velocityElement->LinkEndChild(velocityYElement);
-
-	tinyxml2::XMLElement* velocityZElement = xmlDocument.NewElement("Z");
-	tinyxml2::XMLText* velocityZText = xmlDocument.NewText(std::to_string(velocity.z).c_str());
-	velocityZElement->LinkEndChild(velocityZText);
-	velocityElement->LinkEndChild(velocityZElement);
-
+	velocityElement->LinkEndChild(velocityText);
 	objElement->LinkEndChild(velocityElement);
+
 	parent->LinkEndChild(objElement);
 }
 
@@ -93,11 +80,10 @@ RigidBody RigidBody::deserialize(tinyxml2::XMLNode* parent)
 	rb.setModelMatrix(glm::from_string_mat4x4(position));
 
 	tinyxml2::XMLElement* velocityElement = parent->FirstChildElement("Velocity");
+	elementText = velocityElement->GetText();
 	velocityUnit = velocityElement->Attribute("unit");
-	float velocityX = atof(velocityElement->FirstChildElement("X")->GetText());
-	float velocityY = atof(velocityElement->FirstChildElement("Y")->GetText());
-	float velocityZ = atof(velocityElement->FirstChildElement("Z")->GetText());
+	std::string velocity(elementText);
 	
-	rb.setVelocity(glm::vec3(velocityX, velocityY, velocityZ));
+	rb.setVelocity(glm::from_string_vec3(velocity));
 	return rb;
 }
