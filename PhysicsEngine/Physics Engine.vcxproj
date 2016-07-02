@@ -108,6 +108,7 @@
     <ClCompile Include="tinyxml2\xmltest.cpp" />
     <ClCompile Include="tiny_obj_loader.cc" />
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="UnitsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />

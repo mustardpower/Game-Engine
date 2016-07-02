@@ -153,6 +153,9 @@
     <ClCompile Include="tinyxml2\xmltest.cpp">
       <Filter>Source Files\Data Handling\TinyXML2</Filter>
     </ClCompile>
+    <ClCompile Include="UnitsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinarySearchTree.h">

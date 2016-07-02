@@ -9,7 +9,6 @@ void SceneManager::update()
 	auto current_time_step = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<float> time_step(current_time_step - last_time_step);
 	float dt = time_step.count();
-	printf("%f seconds elapsed\n", dt);
 	
 	for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 	{

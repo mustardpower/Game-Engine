@@ -87,6 +87,10 @@ void GeoModel3D::loadFromFile(std::string file_name)
 		std::cout << "# of shapes    : " << shapes.size() << std::endl;
 		std::cout << "# of materials : " << materials.size() << std::endl;
 	}
+	else
+	{
+		std::cout << err << std::endl;
+	}
 }
 
 GLuint GeoModel3D::getModelID()
