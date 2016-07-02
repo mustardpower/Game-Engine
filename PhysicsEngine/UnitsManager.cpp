@@ -25,7 +25,7 @@ std::vector<Unit> UnitsManager::initializeUnits()
 	velocityMap.insert(std::pair<std::string, double>("kmph", 3.6));
 	velocityMap.insert(std::pair<std::string, double>("mph", 2.23694));
 	velocityMap.insert(std::pair<std::string, double>("ft/s", 3.2808453346457));
-	velocityMap.insert(std::pair<std::string, double>("knot", 1.9438477170141412742));
+	velocityMap.insert(std::pair<std::string, double>("knots", 1.9438477170141412742));
 	std::string default_unit = UnitsManager::defaultUnits().at(UNIT_VELOCITY);
 	Unit velocityUnit(UNIT_VELOCITY, velocityMap, default_unit);
 	allUnits.push_back(velocityUnit);
