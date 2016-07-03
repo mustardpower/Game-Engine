@@ -81,9 +81,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Source Files\SceneManagement</Filter>
     </ClCompile>
@@ -154,7 +151,7 @@
       <Filter>Source Files\Data Handling\TinyXML2</Filter>
     </ClCompile>
     <ClCompile Include="UnitsManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Data Handling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +239,6 @@
     <ClInclude Include="glut.h">
       <Filter>Header Files\GLSL</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -265,18 +259,5 @@
     <None Include="vert_shader.vs">
       <Filter>Shader Files</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="GameEngine.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="GameEngine.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="small.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
 </Project>

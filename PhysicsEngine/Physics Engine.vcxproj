@@ -15,6 +15,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>PhysicsEngine</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>PhysicsEngineLib</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -95,7 +96,6 @@
     <ClCompile Include="glutwindow.cpp" />
     <ClCompile Include="glWindow.cpp" />
     <ClCompile Include="lodepng.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelImporter3D.cpp" />
     <ClCompile Include="PhysicsHandler.cpp" />
     <ClCompile Include="Renderable.cpp" />
@@ -132,7 +132,6 @@
     <ClInclude Include="Node.h" />
     <ClInclude Include="PhysicsHandler.h" />
     <ClInclude Include="Renderable.h" />
-    <ClInclude Include="Resource.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneRenderer.h" />
@@ -150,13 +149,6 @@
   <ItemGroup>
     <None Include="frag_shader.fs" />
     <None Include="vert_shader.vs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="GameEngine.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="GameEngine.ico" />
-    <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
