@@ -75,8 +75,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>C:\Users\paul\Documents\GitHub\Game-Engine\Debug;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\paul\Documents\GitHub\googletest-master\googletest\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\paul\Documents\GitHub\Physics-Engine\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\paul\Documents\GitHub\Physics-Engine\PhysicsEngine;D:\paul\Documents\GitHub\googletest-master\googletest\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -175,6 +175,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TestSettings.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PhysicsEngine\Physics Engine.vcxproj">
+      <Project>{9c8ef456-b734-46e3-a5d4-88eef9d8b4e7}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
