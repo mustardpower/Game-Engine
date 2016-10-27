@@ -45,21 +45,15 @@ Temporary Items
 *.pdb
 *.idb
 *.obj
-*.tlog
+*.ipch
+*.ilk
 *.tlog
 .\PhysicsEngine\Release\*.obj
 PhysicsEngine/Debug/Physics Engine.log
-Release/PhysicsEngineLib.lib
 *.iobj
-Release/PhysicsEngine.ipdb
-Release/PhysicsEngine.exe
+Release/*.*
+Debug/*.*
 PhysicsEngine/Release/PhysicsEngine.log
-*.ipch
-*.ilk
-*.obj
-Debug/PhysicsEngineLib.lib
 PhysicsEngine/PhysicsEngine.vcxproj.user
 Physics Engine.VC.opendb
-Debug/GameEngineUnitTests.exe
 PhysicsEngine/Debug/PhysicsEngine.log
-Debug/PhysicsEngine.exe
