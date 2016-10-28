@@ -45,5 +45,5 @@ public:
 	void updatePosition(float dt);
 
 	void serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent);
-	static RigidBody deserialize(tinyxml2::XMLNode* parent);
+	static tinyxml2::XMLError deserialize(tinyxml2::XMLNode* parent, RigidBody& rigidBody);
 };

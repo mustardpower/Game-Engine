@@ -34,9 +34,11 @@ public:
 	glm::vec3 getVelocity();
 
 	void setModelMatrix(glm::mat4x4 modelMatrix);
+	void setModel(GeoModel3D aModel);
+	void setRigidBody(RigidBody rigidBody);
 
 	void serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent);
-	static Renderable deserialize(tinyxml2::XMLNode* parent);
+	static tinyxml2::XMLError deserialize(tinyxml2::XMLNode* parent, Renderable& renderable);
 
 	void storeFrame();
 	void previousFrame();

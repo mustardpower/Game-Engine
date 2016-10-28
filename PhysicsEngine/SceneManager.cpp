@@ -119,7 +119,7 @@ bool SceneManager::collisionsDetected(Renderable obj)
 	return false;
 }
 
-int SceneManager::toXML(std::string file_name)
+tinyxml2::XMLError SceneManager::toXML(std::string file_name)
 {
 	tinyxml2::XMLDocument aDoc;
 	tinyxml2::XMLDeclaration* decl = aDoc.NewDeclaration();
@@ -144,7 +144,7 @@ int SceneManager::toXML(std::string file_name)
 	return error;
 }
 
-int SceneManager::fromXML(std::string file_name)
+tinyxml2::XMLError SceneManager::fromXML(std::string file_name)
 {
 	Renderable scene_object;
 	tinyxml2::XMLDocument aDoc;
@@ -154,7 +154,9 @@ int SceneManager::fromXML(std::string file_name)
 	tinyxml2::XMLNode * pRenderable = pRoot->NextSibling()->FirstChild();
 	while (pRenderable != nullptr)
 	{
-		scene_object = Renderable::deserialize(pRenderable);
+		error = Renderable::deserialize(pRenderable, scene_object);
+		if (error != tinyxml2::XML_SUCCESS)
+			return error;
 		objects.push_back(scene_object);
 		pRenderable = pRenderable->NextSibling();
 	}

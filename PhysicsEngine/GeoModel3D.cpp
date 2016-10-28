@@ -2,6 +2,7 @@
 #include <WinGDI.h>
 #include "GeoModel3D.h"
 #include "GameEngine.h"
+#include <experimental/filesystem>
 
 GLuint GeoModel3D::NUMBER_OF_MODELS = 0;
 GLuint GLModel3DData::NUMBER_OF_MESHES = 0;
@@ -82,15 +83,8 @@ void GeoModel3D::loadFromFile(std::string file_name)
 		meshes.push_back(new_mesh);
 	}
 
-	if (err.empty())
-	{
-		std::cout << "# of shapes    : " << shapes.size() << std::endl;
-		std::cout << "# of materials : " << materials.size() << std::endl;
-	}
-	else
-	{
-		std::cout << err << std::endl;
-	}
+	std::cout << "# of shapes    : " << shapes.size() << std::endl;
+	std::cout << "# of materials : " << materials.size() << std::endl;
 }
 
 GLuint GeoModel3D::getModelID()
@@ -144,11 +138,17 @@ void GeoModel3D::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode
 	parent->LinkEndChild(objElement);
 }
 
-GeoModel3D GeoModel3D::deserialize(tinyxml2::XMLNode* parent)
+tinyxml2::XMLError GeoModel3D::deserialize(tinyxml2::XMLNode* parent, GeoModel3D &model)
 {
-	GeoModel3D cube;
 	const char* elementText = parent->FirstChildElement("file_name")->GetText();
 	std::string file_name(elementText);
-	cube.loadFromFile(file_name);
-	return cube;
+
+	if (!std::experimental::filesystem::exists(modelDirectory + file_name))
+	{
+		return tinyxml2::XML_ERROR_FILE_COULD_NOT_BE_OPENED;
+	}
+	
+	model.loadFromFile(file_name);
+
+	return tinyxml2::XML_SUCCESS;
 }

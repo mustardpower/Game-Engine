@@ -74,5 +74,5 @@ public:
 	GLuint loadTexture(std::string file_name);
 
 	void serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent);
-	static GeoModel3D deserialize(tinyxml2::XMLNode* parent);
+	static tinyxml2::XMLError deserialize(tinyxml2::XMLNode* parent, GeoModel3D& model);
 };

@@ -47,8 +47,8 @@ public:
 	glm::vec3 viewportToNormalizedDeviceCoordinates(int xPos, int yPos,int screen_width, int screen_height);
 	glm::vec2 normalizedDeviceCoordinatesToViewport(glm::vec3 ndc, int screen_width, int screen_height);
 
-	int toXML(std::string file_name);
-	int fromXML(std::string file_name);
+	tinyxml2::XMLError toXML(std::string file_name);
+	tinyxml2::XMLError fromXML(std::string file_name);
 
 	void clearSelection();
 };

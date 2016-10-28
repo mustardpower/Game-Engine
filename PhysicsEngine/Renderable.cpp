@@ -53,6 +53,16 @@ void Renderable::setModelMatrix(glm::mat4x4 modelMatrix)
 	object.setModelMatrix(modelMatrix);
 }
 
+void Renderable::setModel(GeoModel3D aModel)
+{
+	model = aModel;
+}
+
+void Renderable::setRigidBody(RigidBody rigidBody)
+{
+	object = rigidBody;
+}
+
 void Renderable::storeFrame()
 {
 	frame_store = object.getModelMatrix();
@@ -76,14 +86,29 @@ void Renderable::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode
 	parent->LinkEndChild(objElement);
 }
 
-Renderable Renderable::deserialize(tinyxml2::XMLNode* parent)
+tinyxml2::XMLError Renderable::deserialize(tinyxml2::XMLNode* parent, Renderable& renderable)
 {
+	tinyxml2::XMLError result;
+	GeoModel3D model;
 	tinyxml2::XMLNode* pGeoModel = parent->FirstChildElement("GEOModel");
-	GeoModel3D model = GeoModel3D::deserialize(pGeoModel);
+	result = GeoModel3D::deserialize(pGeoModel, model);
+	if (result != tinyxml2::XML_SUCCESS)
+	{
+		return result;
+	};
+
+	RigidBody rigidBody;
 	tinyxml2::XMLNode* pRigidBody = parent->FirstChildElement("RigidBody");
-	RigidBody rigidBody = RigidBody::deserialize(pRigidBody);
-	Renderable object(model,rigidBody);
-	return object;
+	result = RigidBody::deserialize(pRigidBody, rigidBody);
+	if (result != tinyxml2::XML_SUCCESS)
+	{
+		return result;
+	};
+
+	renderable.setModel(model);
+	renderable.setRigidBody(rigidBody);
+
+	return tinyxml2::XML_SUCCESS;
 }
 
 bool Renderable::intersects(glm::vec3 origin, glm::vec3 dir)

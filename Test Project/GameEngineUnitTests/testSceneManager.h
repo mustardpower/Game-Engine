@@ -21,6 +21,16 @@ TEST(testSceneManager, testXMLRead)
 	EXPECT_EQ(velocity, object.getVelocity());
 }
 
+TEST(testSceneManager, testXMLReadFailure)
+{
+	SceneManager sceneManager;
+	tinyxml2::XMLError res = sceneManager.fromXML(TestSettings::getTestFileDirectory() + "\\SceneRendering\\nonexistant.xml");
+	EXPECT_NE(res, tinyxml2::XML_SUCCESS);
+
+	std::vector<Renderable> objects = sceneManager.getObjects();
+	EXPECT_EQ(0, objects.size());
+}
+
 TEST(testSceneManager, testRayCollision)
 {
 	//bounding box 

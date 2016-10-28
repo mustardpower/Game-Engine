@@ -75,8 +75,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>C:\Users\paul\Documents\GitHub\Physics-Engine\Debug;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\paul\Documents\GitHub\Physics-Engine\PhysicsEngine;D:\paul\Documents\GitHub\googletest-master\googletest\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\PhysicsEngine;D:\paul\Documents\GitHub\googletest-master\googletest\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>

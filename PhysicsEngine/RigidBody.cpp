@@ -81,9 +81,8 @@ void RigidBody::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode*
 	parent->LinkEndChild(objElement);
 }
 
-RigidBody RigidBody::deserialize(tinyxml2::XMLNode* parent)
+tinyxml2::XMLError RigidBody::deserialize(tinyxml2::XMLNode* parent, RigidBody& rb)
 {
-	RigidBody rb;
 	const char* elementText;
 	const char* velocityUnit;
 
@@ -99,5 +98,5 @@ RigidBody RigidBody::deserialize(tinyxml2::XMLNode* parent)
 	float velocityZ = atof(velocityElement->FirstChildElement("Z")->GetText());
 	
 	rb.setVelocity(glm::vec3(velocityX, velocityY, velocityZ));
-	return rb;
+	return tinyxml2::XML_SUCCESS;
 }
