@@ -70,6 +70,10 @@ void SceneRenderer::renderScene(HDC hDc,Camera glCamera,std::vector<Renderable> 
 		mvp_matrix = camera_mvp_matrix * object_model_matrix;
 		shader->setUniformMatrix4fv("mvp_matrix",1,GL_FALSE,&mvp_matrix[0][0]);
 		renderModel(object->getModel());
+		if (object->isSelected())
+		{
+			renderBoundingBox(object->getBoundingBox());
+		}
 	}
 	if (shader) shader->end();
 	SwapBuffers(hDc);
@@ -139,6 +143,48 @@ void SceneRenderer::renderModel(GeoModel3D model)
 		tinyobj::mesh_t mesh = m->getMeshData();
 		glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
 	}
+}
+
+void SceneRenderer::renderBoundingBox(AABB boundingBox)
+{
+	GLuint vao_new_id;
+	printf("Rendering bounding box of selected object!\n");
+	glm::vec3 min = boundingBox.getVecMin();
+	glm::vec3 max = boundingBox.getVecMax();
+	const int NUM_OF_VERTICES = 8;
+	
+	// need to store  
+	glGenVertexArrays(1, &vao_new_id); // Create our Vertex Array Object
+	glBindVertexArray(vao_new_id); // Bind our Vertex Array Object so we can use it  
+
+	glGenBuffers(1, &IBO);
+	glGenBuffers(3, vbos);
+
+	std::vector<float> vertices = {
+		max.x,  max.y,  max.z, // Vertex 0 (X, Y, Z)
+		max.x,  max.y,  min.z, // Vertex 1 (X, Y, Z)
+		max.x,	min.y,  min.z, // Vertex 2 (X, Y, Z)
+		max.x,	min.y,  max.z, // Vertex 3 (X, Y, Z)
+		min.x,  max.y, max.z, // Vertex 4 (X, Y, Z)
+		min.x,  max.y, min.z, // Vertex 5 (X, Y, Z)
+		min.x,	min.y, min.z, // Vertex 6 (X, Y, Z)
+		min.x,	min.y, max.z  // Vertex 7 (X, Y, Z)
+	};
+
+	std::vector<unsigned int> indices = {
+		0,1,  1,5,  5,4,  4,0,    // edges of the top face
+		7,3,  3,2,  2,6,  6,7,    // edges of the bottom face
+		1,2,  0,3,  4,7,  5,6	 // edges connecting top face to bottom face
+	};
+
+	createVertexBuffer(vertices);
+	createIndexBuffer(indices);
+
+	glDrawElements(GL_LINES, NUM_OF_VERTICES*3, GL_UNSIGNED_INT, 0);
+
+	glEnableVertexAttribArray(0); // Disable our Vertex Array Object
+	glBindVertexArray(0); // Disable our Vertex Buffer Object
+
 }
 
 void SceneRenderer::EnableOpenGL(HWND hWnd)

@@ -34,5 +34,6 @@ public:
 	void createNormalsBuffer(std::vector<GLfloat> normals);
 	void createTexCoordsBuffer(std::vector<GLfloat> tex_coords);
 	void renderModel(GeoModel3D model);
+	void renderBoundingBox(AABB boundingBox);
 	void setTextureUnit(int unit);
 };

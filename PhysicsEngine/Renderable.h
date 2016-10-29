@@ -32,6 +32,7 @@ public:
 	GeoModel3D getModel() const;
 	glm::mat4 getModelMatrix();
 	glm::vec3 getVelocity();
+	AABB getBoundingBox();
 
 	void setModelMatrix(glm::mat4x4 modelMatrix);
 	void setModel(GeoModel3D aModel);

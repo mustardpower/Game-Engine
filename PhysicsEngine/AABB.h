@@ -20,4 +20,6 @@ public:
 	bool contains(glm::vec3 point);
 	bool intersects(AABB* aBoundingBox);
 	bool intersects(glm::vec3 origin, glm::vec3 dir);
+	glm::vec3 getVecMin();
+	glm::vec3 getVecMax();
 };

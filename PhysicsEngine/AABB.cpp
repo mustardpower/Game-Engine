@@ -61,3 +61,13 @@ bool AABB::intersects(glm::vec3 origin, glm::vec3 dir)
 
 	return true;
 }
+
+glm::vec3 AABB::getVecMin()
+{
+	return vecMin;
+}
+
+glm::vec3 AABB::getVecMax()
+{
+	return vecMax;
+}

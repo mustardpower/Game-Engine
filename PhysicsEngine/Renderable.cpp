@@ -13,7 +13,7 @@ Renderable::Renderable(const Renderable &other)
 	model = other.getModel();
 	object_id = ++NUMBER_OF_OBJECTS;
 	object = other.object;
-	selected = false;
+	selected = other.selected;
 }
 Renderable::Renderable(GeoModel3D the_model, RigidBody rb)
 {
@@ -46,6 +46,11 @@ glm::mat4 Renderable::getModelMatrix()
 glm::vec3 Renderable::getVelocity()
 {
 	return object.getVelocity();
+}
+
+AABB Renderable::getBoundingBox()
+{
+	return boundingBox;
 }
 
 void Renderable::setModelMatrix(glm::mat4x4 modelMatrix)
