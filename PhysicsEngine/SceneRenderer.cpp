@@ -124,16 +124,13 @@ void SceneRenderer::renderModel(GeoModel3D model)
 
 	for (std::vector<GLModel3DData>::iterator m = modelData.begin(); m != modelData.end(); m++)
 	{
-		try
+		if (object_vao_map.find(m->getMeshID()) == object_vao_map.end())
 		{
-			vaoID = object_vao_map.at(m->getMeshID());
+			createVAO(model); // if errors here ensure to create VAOs
 		}
-		catch (std::out_of_range ex)
-		{
-			// if errors here ensure to create VAOs
-			createVAO(model);
-			vaoID = object_vao_map.at(m->getMeshID());
-		}
+
+		vaoID = object_vao_map.at(m->getMeshID());
+		
 		glBindVertexArray(vaoID); // Bind our Vertex Array Object
 
 		glActiveTexture(GL_TEXTURE0);
@@ -148,7 +145,6 @@ void SceneRenderer::renderModel(GeoModel3D model)
 void SceneRenderer::renderBoundingBox(AABB boundingBox)
 {
 	GLuint vao_new_id;
-	printf("Rendering bounding box of selected object!\n");
 	glm::vec3 min = boundingBox.getVecMin();
 	glm::vec3 max = boundingBox.getVecMax();
 	const int NUM_OF_VERTICES = 8;
