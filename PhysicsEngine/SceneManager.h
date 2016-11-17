@@ -34,9 +34,13 @@ public:
 	void onMouseWheel(int nWheelNumber, int nDirection, int x, int y);
 	void onLeftMouseDown(int xPos, int yPos, int screen_width, int screen_height);
 	void onRightMouseDown(int x, int y);
-	void onLeftMouseUp(int x, int y);
+	void onLeftMouseUp(int x, int y, int screen_width, int screen_height);
 	void onRightMouseUp(int x, int y);
+	void onLeftMouseDrag(int x, int y, int screen_width, int screen_height);
 	void onKeyPress(int nKey);
+	void onRotateModeSelected();
+	void onZoomModeSelected();
+	void onPanModeSelected();
 	Camera getCamera();
 	void update();
 	void reset();

@@ -123,19 +123,34 @@
 	}
 	void GameEngine::OnLeftMouseDown(int x, int y) 
 	{
-		RECT windowRect;
-		GetClientRect(_gWindow, &windowRect);
-		int screen_width = windowRect.right - windowRect.left;
-		int screen_height = windowRect.bottom - windowRect.top;
+		int screen_width = 0;
+		int screen_height = 0;
+		getClientAreaSize(screen_width, screen_height);
 		sceneManager.onLeftMouseDown(x, y, screen_width, screen_height);
 	}  
 	void GameEngine::OnRightMouseDown(int x, int y)
 	{
-		sceneManager.onRightMouseDown(x, y);
+		HMENU hmenu = LoadMenu(hInstance, MAKEINTRESOURCE(IDR_MENU1));
+		if (hmenu == NULL) return;
+		POINT pt = { x,y };
+		ClientToScreen(_gWindow, &pt);
+		HMENU hPopupMenu = GetSubMenu(hmenu, 0);
+		TrackPopupMenu(hPopupMenu, TPM_BOTTOMALIGN | TPM_LEFTALIGN, pt.x,pt.y, 0, _gWindow, NULL);
 	}
 	void GameEngine::OnLeftMouseUp(int x, int y) 
 	{
-		sceneManager.onLeftMouseUp(x, y);
+		int screen_width = 0;
+		int screen_height = 0;
+		getClientAreaSize(screen_width, screen_height);
+		sceneManager.onLeftMouseUp(x, y, screen_width, screen_height);
+	}
+
+	void GameEngine::getClientAreaSize(int& screen_width, int& screen_height)
+	{
+		RECT windowRect;
+		GetClientRect(_gWindow, &windowRect);
+		screen_width = windowRect.right - windowRect.left;
+		screen_height = windowRect.bottom - windowRect.top;
 	}
 	void GameEngine::OnRightMouseUp(int x, int y)
 	{
@@ -143,12 +158,17 @@
 	}
 	void GameEngine::OnMouseWheel(int nWheelNumber, int nDirection)
 	{
-		RECT windowRect;
-		GetClientRect(_gWindow, &windowRect);
-		int screen_width = windowRect.right - windowRect.left;
-		int screen_height = windowRect.bottom - windowRect.top;
+		int screen_width = 0;
+		int screen_height = 0;
+		getClientAreaSize(screen_width, screen_height);
 		sceneManager.onMouseWheel(nWheelNumber, nDirection, screen_width, screen_height);
 	}
+
+	void GameEngine::OnMouseMove(int x, int y)
+	{
+
+	}
+
 	void GameEngine::OnKeyDown(int nKey, char cAscii)
 	{       
 		if (cAscii == 27) // 0x1b = ESC
@@ -174,27 +194,22 @@
 
 	void GameEngine::OnPopupMenuSelection(int menuOption)
 	{
-		// NEED TO REMOVE GLUT FUNCTION
-		switch (menuOption)
-		{
-		case 1:
-			glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-			break;
-		case 2:
-			glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
-			break;
-		case 3:
-			glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
-			break;
-		case 4:
-			glClearColor(1.0f, 0.5f, 0.0f, 0.0f);
-			break;
-		default:
-			glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-			break;
-		}
+		
+	}
 
-		glutPostRedisplay();
+	void GameEngine::OnRotateModeSelected()
+	{
+		sceneManager.onRotateModeSelected();
+	}
+
+	void GameEngine::OnPanModeSelected()
+	{
+		sceneManager.onPanModeSelected();
+	}
+
+	void GameEngine::OnZoomModeSelected()
+	{
+		sceneManager.onZoomModeSelected();
 	}
 
 	void GameEngine::initializeMenuBar()
@@ -220,17 +235,19 @@
 		}
 	}
 
-	//! Called when Mouse is moved (without pressing any button)
-	void GameEngine::OnMouseMove(int x, int y)
-	{
-	}
-
 	void  GameEngine::SetFullscreen(bool bFullscreen)
 	{
 	}
 
-	void GameEngine::OnLeftMouseDrag(int x, int y)
+	void GameEngine::OnLeftMouseDrag(int x, int y, DWORD flags)
 	{
+		if (flags & MK_LBUTTON)
+		{
+			int screen_width = 0;
+			int screen_height = 0;
+			getClientAreaSize(screen_width, screen_height);
+			sceneManager.onLeftMouseDrag(x, y, screen_width, screen_height);
+		}
 	}
 
 	void GameEngine::OnXMLLoad()
@@ -373,6 +390,21 @@
 		{
 			switch (LOWORD(wParam))
 			{
+			case ID_VIEWMODE_ROTATE:
+			{
+				window->OnRotateModeSelected();
+			}
+			break;
+			case ID_VIEWMODE_PAN:
+			{
+				window->OnPanModeSelected();
+			}
+			break;
+			case ID_VIEWMODE_ZOOM:
+			{
+				window->OnZoomModeSelected();
+			}
+			break;
 			case ID_FILE_NEW:
 				window->OnEngineReset();
 				break;
@@ -421,7 +453,9 @@
 			int yPos = GET_Y_LPARAM(lParam);
 
 			if (GetKeyState(VK_LBUTTON) & 0x100)
-				window->OnLeftMouseDrag(xPos, yPos);
+			{
+				window->OnLeftMouseDrag(xPos, yPos, (DWORD)wParam);
+			}
 
 			window->OnMouseMove(xPos, yPos);
 			window->Repaint();
@@ -434,12 +468,6 @@
 			HWND hwnd = window->getWindowHandle();
 			window->OnLeftMouseDown(xPos, yPos);
 			window->OnRender();
-			// if still held down then trigger another WM_LBUTTONDOWN event 
-			//to get effect of repeated action on holding mouse down
-			if (GetAsyncKeyState(VK_LBUTTON))
-			{
-				PostMessage(hwnd, WM_LBUTTONDOWN, wParam, lParam);	
-			}
 		}
 		break;
 		case WM_RBUTTONDOWN:
@@ -449,12 +477,6 @@
 			HWND hwnd = window->getWindowHandle();
 			window->OnRightMouseDown(xPos, yPos);
 			window->OnRender();
-			// if still held down then trigger another WM_RBUTTONDOWN event 
-			//to get effect of repeated action on holding mouse down
-			if (GetAsyncKeyState(VK_RBUTTON))
-			{
-				PostMessage(hwnd, WM_RBUTTONDOWN, wParam, lParam);
-			}
 		}
 		break;
 		case WM_LBUTTONUP:

@@ -28,7 +28,21 @@ void SceneManager::reset()
 {
 	objects.clear();
 }
-void SceneManager::onLeftMouseDown(int xPos, int yPos, int screen_width, int screen_height)
+void SceneManager::onLeftMouseDown(int x, int y, int screen_width, int screen_height)
+{
+	glCamera.onLeftMouseDown(x, y);
+}
+
+void SceneManager::onRightMouseDown(int x, int y)
+{
+}
+
+void SceneManager::onLeftMouseDrag(int x, int y, int screen_width, int screen_height)
+{
+	glCamera.onLeftMouseDrag(x, y, screen_width, screen_height);
+}
+
+void SceneManager::onLeftMouseUp(int xPos, int yPos, int screen_width, int screen_height)
 {
 	glm::vec4 viewport = glm::vec4(0.0f, 0.0f, screen_width, screen_height);
 
@@ -42,16 +56,27 @@ void SceneManager::onLeftMouseDown(int xPos, int yPos, int screen_width, int scr
 		if (object->intersects(worldPosNear, ray_direction))
 		{
 			object->setSelection(true);
-		}		
+		}
+		else
+		{
+			object->setSelection(false);
+		}
 	}
 }
 
-void SceneManager::onRightMouseDown(int x, int y)
+void SceneManager::onRotateModeSelected()
 {
+	glCamera.setCameraMode(CAMERA_ROTATE);
 }
 
-void SceneManager::onLeftMouseUp(int x, int y)
+void SceneManager::onPanModeSelected()
 {
+	glCamera.setCameraMode(CAMERA_PAN);
+}
+
+void SceneManager::onZoomModeSelected()
+{
+	glCamera.setCameraMode(CAMERA_ZOOM);
 }
 
 void SceneManager::onRightMouseUp(int x, int y)

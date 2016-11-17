@@ -93,7 +93,6 @@
     <ClCompile Include="GeoModel3D.cpp" />
     <ClCompile Include="glApplication.cpp" />
     <ClCompile Include="glsl.cpp" />
-    <ClCompile Include="glutwindow.cpp" />
     <ClCompile Include="glWindow.cpp" />
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="ModelImporter3D.cpp" />
@@ -125,7 +124,6 @@
     <ClInclude Include="glApplication.h" />
     <ClInclude Include="glsl.h" />
     <ClInclude Include="glut.h" />
-    <ClInclude Include="glutwindow.h" />
     <ClInclude Include="glWindow.h" />
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="ModelImporter3D.h" />

@@ -53,7 +53,7 @@ namespace cwc
       virtual void OnMouseMove(int x, int y) = 0;
       
       //! Called while Left Mouse button is pressed.
-      virtual void OnLeftMouseDrag(int x, int y) = 0;
+      virtual void OnLeftMouseDrag(int x, int y, DWORD flags) = 0;
       
       //! Called when mouse wheel is used
       virtual void OnMouseWheel(int nWheelNumber, int nDirection) = 0;
@@ -69,6 +69,10 @@ namespace cwc
 	  virtual void OnEngineReset() {};
 	  virtual void OnXMLLoad() {};
 	  virtual void OnXMLSave() {};
+
+	  virtual void OnRotateModeSelected() = 0;
+	  virtual void OnPanModeSelected() = 0;
+	  virtual void OnZoomModeSelected() = 0;
       
       // Commands:
       

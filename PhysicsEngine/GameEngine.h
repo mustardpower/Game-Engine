@@ -41,8 +41,8 @@ public:
 	virtual void OnLeftMouseUp(int x, int y);
 	virtual void OnRightMouseUp(int x, int y);
 	virtual void OnMouseWheel(int nWheelNumber, int nDirection);
+	virtual void OnLeftMouseDrag(int x, int y, DWORD flags);
 	virtual void OnMouseMove(int x, int y);
-	virtual void OnLeftMouseDrag(int x, int y);
 	virtual void OnKeyDown(int nKey, char cAscii);
 	virtual void OnKeyUp(int nKey, char cAscii);
 	virtual void OnPopupMenuSelection(int menuOption);
@@ -60,6 +60,11 @@ public:
 
 	HWND createSimpleToolbar(HWND hWndParent);
 	void initializeMenuBar();
+	void getClientAreaSize(int& width, int& height);
+
+	virtual void OnRotateModeSelected();
+	virtual void OnPanModeSelected();
+	virtual void OnZoomModeSelected();
 
 	static void CALLBACK sMenuBarFunc(int menuOption);
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
