@@ -2,11 +2,12 @@
 #include <Windows.h>
 #include <windowsx.h>
 #include <CommCtrl.h>
+#include <chrono>
 
 #include "glWindow.h"
 #include "glsl.h"
-#include "SceneManager.h"
 #include "SceneRenderer.h"
+#include "UnitsManager.h"
 
 class GameEngine : public cwc::glWindow
 {
@@ -14,11 +15,14 @@ private:
 	static HINSTANCE hInstance;
 	HIMAGELIST hImageList;
 	WNDCLASSEXW wcex;
-	SceneManager sceneManager;
 	SceneRenderer sceneRenderer;
 	static std::string applicationDirectory;
 	static std::string modelDirectory;
 	static std::string texturesDirectory;
+	std::vector<Renderable> objects;
+	Camera glCamera;
+	std::chrono::steady_clock::time_point last_time_step;
+	static UnitsManager unitManager;
 
 public:
 	GameEngine(char* GameEngineTitle);
@@ -27,6 +31,8 @@ public:
 	static std::string getModelDirectory();
 	static std::string getTexturesDirectory();
 
+	void clearSelection();
+	bool collisionsDetected(Renderable obj);
 
 	virtual void OnRender(void);
 	virtual void OnIdle();

@@ -81,9 +81,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files\SceneManagement</Filter>
-    </ClCompile>
     <ClCompile Include="Renderable.cpp">
       <Filter>Source Files\SceneManagement</Filter>
     </ClCompile>
@@ -163,9 +160,6 @@
     </ClInclude>
     <ClInclude Include="AVL Tree.h">
       <Filter>Header Files\Data Structures\AVL Tree</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Header Files\SceneManagement</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files\SceneManagement</Filter>

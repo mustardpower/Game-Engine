@@ -1,5 +1,5 @@
 #include "RigidBody.h"
-#include "SceneManager.h"
+#include "UnitsManager.h"
 
 GLuint RigidBody::NUMBER_OF_OBJECTS = 0;
 PhysicsHandler RigidBody::physicsHandler;

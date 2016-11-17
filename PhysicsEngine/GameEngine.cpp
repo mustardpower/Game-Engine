@@ -1,5 +1,4 @@
 #include "GameEngine.h"
-#include "SceneManager.h"
 #include "tiny_obj_loader.h"
 #include "resource.h"
 
@@ -20,6 +19,14 @@
 	GameEngine::GameEngine(char* GameEngineTitle) : cwc::glWindow()
 	{
 		OnInit();
+	}
+
+	void GameEngine::clearSelection()
+	{
+		for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+		{
+			object->setSelection(false);
+		}
 	}
 
 	//
@@ -107,9 +114,7 @@
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(_gWindow, &ps);
 		std::vector<GeoModel3D*> object_models;
-		std::vector<Renderable> objects = sceneManager.getObjects();
-		Camera camera = sceneManager.getCamera();
-		sceneRenderer.renderScene(hdc,camera,objects);
+		sceneRenderer.renderScene(hdc,glCamera,objects);
 		EndPaint(_gWindow, &ps);
 	}
 
@@ -123,10 +128,7 @@
 	}
 	void GameEngine::OnLeftMouseDown(int x, int y) 
 	{
-		int screen_width = 0;
-		int screen_height = 0;
-		getClientAreaSize(screen_width, screen_height);
-		sceneManager.onLeftMouseDown(x, y, screen_width, screen_height);
+		glCamera.onLeftMouseDown(x, y);
 	}  
 	void GameEngine::OnRightMouseDown(int x, int y)
 	{
@@ -137,12 +139,29 @@
 		HMENU hPopupMenu = GetSubMenu(hmenu, 0);
 		TrackPopupMenu(hPopupMenu, TPM_BOTTOMALIGN | TPM_LEFTALIGN, pt.x,pt.y, 0, _gWindow, NULL);
 	}
-	void GameEngine::OnLeftMouseUp(int x, int y) 
+	void GameEngine::OnLeftMouseUp(int xPos, int yPos) 
 	{
 		int screen_width = 0;
 		int screen_height = 0;
 		getClientAreaSize(screen_width, screen_height);
-		sceneManager.onLeftMouseUp(x, y, screen_width, screen_height);
+		glm::vec4 viewport = glm::vec4(0.0f, 0.0f, screen_width, screen_height);
+
+		// calculate point on near and far plane
+		glm::vec3 worldPosNear = glCamera.pointOnNearPlane(xPos, screen_height - yPos, viewport);
+		glm::vec3 worldPosFar = glCamera.pointOnFarPlane(xPos, screen_height - yPos, viewport);
+
+		glm::vec3 ray_direction = glm::normalize(worldPosFar - worldPosNear);
+		for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+		{
+			if (object->intersects(worldPosNear, ray_direction))
+			{
+				object->setSelection(true);
+			}
+			else
+			{
+				object->setSelection(false);
+			}
+		}
 	}
 
 	void GameEngine::getClientAreaSize(int& screen_width, int& screen_height)
@@ -154,14 +173,30 @@
 	}
 	void GameEngine::OnRightMouseUp(int x, int y)
 	{
-		sceneManager.onRightMouseUp(x, y);
+		clearSelection();
 	}
 	void GameEngine::OnMouseWheel(int nWheelNumber, int nDirection)
 	{
 		int screen_width = 0;
 		int screen_height = 0;
 		getClientAreaSize(screen_width, screen_height);
-		sceneManager.onMouseWheel(nWheelNumber, nDirection, screen_width, screen_height);
+		const int increment = 5;
+
+		glm::vec4 viewport = glm::vec4(0.0f, 0.0f, screen_width, screen_height);
+
+		// calculate point on near and far plane
+		glm::vec3 worldPosNear = glCamera.pointOnNearPlane(screen_width / 2.0, screen_height / 2.0, viewport);
+		glm::vec3 worldPosFar = glCamera.pointOnFarPlane(screen_width / 2.0, screen_height / 2.0, viewport);
+		glm::vec3 ray_direction = glm::normalize(worldPosFar - worldPosNear);
+
+		if (nDirection > 0)
+		{
+			glCamera.translate(ray_direction);
+		}
+		if (nDirection < 0)
+		{
+			glCamera.translate(-ray_direction);
+		}
 	}
 
 	void GameEngine::OnMouseMove(int x, int y)
@@ -177,7 +212,25 @@
 		}
 		else
 		{
-			sceneManager.onKeyPress(nKey);
+			const int increment = 1;
+
+			switch (nKey)
+			{
+			case VK_LEFT:
+				glCamera.translateX(-increment);
+				break;
+			case VK_RIGHT:
+				glCamera.translateX(increment);
+				break;
+			case VK_UP:
+				glCamera.translateY(increment);
+				break;
+			case VK_DOWN:
+				glCamera.translateY(-increment);
+				break;
+			default:
+				glCamera.translateZ(-increment);
+			}
 		}
 	};
 	void GameEngine::OnKeyUp(int nKey, char cAscii)
@@ -199,17 +252,17 @@
 
 	void GameEngine::OnRotateModeSelected()
 	{
-		sceneManager.onRotateModeSelected();
+		glCamera.setCameraMode(CAMERA_ROTATE);
 	}
 
 	void GameEngine::OnPanModeSelected()
 	{
-		sceneManager.onPanModeSelected();
+		glCamera.setCameraMode(CAMERA_PAN);
 	}
 
 	void GameEngine::OnZoomModeSelected()
 	{
-		sceneManager.onZoomModeSelected();
+		glCamera.setCameraMode(CAMERA_ZOOM);
 	}
 
 	void GameEngine::initializeMenuBar()
@@ -246,7 +299,7 @@
 			int screen_width = 0;
 			int screen_height = 0;
 			getClientAreaSize(screen_width, screen_height);
-			sceneManager.onLeftMouseDrag(x, y, screen_width, screen_height);
+			glCamera.onLeftMouseDrag(x, y, screen_width, screen_height);
 		}
 	}
 
@@ -274,8 +327,25 @@
 			//  they selected is now stored in 'buffer'
 			std::wstring ws(buffer);
 			std::string file_name(ws.begin(), ws.end());
-			int error_code = sceneManager.fromXML(file_name);
-			if (error_code)
+			Renderable scene_object;
+			tinyxml2::XMLDocument aDoc;
+			tinyxml2::XMLError error = aDoc.LoadFile(file_name.c_str());
+			tinyxml2::XMLNode * pRoot = aDoc.FirstChild();
+			if (pRoot != nullptr)
+			{
+				tinyxml2::XMLNode * pRenderable = pRoot->NextSibling()->FirstChild();
+				while (pRenderable != nullptr)
+				{
+					error = Renderable::deserialize(pRenderable, scene_object);
+					if (error == tinyxml2::XML_SUCCESS)
+					{
+						objects.push_back(scene_object);
+					}
+					pRenderable = pRenderable->NextSibling();
+				}
+			}
+
+			if (error)
 			{
 				MessageBoxW(_gWindow, L"Could not load XML", L"Error loading XML", MB_OK);
 			}
@@ -306,9 +376,23 @@
 			//  they selected is now stored in 'buffer'
 			std::wstring ws(buffer);
 			std::string file_name(ws.begin(), ws.end());
-			int error_code = sceneManager.toXML(file_name);
-			if (error_code)
+			tinyxml2::XMLDocument aDoc;
+			tinyxml2::XMLDeclaration* decl = aDoc.NewDeclaration();
+			aDoc.LinkEndChild(decl);
+
+			tinyxml2::XMLNode* root = aDoc.NewElement("root");
+			aDoc.LinkEndChild(root);
+
+			// this may need modifying to deal with nested elements
+			for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 			{
+				object->serialize(aDoc, root);
+			}
+
+			tinyxml2::XMLError error = aDoc.SaveFile(file_name.c_str());
+			if (error)
+			{
+				aDoc.PrintError();
 				MessageBoxW(_gWindow, L"Could not save as XML", L"Error saving XML", MB_OK);
 			}
 		}
@@ -316,7 +400,7 @@
 
 	void GameEngine::OnEngineReset()
 	{
-		sceneManager.reset();
+		objects.clear();
 	}
 
 	void GameEngine::Repaint()
@@ -336,13 +420,34 @@
 
 	void GameEngine::Update()
 	{
-		sceneManager.update();
+		auto current_time_step = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<float> time_step(current_time_step - last_time_step);
+		float dt = time_step.count();
+
+		for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+		{
+			object->storeFrame();				// store the position, velocity, inertia etc
+			object->updateFrame(dt);			// update the position based on the velocity etc
+			if (collisionsDetected(*object))
+			{
+				object->previousFrame();		// if the new position is in collision with another object
+												// revert to previous position and use more accurate handling
+			}
+		}
+
+		last_time_step = current_time_step;
+
 		Repaint();
 	}
 
 	void GameEngine::Close()
 	{
 		DestroyWindow(_gWindow);
+	}
+
+	bool GameEngine::collisionsDetected(Renderable obj)
+	{
+		return false;
 	}
 
 	HWND GameEngine::createSimpleToolbar(HWND hWndParent)

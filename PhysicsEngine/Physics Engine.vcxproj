@@ -99,7 +99,6 @@
     <ClCompile Include="PhysicsHandler.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="RigidBody.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneRenderer.cpp" />
     <ClCompile Include="SOIL\image_DXT.c" />
     <ClCompile Include="SOIL\image_helper.c" />
@@ -131,7 +130,6 @@
     <ClInclude Include="PhysicsHandler.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="RigidBody.h" />
-    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneRenderer.h" />
     <ClInclude Include="SOIL\image_DXT.h" />
     <ClInclude Include="SOIL\image_helper.h" />
