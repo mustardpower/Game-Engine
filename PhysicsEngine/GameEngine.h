@@ -9,6 +9,8 @@
 #include "SceneRenderer.h"
 #include "UnitsManager.h"
 
+enum mode { PAN, ZOOM, SELECTION, ROTATE };
+
 class GameEngine : public cwc::glWindow
 {
 private:
@@ -23,6 +25,8 @@ private:
 	Camera glCamera;
 	std::chrono::steady_clock::time_point last_time_step;
 	static UnitsManager unitManager;
+	mode viewMode;
+	glm::vec2 lastMousePos;
 
 public:
 	GameEngine(char* GameEngineTitle);

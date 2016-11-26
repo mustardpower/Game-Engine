@@ -126,10 +126,12 @@
 		DestroyWindow(_gWindow);
 		PostQuitMessage(0);
 	}
+
 	void GameEngine::OnLeftMouseDown(int x, int y) 
 	{
-		glCamera.onLeftMouseDown(x, y);
+		lastMousePos = glm::vec2(x, y);
 	}  
+
 	void GameEngine::OnRightMouseDown(int x, int y)
 	{
 		HMENU hmenu = LoadMenu(hInstance, MAKEINTRESOURCE(IDR_MENU1));
@@ -141,8 +143,7 @@
 	}
 	void GameEngine::OnLeftMouseUp(int xPos, int yPos) 
 	{
-		mode camMode = glCamera.getCameraMode();
-		if (camMode == CAMERA_SELECTION)
+		if (viewMode == SELECTION)
 		{
 			int screen_width = 0;
 			int screen_height = 0;
@@ -251,22 +252,22 @@
 
 	void GameEngine::OnSelectionModeSelected()
 	{
-		glCamera.setCameraMode(CAMERA_SELECTION);
+		viewMode = SELECTION;
 	}
 
 	void GameEngine::OnRotateModeSelected()
 	{
-		glCamera.setCameraMode(CAMERA_ROTATE);
+		viewMode = ROTATE;
 	}
 
 	void GameEngine::OnPanModeSelected()
 	{
-		glCamera.setCameraMode(CAMERA_PAN);
+		viewMode = PAN;
 	}
 
 	void GameEngine::OnZoomModeSelected()
 	{
-		glCamera.setCameraMode(CAMERA_ZOOM);
+		viewMode = ZOOM;
 	}
 
 	void GameEngine::initializeMenuBar()
@@ -300,10 +301,29 @@
 	{
 		if (flags & MK_LBUTTON)
 		{
-			int screen_width = 0;
-			int screen_height = 0;
+			int screen_width, screen_height;
 			getClientAreaSize(screen_width, screen_height);
-			glCamera.onLeftMouseDrag(x, y, screen_width, screen_height);
+			float deltaX = (x - lastMousePos.x) / screen_width;
+			float deltaY = (y - lastMousePos.y) / screen_height;
+			switch (viewMode)
+			{
+				case ROTATE:
+				{
+					glCamera.onRotate(deltaX, deltaY);
+				}
+				break;
+				case PAN:
+				{
+					glCamera.onPan(deltaX, deltaY);
+				}
+				break;
+				case ZOOM:
+				{
+					glCamera.onZoom(deltaX, deltaY);
+				}
+				break;
+			}
+			lastMousePos = glm::vec2(x, y);
 		}
 	}
 
