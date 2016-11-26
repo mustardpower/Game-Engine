@@ -9,6 +9,8 @@
 #include "SceneRenderer.h"
 #include "UnitsManager.h"
 
+enum mode { PAN, ZOOM, SELECTION, ROTATE };
+
 class GameEngine : public cwc::glWindow
 {
 private:
@@ -23,6 +25,8 @@ private:
 	Camera glCamera;
 	std::chrono::steady_clock::time_point last_time_step;
 	static UnitsManager unitManager;
+	mode viewMode;
+	glm::vec2 lastMousePos;
 
 public:
 	GameEngine(char* GameEngineTitle);
@@ -51,7 +55,6 @@ public:
 	virtual void OnMouseMove(int x, int y);
 	virtual void OnKeyDown(int nKey, char cAscii);
 	virtual void OnKeyUp(int nKey, char cAscii);
-	virtual void OnPopupMenuSelection(int menuOption);
 	virtual void OnEngineReset();
 	virtual void OnXMLLoad();
 	virtual void OnXMLSave();
@@ -64,10 +67,14 @@ public:
 	virtual void Show(); //! Show the window
 	virtual void Close();
 
+	int LoadFromFile(std::string file_name);
+	int SaveToFile(std::string file_name);
+
 	HWND createSimpleToolbar(HWND hWndParent);
 	void initializeMenuBar();
 	void getClientAreaSize(int& width, int& height);
 
+	virtual void OnSelectionModeSelected();
 	virtual void OnRotateModeSelected();
 	virtual void OnPanModeSelected();
 	virtual void OnZoomModeSelected();

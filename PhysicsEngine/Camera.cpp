@@ -2,7 +2,6 @@
 
 Camera::Camera()
 {
-	cameraMode = CAMERA_ROTATE;
 	fov = 45.0;
 	nearZ = 4.0f;
 	farZ  = 60.0f;
@@ -57,42 +56,27 @@ glm::mat4 Camera::getProjectionMatrix()
 	return glm::perspective(fov, aspect, nearZ, farZ);
 }
 
-void Camera::onLeftMouseDown(float x, float y)
+void Camera::onPan(float deltaX, float deltaY)
 {
-	lastMousePos = glm::vec2(x, y);
-}
-
-void Camera::onLeftMouseDrag(float x, float y, float screen_width, float screen_height)
-{
-	float deltaX = (x - lastMousePos.x) / screen_width;
-	float deltaY = (y - lastMousePos.y) / screen_height;
 	glm::vec3 diry = (glm::cross(upVector, cameraTarget - cameraPos)) / (glm::length(glm::cross(upVector, cameraTarget - cameraPos)));
 
-	switch (cameraMode)
-	{
-		case CAMERA_PAN:
-		{
-			float length = 2 * glm::length(cameraPos - cameraTarget) * tan(fov / 2.0);
-			cameraTarget = cameraTarget + (diry * deltaX * length * (float)(screen_width/screen_height)) + (upVector * deltaY * length);
-		}
-		break;
-		case CAMERA_ROTATE:
-		{
-			float pi = glm::pi<float>();
-			cameraPos = rotatePoint(cameraPos, cameraTarget, upVector, -deltaX * pi);
-			cameraPos = rotatePoint(cameraPos, cameraTarget, diry, deltaY * pi);
-			upVector = rotatePoint(cameraTarget + upVector, cameraTarget, diry, deltaY * pi) - cameraTarget;
-			upVector = glm::normalize(upVector);
-		}
-		break;
-		case CAMERA_ZOOM:
-		{
-			cameraPos = cameraTarget + (cameraPos - cameraTarget) * (deltaY + 1);
-		}
-		break;
-	}
+	float length = 2 * glm::length(cameraPos - cameraTarget) * tan(fov / 2.0);
+	cameraTarget = cameraTarget + (diry * deltaX * length * aspect) + (upVector * deltaY * length);
+}
 
-	lastMousePos = glm::vec2(x, y);
+void Camera::onRotate(float deltaX, float deltaY)
+{
+	float pi = glm::pi<float>();
+	glm::vec3 diry = (glm::cross(upVector, cameraTarget - cameraPos)) / (glm::length(glm::cross(upVector, cameraTarget - cameraPos)));
+	cameraPos = rotatePoint(cameraPos, cameraTarget, upVector, -deltaX * pi);
+	cameraPos = rotatePoint(cameraPos, cameraTarget, diry, deltaY * pi);
+	upVector = rotatePoint(cameraTarget + upVector, cameraTarget, diry, deltaY * pi) - cameraTarget;
+	upVector = glm::normalize(upVector);
+}
+
+void Camera::onZoom(float deltaX, float deltaY)
+{
+	cameraPos = cameraTarget + (cameraPos - cameraTarget) * (deltaY + 1);
 }
 
 glm::vec3 Camera::rotatePoint(glm::vec3 point, glm::vec3 origin, glm::vec3 direction, float angle)
@@ -117,11 +101,6 @@ glm::vec3 Camera::rotatePoint(glm::vec3 point, glm::vec3 origin, glm::vec3 direc
 	glm::mat3 rotationMatrix = glm::mat3(e00, e01, e02, e10, e11, e12, e20, e21, e22);
 	glm::vec3 result = origin + rotationMatrix * (point - origin);
 	return result;
-}
-
-void Camera::setCameraMode(mode camMode)
-{
-	cameraMode = camMode;
 }
 
 glm::vec3 Camera::pointOnNearPlane(float x, float y, glm::vec4 viewport)
