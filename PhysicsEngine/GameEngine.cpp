@@ -141,25 +141,29 @@
 	}
 	void GameEngine::OnLeftMouseUp(int xPos, int yPos) 
 	{
-		int screen_width = 0;
-		int screen_height = 0;
-		getClientAreaSize(screen_width, screen_height);
-		glm::vec4 viewport = glm::vec4(0.0f, 0.0f, screen_width, screen_height);
-
-		// calculate point on near and far plane
-		glm::vec3 worldPosNear = glCamera.pointOnNearPlane(xPos, screen_height - yPos, viewport);
-		glm::vec3 worldPosFar = glCamera.pointOnFarPlane(xPos, screen_height - yPos, viewport);
-
-		glm::vec3 ray_direction = glm::normalize(worldPosFar - worldPosNear);
-		for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+		mode camMode = glCamera.getCameraMode();
+		if (camMode == CAMERA_SELECTION)
 		{
-			if (object->intersects(worldPosNear, ray_direction))
+			int screen_width = 0;
+			int screen_height = 0;
+			getClientAreaSize(screen_width, screen_height);
+			glm::vec4 viewport = glm::vec4(0.0f, 0.0f, screen_width, screen_height);
+
+			// calculate point on near and far plane
+			glm::vec3 worldPosNear = glCamera.pointOnNearPlane(xPos, screen_height - yPos, viewport);
+			glm::vec3 worldPosFar = glCamera.pointOnFarPlane(xPos, screen_height - yPos, viewport);
+
+			glm::vec3 ray_direction = glm::normalize(worldPosFar - worldPosNear);
+			for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 			{
-				object->setSelection(true);
-			}
-			else
-			{
-				object->setSelection(false);
+				if (object->intersects(worldPosNear, ray_direction))
+				{
+					object->setSelection(true);
+				}
+				else
+				{
+					object->setSelection(false);
+				}
 			}
 		}
 	}
@@ -245,9 +249,9 @@
 		}
 	};
 
-	void GameEngine::OnPopupMenuSelection(int menuOption)
+	void GameEngine::OnSelectionModeSelected()
 	{
-		
+		glCamera.setCameraMode(CAMERA_SELECTION);
 	}
 
 	void GameEngine::OnRotateModeSelected()
@@ -317,39 +321,39 @@
 		ofn.lpstrFile = buffer;
 		ofn.nMaxFile = MAX_PATH;  // size of our 'buffer' buffer
 
-								  // Now that we've prepped the struct, actually open the dialog:
-								  //  the below function call actually opens the "File Open" dialog box, and returns
-								  //  once the user exits out of it
-
 		if (GetOpenFileNameW(&ofn))
 		{
-			// code reaches here if the user hit 'OK'.  The full path of the file
-			//  they selected is now stored in 'buffer'
 			std::wstring ws(buffer);
 			std::string file_name(ws.begin(), ws.end());
-			Renderable scene_object;
-			tinyxml2::XMLDocument aDoc;
-			tinyxml2::XMLError error = aDoc.LoadFile(file_name.c_str());
-			tinyxml2::XMLNode * pRoot = aDoc.FirstChild();
-			if (pRoot != nullptr)
-			{
-				tinyxml2::XMLNode * pRenderable = pRoot->NextSibling()->FirstChild();
-				while (pRenderable != nullptr)
-				{
-					error = Renderable::deserialize(pRenderable, scene_object);
-					if (error == tinyxml2::XML_SUCCESS)
-					{
-						objects.push_back(scene_object);
-					}
-					pRenderable = pRenderable->NextSibling();
-				}
-			}
-
+			int error = LoadFromFile(file_name);
 			if (error)
 			{
 				MessageBoxW(_gWindow, L"Could not load XML", L"Error loading XML", MB_OK);
 			}
 		}
+	}
+
+	int GameEngine::LoadFromFile(std::string file_name)
+	{
+		Renderable scene_object;
+		tinyxml2::XMLDocument aDoc;
+		tinyxml2::XMLError error = aDoc.LoadFile(file_name.c_str());
+		tinyxml2::XMLNode * pRoot = aDoc.FirstChild();
+		if (pRoot != nullptr)
+		{
+			tinyxml2::XMLNode * pRenderable = pRoot->NextSibling()->FirstChild();
+			while (pRenderable != nullptr)
+			{
+				error = Renderable::deserialize(pRenderable, scene_object);
+				if (error == tinyxml2::XML_SUCCESS)
+				{
+					objects.push_back(scene_object);
+				}
+				pRenderable = pRenderable->NextSibling();
+			}
+		}
+
+		return error;
 	}
 
 	void GameEngine::OnXMLSave()
@@ -366,36 +370,35 @@
 		ofn.lpstrFile = buffer;
 		ofn.nMaxFile = MAX_PATH;  // size of our 'buffer' buffer
 
-								  // Now that we've prepped the struct, actually open the dialog:
-								  //  the below function call actually opens the "File Save" dialog box, and returns
-								  //  once the user exits out of it
-
 		if (GetSaveFileNameW(&ofn))
 		{
-			// code reaches here if the user hit 'OK'.  The full path of the file
-			//  they selected is now stored in 'buffer'
 			std::wstring ws(buffer);
 			std::string file_name(ws.begin(), ws.end());
-			tinyxml2::XMLDocument aDoc;
-			tinyxml2::XMLDeclaration* decl = aDoc.NewDeclaration();
-			aDoc.LinkEndChild(decl);
-
-			tinyxml2::XMLNode* root = aDoc.NewElement("root");
-			aDoc.LinkEndChild(root);
-
-			// this may need modifying to deal with nested elements
-			for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
-			{
-				object->serialize(aDoc, root);
-			}
-
-			tinyxml2::XMLError error = aDoc.SaveFile(file_name.c_str());
+			int error = SaveToFile(file_name);
 			if (error)
 			{
-				aDoc.PrintError();
 				MessageBoxW(_gWindow, L"Could not save as XML", L"Error saving XML", MB_OK);
 			}
 		}
+	}
+
+	int GameEngine::SaveToFile(std::string file_name)
+	{
+		tinyxml2::XMLDocument aDoc;
+		tinyxml2::XMLDeclaration* decl = aDoc.NewDeclaration();
+		aDoc.LinkEndChild(decl);
+
+		tinyxml2::XMLNode* root = aDoc.NewElement("root");
+		aDoc.LinkEndChild(root);
+
+		// this may need modifying to deal with nested elements
+		for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+		{
+			object->serialize(aDoc, root);
+		}
+
+		tinyxml2::XMLError error = aDoc.SaveFile(file_name.c_str());
+		return error;
 	}
 
 	void GameEngine::OnEngineReset()
@@ -495,6 +498,11 @@
 		{
 			switch (LOWORD(wParam))
 			{
+			case ID_VIEWMODE_SELECTION:
+			{
+				window->OnSelectionModeSelected();
+			}
+			break;
 			case ID_VIEWMODE_ROTATE:
 			{
 				window->OnRotateModeSelected();

@@ -51,7 +51,6 @@ public:
 	virtual void OnMouseMove(int x, int y);
 	virtual void OnKeyDown(int nKey, char cAscii);
 	virtual void OnKeyUp(int nKey, char cAscii);
-	virtual void OnPopupMenuSelection(int menuOption);
 	virtual void OnEngineReset();
 	virtual void OnXMLLoad();
 	virtual void OnXMLSave();
@@ -64,10 +63,14 @@ public:
 	virtual void Show(); //! Show the window
 	virtual void Close();
 
+	int LoadFromFile(std::string file_name);
+	int SaveToFile(std::string file_name);
+
 	HWND createSimpleToolbar(HWND hWndParent);
 	void initializeMenuBar();
 	void getClientAreaSize(int& width, int& height);
 
+	virtual void OnSelectionModeSelected();
 	virtual void OnRotateModeSelected();
 	virtual void OnPanModeSelected();
 	virtual void OnZoomModeSelected();

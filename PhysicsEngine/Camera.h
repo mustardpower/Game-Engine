@@ -35,7 +35,7 @@ public:
 	void onLeftMouseDrag(float x, float y, float screen_width, float screen_height);
 	glm::vec3 Camera::rotatePoint(glm::vec3 point, glm::vec3 origin, glm::vec3 direction, float angle);
 	void setCameraMode(mode camMode);
-
+	mode getCameraMode();
 	glm::mat4 getMVPMatrix();
 	glm::mat4 getModelMatrix();
 	glm::mat4 getViewMatrix();

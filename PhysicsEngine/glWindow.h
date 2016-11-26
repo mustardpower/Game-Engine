@@ -70,6 +70,7 @@ namespace cwc
 	  virtual void OnXMLLoad() {};
 	  virtual void OnXMLSave() {};
 
+	  virtual void OnSelectionModeSelected() = 0;
 	  virtual void OnRotateModeSelected() = 0;
 	  virtual void OnPanModeSelected() = 0;
 	  virtual void OnZoomModeSelected() = 0;

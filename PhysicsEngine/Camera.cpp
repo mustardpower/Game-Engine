@@ -40,6 +40,11 @@ void Camera::translateZ(float increment)
 	model_matrix = glm::translate(model_matrix,glm::vec3(0,0,increment));
 }
 
+mode Camera::getCameraMode()
+{
+	return cameraMode;
+}
+
 glm::mat4 Camera::getMVPMatrix()
 {
 	return getProjectionMatrix() * getViewMatrix() * model_matrix;
