@@ -33,6 +33,16 @@ Renderable & Renderable::operator= (const Renderable & other)
 	return *this;
 }
 
+bool Renderable::operator==(const Renderable& other)
+{
+	return object_id == other.object_id;
+}
+
+bool Renderable::operator!=(const Renderable& other)
+{
+	return object_id != other.object_id;
+}
+
 GeoModel3D Renderable::getModel() const
 {
 	return model;
@@ -48,7 +58,7 @@ glm::vec3 Renderable::getVelocity()
 	return object.getVelocity();
 }
 
-AABB Renderable::getBoundingBox()
+const AABB& Renderable::getBoundingBox()
 {
 	return boundingBox;
 }
@@ -119,6 +129,11 @@ tinyxml2::XMLError Renderable::deserialize(tinyxml2::XMLNode* parent, Renderable
 bool Renderable::intersects(glm::vec3 origin, glm::vec3 dir)
 {
 	return boundingBox.intersects(origin, dir);
+}
+
+bool Renderable::intersects(Renderable other)
+{
+	return boundingBox.intersects(other.getBoundingBox());
 }
 
 void Renderable::setSelection(bool is_selected)

@@ -24,13 +24,13 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="testSceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TestSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="testPhysicsHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testGameEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

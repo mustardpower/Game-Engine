@@ -35,6 +35,8 @@ public:
 	static std::string getModelDirectory();
 	static std::string getTexturesDirectory();
 
+	const std::vector<Renderable> getObjects();
+
 	void clearSelection();
 	bool collisionsDetected(Renderable obj);
 

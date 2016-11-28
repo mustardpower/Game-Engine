@@ -4,5 +4,5 @@
 class BoundingObject
 {
 public:
-	virtual bool contains(glm::vec3 point) = 0;
+	virtual bool contains(glm::vec3 point) const = 0;
 };

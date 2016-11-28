@@ -163,7 +163,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="testPhysicsHandler.h" />
-    <ClInclude Include="testSceneManager.h" />
+    <ClInclude Include="testGameEngine.h" />
     <ClInclude Include="TestSettings.h" />
   </ItemGroup>
   <ItemGroup>

@@ -2,15 +2,14 @@
 
 #include "gtest/gtest.h"
 #include "TestSettings.h"
-#include <SceneManager.h>
 #include <GameEngine.h>
 #include <AABB.h>
 
-TEST(testSceneManager, testXMLRead)
+TEST(testGameEngine, testXMLRead)
 {
-	SceneManager sceneManager;
-	sceneManager.fromXML(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_cube.xml");
-	std::vector<Renderable> objects = sceneManager.getObjects();
+	GameEngine testEngine("Test");
+	testEngine.LoadFromFile(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_cube.xml");
+	std::vector<Renderable> objects = testEngine.getObjects();
 	EXPECT_EQ(1, objects.size());
 	Renderable object = objects.at(0);
 
@@ -21,17 +20,17 @@ TEST(testSceneManager, testXMLRead)
 	EXPECT_EQ(velocity, object.getVelocity());
 }
 
-TEST(testSceneManager, testXMLReadFailure)
+TEST(testGameEngine, testXMLReadFailure)
 {
-	SceneManager sceneManager;
-	tinyxml2::XMLError res = sceneManager.fromXML(TestSettings::getTestFileDirectory() + "\\SceneRendering\\nonexistant.xml");
+	GameEngine testEngine("Test");
+	int res = testEngine.LoadFromFile(TestSettings::getTestFileDirectory() + "\\SceneRendering\\nonexistant.xml");
 	EXPECT_NE(res, tinyxml2::XML_SUCCESS);
 
-	std::vector<Renderable> objects = sceneManager.getObjects();
+	std::vector<Renderable> objects = testEngine.getObjects();
 	EXPECT_EQ(0, objects.size());
 }
 
-TEST(testSceneManager, testRayCollision)
+TEST(testGameEngine, testRayCollision)
 {
 	//bounding box 
 	glm::vec3 vecMin(-1.0, -1.0, -1.0);
@@ -54,24 +53,25 @@ TEST(testSceneManager, testRayCollision)
 	EXPECT_EQ(FALSE, boundingBox.intersects(origin1, direction2));
 }
 
-TEST(testSceneManager, testViewportToNormalizedDeviceCoordinates)
+TEST(testGameEngine, testAABBCollision)
 {
-	SceneManager sceneManager;
+	// --------------- SIMPLE TEST CASE 1: two AABBs in the same place ------------//
+	glm::vec3 vecMin1(-1.0, -1.0, -1.0);
+	glm::vec3 vecMax1(1.0, 1.0, 1.0);
+	AABB boundingBox1(vecMin1, vecMax1);
 
-	int mouseX = 400;
-	int mouseY = 600;
-	int screen_width = 1024;
-	int screen_height = 1020;
+	glm::vec3 vecMin2(-1.0, -1.0, -1.0);
+	glm::vec3 vecMax2(1.0, 1.0, 1.0);
+	AABB boundingBox2(vecMin2, vecMax2);
 
-	glm::vec3 ndc = sceneManager.viewportToNormalizedDeviceCoordinates(mouseX, mouseY, screen_width, screen_height);
-	glm::vec2 viewportCoordinates = sceneManager.normalizedDeviceCoordinatesToViewport(ndc, screen_width, screen_height);
-	EXPECT_EQ(viewportCoordinates.x, mouseX);
-	EXPECT_EQ(viewportCoordinates.y, mouseY);
+	EXPECT_EQ(TRUE, boundingBox1.intersects(boundingBox2));
+	EXPECT_EQ(TRUE, boundingBox2.intersects(boundingBox1));
+
+	// --------------- SIMPLE TEST CASE 2: two AABBs in that do not collide ------------//
+
+	glm::vec3 vecMin3(1.5, -1.0, -1.0);
+	glm::vec3 vecMax3(2.5, 1.0, 1.0);
+	AABB boundingBox3(vecMin3, vecMax3);
+	EXPECT_EQ(FALSE, boundingBox1.intersects(boundingBox3));
+	EXPECT_EQ(FALSE, boundingBox3.intersects(boundingBox1));
 }
-
-/* Test No. 3
-TEST(testCalc, MySecondTest)
-{
-...
-}
-*/

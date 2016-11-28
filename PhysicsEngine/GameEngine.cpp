@@ -79,6 +79,11 @@
 		return getApplicationDirectory() + "\\textures\\";
 	}
 
+	const std::vector<Renderable> GameEngine::getObjects()
+	{
+		return objects;
+	}
+
 	void GameEngine::OnInit()
 	{
 		// Ensure that the common control DLL is loaded, and then create 
@@ -470,6 +475,18 @@
 
 	bool GameEngine::collisionsDetected(Renderable obj)
 	{
+		// loop over objects and check collision of bounding boxes
+		for (std::vector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+		{
+			if (*object != obj)
+			{
+				if (object->intersects(obj))
+				{
+					return true;
+				}
+			}
+		}
+
 		return false;
 	}
 

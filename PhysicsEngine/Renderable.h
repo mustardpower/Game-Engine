@@ -27,12 +27,15 @@ public:
 	Renderable();
 	Renderable(const Renderable& other);
 	Renderable & operator= (const Renderable & other);
+	bool operator==(const Renderable& other);
+	bool operator!=(const Renderable& other);
+
 	Renderable(GeoModel3D model, RigidBody rigidBody);
 
 	GeoModel3D getModel() const;
 	glm::mat4 getModelMatrix();
 	glm::vec3 getVelocity();
-	AABB getBoundingBox();
+	const AABB& getBoundingBox();
 
 	void setModelMatrix(glm::mat4x4 modelMatrix);
 	void setModel(GeoModel3D aModel);
@@ -45,6 +48,7 @@ public:
 	void previousFrame();
 	void updateFrame(float dt);
 
+	bool Renderable::intersects(Renderable other);
 	bool Renderable::intersects(glm::vec3 p, glm::vec3 dir);
 
 	void setSelection(bool is_selected);
