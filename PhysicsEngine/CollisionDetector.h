@@ -1,7 +1,0 @@
- 
-
-class CollisionDetector
-{
-private:
-public:
-};

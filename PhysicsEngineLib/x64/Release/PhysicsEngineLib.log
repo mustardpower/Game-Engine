@@ -1,0 +1,80 @@
+﻿  Rcc'ing PhysicsEngineLib.qrc...
+RCC : warning : No resources in 'D:\Users\paul\Documents\GitHub\QtPhysicsEngine\PhysicsEngineLib\PhysicsEngineLib.qrc'.
+  
+  Moc'ing QtPhysicsEngine.h...
+  Moc'ing QtGLWidget.h...
+  Uic'ing QtGLWidget.ui...
+  Uic'ing QtPhysicsEngine.ui...
+  AABB.cpp
+  Camera.cpp
+  moc_QtGLWidget.cpp
+  moc_QtPhysicsEngine.cpp
+  GeoModel3D.cpp
+  PhysicsHandler.cpp
+  QtGLWidget.cpp
+  QtPhysicsEngine.cpp
+  Renderable.cpp
+  RigidBody.cpp
+  image_DXT.cpp
+  image_helper.cpp
+  SOIL.cpp
+  stb_image_aug.cpp
+SOIL\stb_image_aug.cpp(179): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(212): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(243): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(253): warning C4312: 'type cast': conversion from 'int' to 'float *' of greater size
+SOIL\stb_image_aug.cpp(269): warning C4312: 'type cast': conversion from 'int' to 'float *' of greater size
+SOIL\stb_image_aug.cpp(283): warning C4312: 'type cast': conversion from 'int' to 'float *' of greater size
+SOIL\stb_image_aug.cpp(481): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(519): warning C4312: 'type cast': conversion from 'int' to 'float *' of greater size
+SOIL\stb_image_aug.cpp(537): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(1450): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(1479): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(1497): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(2363): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(2518): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(2524): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(2535): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(2543): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(2599): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(2602): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(2613): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(2651): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3056): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3060): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3068): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3076): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3089): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3106): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3110): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3332): warning C4312: 'type cast': conversion from 'int' to 'float *' of greater size
+SOIL\stb_image_aug.cpp(3341): warning C4312: 'type cast': conversion from 'int' to 'float *' of greater size
+SOIL\stb_image_aug.cpp(3346): warning C4312: 'type cast': conversion from 'int' to 'float *' of greater size
+SOIL\stb_image_aug.cpp(3350): warning C4312: 'type cast': conversion from 'int' to 'float *' of greater size
+SOIL\stb_image_aug.cpp(3386): warning C4838: conversion from 'int' to 'stbi_uc' requires a narrowing conversion
+SOIL\stb_image_aug.cpp(3395): warning C4312: 'type cast': conversion from 'int' to 'float *' of greater size
+SOIL\stb_image_aug.cpp(3439): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3448): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3453): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3457): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3505): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+SOIL\stb_image_aug.cpp(3550): warning C4312: 'type cast': conversion from 'int' to 'unsigned char *' of greater size
+  tinyxml2.cpp
+  tiny_obj_loader.cc
+C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\utility(145): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  tiny_obj_loader.cc(326): note: see reference to function template instantiation 'std::pair<std::string,int>::pair<std::string&,unsigned __int64,void>(_Other1,_Other2 &&) noexcept(false)' being compiled
+          with
+          [
+              _Other1=std::string &,
+              _Other2=unsigned __int64
+          ]
+  tiny_obj_loader.cc(326): note: see reference to function template instantiation 'std::pair<std::string,int>::pair<std::string&,unsigned __int64,void>(_Other1,_Other2 &&) noexcept(false)' being compiled
+          with
+          [
+              _Other1=std::string &,
+              _Other2=unsigned __int64
+          ]
+  UnitsManager.cpp
+  Generating Code...
+  qrc_PhysicsEngineLib.cpp
+  PhysicsEngineLib.vcxproj -> D:\Users\paul\Documents\GitHub\QtPhysicsEngine\x64\Release\PhysicsEngineLib.lib
