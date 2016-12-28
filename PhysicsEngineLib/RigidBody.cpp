@@ -97,7 +97,7 @@ tinyxml2::XMLError RigidBody::deserialize(tinyxml2::XMLNode* parent, RigidBody& 
 	float velocityX = atof(velocityElement->FirstChildElement("X")->GetText());
 	float velocityY = atof(velocityElement->FirstChildElement("Y")->GetText());
 	float velocityZ = atof(velocityElement->FirstChildElement("Z")->GetText());
-	
+
 	rb.setVelocity(QVector3D(velocityX, velocityY, velocityZ));
 	return tinyxml2::XML_SUCCESS;
 }

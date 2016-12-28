@@ -16,7 +16,7 @@ QtGLWidget::QtGLWidget(QWidget *parent) : QOpenGLWidget(parent)
 	viewMode = ROTATE;
 
 	QTimer *timer = new QTimer(this);
-	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateFrame()));
 	timer->start(10);
 }
 
@@ -42,6 +42,12 @@ void QtGLWidget::initializeGL()
 
 	// Enable back face culling
 	f->glEnable(GL_CULL_FACE);
+}
+
+bool QtGLWidget::collisionsDetected(const Renderable &obj)
+{
+	// TO DO: COLLISION DETECTION!
+	return false;
 }
 
 void QtGLWidget::createVAO(GeoModel3D model)
@@ -399,4 +405,26 @@ void QtGLWidget::wheelEvent(QWheelEvent *event)
 	{
 		glCamera.translate(-ray_direction);
 	}
+}
+
+void QtGLWidget::updateFrame()
+{
+	auto current_time_step = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<float> time_step(current_time_step - last_time_step);
+	float dt = time_step.count();
+
+	for (QVector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+	{
+		object->storeFrame();				// store the position, velocity, inertia etc
+		object->updateFrame(dt);			// update the position based on the velocity etc
+		if (collisionsDetected(*object))
+		{
+			object->previousFrame();		// if the new position is in collision with another object
+											// revert to previous position and use more accurate handling
+		}
+	}
+
+	last_time_step = current_time_step;
+
+	update();
 }

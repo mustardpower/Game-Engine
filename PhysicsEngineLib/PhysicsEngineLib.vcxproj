@@ -101,6 +101,7 @@
     <ClCompile Include="SOIL\stb_image_aug.cpp" />
     <ClCompile Include="tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="tiny_obj_loader.cc" />
+    <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +134,7 @@
     <ClInclude Include="SOIL\stb_image_aug.h" />
     <ClInclude Include="tinyxml2\tinyxml2.h" />
     <ClInclude Include="tiny_obj_loader.h" />
+    <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitsManager.h" />
     <CustomBuild Include="QtPhysicsEngine.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

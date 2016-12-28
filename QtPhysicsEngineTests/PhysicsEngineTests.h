@@ -12,5 +12,6 @@ class PhysicsEngineTests : public QObject
 	void testRayCollision();
 	void testAABBCollision();
 	void testLinePlaneCollision();
+	void testUnitConversion();
 	void cleanupTestCase();
 };

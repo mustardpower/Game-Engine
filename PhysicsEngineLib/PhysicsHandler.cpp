@@ -1,6 +1,7 @@
 #include "PhysicsHandler.h"
 
 const QVector3D PhysicsHandler::gravity(0.0,9.81,0.0); // in N/kg
+
 void PhysicsHandler::calculatePosition(QMatrix4x4 &modelmat, QVector3D velocity,float dt)
 {
 	modelmat.translate(velocity * dt);
@@ -30,3 +31,18 @@ QVector3D PhysicsHandler::linePlaneCollisionPoint(QVector3D lo, QVector3D ldir, 
 	d = numerator / denom;
 	return ldir * d + lo;
 }
+
+// fire a Box A from origin Oa and fire Box B from origin Ob so that they collide
+
+// at each time step check for collision
+
+// THIS IS THE FIRST STEP!!!!! NEED TO WORK OUT WHEN OBJECTS ARE ACTUALLY IN COLLISION
+// bounding box test - if colliding then do a more computationally expensive test
+// for our cubes we may get away with the simple bounding box test
+// need to check if the AABB calculation is correct when the box is rotated!
+
+/* if colliding then resolve constraints
+
+- will need to resolve positions so that faces are not intersecting
+- when collision is detected then apply new forces to Box A and Box B so that faces no longer collide (so distance between colliding faces\planes is 0) 
+*/

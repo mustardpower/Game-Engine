@@ -1,6 +1,7 @@
 #include "PhysicsEngineTests.h"
 #include "QtPhysicsEngine.h"
 #include "Renderable.h"
+#include "UnitsManager.h"
 #include "TestSettings.h"
 
 void PhysicsEngineTests::initTestCase()
@@ -88,6 +89,13 @@ void PhysicsEngineTests::testLinePlaneCollision()
 	QVector3D planeNormal(0.0, 0.0, 1.0);
 	QVector3D collisionPoint = physicsHandler.linePlaneCollisionPoint(lineOrigin, lineDirection, planePoint, planeNormal);
 	QCOMPARE(collisionPoint, QVector3D(-0.174523577, 2.18154478, -1.0));
+}
+
+void PhysicsEngineTests::testUnitConversion()
+{
+	UnitsManager unitManager;
+	QVERIFY(unitManager.currentUnit(UNIT_LENGTH) == "m/s");
+	QCOMPARE(unitManager.convertToCurrentUnit(1000, "mph", UNIT_LENGTH), 447.03925898772428);
 }
 
 void PhysicsEngineTests::cleanupTestCase()

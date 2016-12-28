@@ -1,36 +1,8 @@
 #pragma once
-
+#include "Unit.h"
 #include <string>
 #include <map>
 #include <vector>
-
-enum UNIT_TYPE
-{
-	UNIT_LENGTH,
-	UNIT_MASS,
-	UNIT_VELOCITY,
-	UNIT_TORQUE,
-	UNIT_TEMPERATURE
-};
-
-struct Unit
-{
-	UNIT_TYPE name;
-	std::map<std::string, double> unitsMap;
-	std::string current;
-
-	Unit(UNIT_TYPE unit_type, std::map<std::string, double> unitMap, std::string default_unit)
-	{
-		current = default_unit;
-		name = unit_type;
-		unitsMap = unitMap;
-	};
-
-	std::string getCurrent()
-	{
-		return current;
-	}
-};
 
 class UnitsManager
 {
@@ -42,4 +14,5 @@ public:
 	static std::map<UNIT_TYPE, std::string> defaultUnits();
 	static void addUnit(Unit unit);
 	static std::string currentUnit(UNIT_TYPE aType);
+	static double convertToCurrentUnit(double value, std::string value_unit, UNIT_TYPE unit_type);
 };

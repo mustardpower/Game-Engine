@@ -2,6 +2,10 @@
 
 std::vector<Unit> UnitsManager::units = UnitsManager::initializeUnits();
 
+UnitsManager::UnitsManager()
+{
+}
+
 void UnitsManager::addUnit(Unit unit)
 {
 	units.push_back(unit);
@@ -39,4 +43,10 @@ std::string UnitsManager::currentUnit(UNIT_TYPE unit_type)
 {
 	Unit unit = units.at(unit_type);
 	return unit.getCurrent();
+}
+
+double UnitsManager::convertToCurrentUnit(double value, std::string value_unit, UNIT_TYPE unit_type)
+{
+	Unit unit = units.at(unit_type);
+	return unit.convertToCurrent(value, value_unit);
 }

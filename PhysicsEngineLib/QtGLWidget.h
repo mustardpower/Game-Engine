@@ -2,6 +2,7 @@
 
 #include <QOpenGLWidget>
 #include "Camera.h"
+#include <chrono>
 #include <QMatrix4x4>
 #include <QOpenGLShader>
 #include <qopenglshaderprogram.h>
@@ -21,6 +22,7 @@ public:
 	QtGLWidget(QWidget *parent = Q_NULLPTR);
 	~QtGLWidget();
 
+	bool collisionsDetected(const Renderable& obj);
 	void createVAO(GeoModel3D model);
 	QVector<Renderable> getObjects();
 	void initShaders();
@@ -42,11 +44,13 @@ public:
 	void onPanModeSelected();
 	void onZoomModeSelected();
 	void reset();
+	void updateFrame();
 
 private:
 	QPoint dragStartPosition;
 	Camera glCamera;
 	QPoint lastDragOffset;
+	std::chrono::steady_clock::time_point last_time_step;
 	QOpenGLDebugLogger * logger;
 	QMatrix4x4 m_projection;
 	QOpenGLShaderProgram m_shaderProgram;
