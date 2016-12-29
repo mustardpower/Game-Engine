@@ -30,7 +30,7 @@ public:
 	RigidBody(QVector3D position = QVector3D(0.0,0.0,0.0));
 
 	// getters
-	QMatrix4x4 getModelMatrix();
+	QMatrix4x4 getModelMatrix() const;
 	QVector3D getMomentum();
 	QVector3D getVelocity();
 

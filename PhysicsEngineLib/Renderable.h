@@ -30,12 +30,13 @@ public:
 	Renderable & operator= (const Renderable & other);
 	bool operator==(const Renderable& other);
 	bool operator!=(const Renderable& other);
-
 	Renderable(GeoModel3D model, RigidBody rigidBody);
+
+	AABB calculateBoundingBox();
 	GeoModel3D getModel() const;
-	QMatrix4x4 getModelMatrix();
+	QMatrix4x4 getModelMatrix() const;
 	QVector3D getVelocity();
-	const AABB& getBoundingBox();
+	AABB getBoundingBox();
 	bool isSelected();
 	bool intersects(Renderable other);
 	bool intersects(QVector3D p, QVector3D dir);

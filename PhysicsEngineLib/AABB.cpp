@@ -1,5 +1,6 @@
 #include "AABB.h"
 #include <algorithm>
+#include <qdebug.h>
 
 using namespace std;
 
@@ -12,6 +13,18 @@ AABB::AABB(QVector3D a, QVector3D b)
 {
 	vecMin = a;
 	vecMax = b;
+}
+
+AABB::AABB(AABB& other)
+{
+	vecMin = other.vecMin;
+	vecMax = other.vecMax;
+}
+AABB & AABB::operator=(const AABB & other)
+{
+	vecMin = other.vecMin;
+	vecMax = other.vecMax;
+	return *this;
 }
 bool AABB::contains(QVector3D point) const
 {
@@ -70,4 +83,10 @@ QVector3D AABB::getVecMin()
 QVector3D AABB::getVecMax()
 {
 	return vecMax;
+}
+
+void AABB::setDimensions(QVector3D vMin, QVector3D vMax)
+{
+	vecMin = vMin;
+	vecMax = vMax;
 }

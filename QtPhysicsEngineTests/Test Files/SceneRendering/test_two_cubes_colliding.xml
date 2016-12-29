@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <Renderable>
+        <GEOModel>
+            <file_name>cube.obj</file_name>
+        </GEOModel>
+        <RigidBody>
+            <Position>1.000000 0.000000 0.000000 -10.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.00000 0.000000 0.000000 1.000000</Position>
+			<Velocity unit="m/s">
+                <X>2.000000</X>
+                <Y>0</Y>
+                <Z>0</Z>
+            </Velocity>
+        </RigidBody>
+    </Renderable>
+	<Renderable>
+        <GEOModel>
+            <file_name>cube.obj</file_name>
+        </GEOModel>
+        <RigidBody>
+            <Position>1.000000 0.000000 0.000000 10.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.00000 0.000000 0.000000 1.000000</Position>
+			<Velocity unit="m/s">
+                <X>-2.000000</X>
+                <Y>0</Y>
+                <Z>0</Z>
+            </Velocity>
+        </RigidBody>
+    </Renderable>
+</root>

@@ -44,7 +44,7 @@ QMatrix4x4 Camera::getMVPMatrix()
 {
 	return getProjectionMatrix() * getViewMatrix() * model_matrix;
 }
-QMatrix4x4 Camera::getModelMatrix()
+QMatrix4x4 Camera::getModelMatrix() const
 {
 	return model_matrix;
 }

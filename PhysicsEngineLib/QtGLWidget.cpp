@@ -44,9 +44,20 @@ void QtGLWidget::initializeGL()
 	f->glEnable(GL_CULL_FACE);
 }
 
-bool QtGLWidget::collisionsDetected(const Renderable &obj)
+bool QtGLWidget::collisionsDetected(Renderable &obj)
 {
 	// TO DO: COLLISION DETECTION!
+	for (QVector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+	{
+		if (*object != obj)
+		{
+			if (object->intersects(obj))
+			{
+				return true;
+			}
+		}
+	}
+
 	return false;
 }
 
@@ -196,6 +207,7 @@ void QtGLWidget::mouseReleaseEvent(QMouseEvent * event)
 		if (isMouseDragging(event))
 			return;
 
+		qDebug() << "Mouse click released";
 		QRect viewport(0.0f, 0.0f, width(), height());
 
 		// calculate point on near and far plane
@@ -205,6 +217,7 @@ void QtGLWidget::mouseReleaseEvent(QMouseEvent * event)
 		QVector3D ray_direction = (worldPosFar - worldPosNear).normalized();
 		for (QVector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 		{
+			object->getBoundingBox();
 			bool intersects = object->intersects(worldPosNear, ray_direction);
 			object->setSelection(intersects);
 		}
@@ -256,23 +269,26 @@ void QtGLWidget::paintGL()
 		m_shaderProgram.setUniformValue("mvp_matrix", mvp_matrix);
 
 		renderModel(object->getModel());
-		if (object->isSelected())
+		if(object->isSelected())
 		{
-			renderBoundingBox(object->getBoundingBox());
+			renderBoundingBox(*object);
 		}
 	}
 }
 
-void QtGLWidget::renderBoundingBox(AABB boundingBox)
+void QtGLWidget::renderBoundingBox(Renderable& object)
 {
 	QOpenGLVertexArrayObject m_vao;
 	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+	AABB boundingBox = object.getBoundingBox();
+	QMatrix4x4 invTransform = object.getModelMatrix().inverted();
 	QVector3D min = boundingBox.getVecMin();
 	QVector3D max = boundingBox.getVecMax();
 	const int NUM_OF_VERTICES = 8;
 
-	m_vao.create(); // Create our Vertex Array Object
-	m_vao.bind(); // Bind our Vertex Array Object so we can use it
+	m_shaderProgram.setUniformValue("mvp_matrix", glCamera.getMVPMatrix()); // bounding box stored in global coordinates so no need for object transform
+	m_vao.create(); 
+	m_vao.bind(); 
 
 	std::vector<float> vertices = {
 		max.x(),  max.y(),  max.z(), // Vertex 0 (X, Y, Z)
@@ -328,7 +344,7 @@ void QtGLWidget::renderModel(GeoModel3D model)
 		vaoID->bind();
 
 		//QOpenGLTexture texture(QImage(m->texture).mirrored());
-		QOpenGLTexture texture(QImage(m->texture));
+		QOpenGLTexture texture(QImage(m->getTexture()));
 		texture.bind();
 
 		tinyobj::mesh_t mesh = m->getMeshData();

@@ -22,7 +22,7 @@ public:
 	QtGLWidget(QWidget *parent = Q_NULLPTR);
 	~QtGLWidget();
 
-	bool collisionsDetected(const Renderable& obj);
+	bool collisionsDetected(Renderable& obj);
 	void createVAO(GeoModel3D model);
 	QVector<Renderable> getObjects();
 	void initShaders();
@@ -31,7 +31,7 @@ public:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent * event);
 	QPoint normalizedDeviceCoordinatesToViewport(QVector3D ndc, int screen_width, int screen_height);
-	void renderBoundingBox(AABB boundingBox);
+	void renderBoundingBox(Renderable& object);
 	void renderModel(GeoModel3D model);
 	QVector<Renderable> selectedObjects();
 	void setObjects(QVector<Renderable> objs);

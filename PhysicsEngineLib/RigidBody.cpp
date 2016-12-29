@@ -16,7 +16,7 @@ void RigidBody::translate(QVector3D translation)
 	model_matrix.translate(translation);
 }
 
-QMatrix4x4 RigidBody::getModelMatrix()
+QMatrix4x4 RigidBody::getModelMatrix() const
 {
 	return model_matrix;
 }

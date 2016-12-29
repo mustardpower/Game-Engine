@@ -17,10 +17,13 @@ private:
 public:
 	AABB();
 	AABB(QVector3D min, QVector3D max);
+	AABB(AABB& other);
+	AABB& operator= (const AABB& other);
 
 	bool contains(QVector3D point) const;
 	bool intersects(const AABB& aBoundingBox);
 	bool intersects(QVector3D origin, QVector3D dir);
 	QVector3D getVecMin();
 	QVector3D getVecMax();
+	void setDimensions(QVector3D vMin, QVector3D vMax);
 };

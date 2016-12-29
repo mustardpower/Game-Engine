@@ -13,20 +13,23 @@
 // Desc:		This class manages the data for a single mesh
 //-----------------------------------------------------------------------------
 
-struct GLModel3DData		// this is model data to be uploaded to the graphics card - we do not need multiple versions for objects that share data
+class GLModel3DData		// this is model data to be uploaded to the graphics card - we do not need multiple versions for objects that share data
 	{
+		private:
 		int meshID;
 		static int NUMBER_OF_MESHES;
 		tinyobj::mesh_t mesh;
 		std::vector<tinyobj::material_t> materials;
 		QString texture;
 
+	public:
 		int getMeshID() { return meshID; }
 		tinyobj::mesh_t getMeshData() { return mesh;  }
 		GLModel3DData() { meshID = ++NUMBER_OF_MESHES; }
 		~GLModel3DData();
 		void addMeshData(tinyobj::mesh_t new_mesh) { mesh = new_mesh; }
 		void addTexture(QString aTexture) { texture = aTexture; }
+		QString getTexture() { return texture; }
 	};
 
 //-----------------------------------------------------------------------------
