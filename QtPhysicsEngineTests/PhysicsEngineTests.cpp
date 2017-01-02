@@ -33,6 +33,30 @@ void PhysicsEngineTests::testXMLReadFailure()
 	QVERIFY(objects.size() == 0);
 }
 
+void PhysicsEngineTests::testXMLRoundTrip()
+{
+	QtPhysicsEngine testEngine;
+	int res = testEngine.loadFromFile(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_roundtrip.xml");
+	QVERIFY(res == tinyxml2::XML_SUCCESS);
+	QVector<Renderable> originalObjects = testEngine.getObjects();
+	QVERIFY(originalObjects.size() == 2);
+	Renderable originalObj1 = originalObjects.at(0);
+	Renderable originalObj2 = originalObjects.at(1);
+
+	res = testEngine.saveToFile(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_roundtripsave.xml");
+	QVERIFY(res == tinyxml2::XML_SUCCESS);
+
+	res = testEngine.loadFromFile(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_roundtripsave.xml");
+	QVERIFY(res == tinyxml2::XML_SUCCESS);
+	QVector<Renderable> roundtripObjects = testEngine.getObjects();
+	QVERIFY(roundtripObjects.size() == 2);
+
+	Renderable roundtripObj1 = roundtripObjects.at(0);
+	Renderable roundtripObj2 = roundtripObjects.at(1);
+	QVERIFY(originalObj1.equalTo(roundtripObj1));
+	QVERIFY(originalObj2.equalTo(roundtripObj2));
+}
+
 void PhysicsEngineTests::testRayCollision()
 {
 	//bounding box 

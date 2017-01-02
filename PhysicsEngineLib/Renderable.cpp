@@ -46,6 +46,16 @@ bool Renderable::operator!=(const Renderable& other)
 	return object_id != other.object_id;
 }
 
+bool Renderable::equalTo(const Renderable& other)
+{
+	return object.equalTo(other.object);
+}
+
+float Renderable::getMass()
+{
+	return object.getMass();
+}
+
 GeoModel3D Renderable::getModel() const
 {
 	return model;
@@ -186,6 +196,11 @@ bool Renderable::intersects(Renderable other)
 void Renderable::setSelection(bool is_selected)
 {
 	selected = is_selected;
+}
+
+void Renderable::setVelocity(QVector3D velocity)
+{
+	object.setVelocity(velocity);
 }
 
 bool Renderable::isSelected()

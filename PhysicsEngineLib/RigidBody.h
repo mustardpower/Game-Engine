@@ -27,17 +27,20 @@ private:
 	static PhysicsHandler physicsHandler;
 public:
 
-	RigidBody(QVector3D position = QVector3D(0.0,0.0,0.0));
+	RigidBody(QVector3D position = QVector3D(0.0,0.0,0.0), float mass = 1.0);
 
 	// getters
+	float getMass() const;
 	QMatrix4x4 getModelMatrix() const;
 	QVector3D getMomentum();
 	QVector3D getVelocity();
 
 	// setters
+	void setMass(float object_mass);
 	void setModelMatrix(QMatrix4x4 matrix);
 	void setVelocity(QVector3D v);
 
+	bool equalTo(const RigidBody &other);
 	void translate(QVector3D translation);
 	void updatePosition(float dt);
 

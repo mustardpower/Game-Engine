@@ -428,15 +428,52 @@ void QtGLWidget::updateFrame()
 	auto current_time_step = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<float> time_step(current_time_step - last_time_step);
 	float dt = time_step.count();
-
+	Renderable* collidingObj;
 	for (QVector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 	{
 		object->storeFrame();				// store the position, velocity, inertia etc
 		object->updateFrame(dt);			// update the position based on the velocity etc
 		if (collisionsDetected(*object))
 		{
+			for (QVector<Renderable>::iterator obj = objects.begin(); obj != objects.end(); obj++)
+			{
+				if (object != obj)
+				{
+					if (object->intersects(*obj))
+					{
+						collidingObj = obj;
+					}
+				}
+			}
+
 			object->previousFrame();		// if the new position is in collision with another object
 											// revert to previous position and use more accurate handling
+
+			if (collidingObj)
+			{
+				// calculate contact point on colliding bodies
+				// calculate offset between contact points and centre of mass
+				// calculate the contact normal (assumed to point away from body 1 and towards body 2)
+				// calculate vr (the pre-collision relative velocity)
+				PhysicsHandler ph;
+				QVector3D v1 = object->getVelocity();
+				QVector3D v2 = collidingObj->getVelocity();
+				QVector3D w1(0, 0, 0);
+				QVector3D w2(0, 0, 0);
+				QVector3D r1(-1, 0, 0);
+				QVector3D r2(1, 0, 0);
+				float m1 = object->getMass();
+				float m2 = collidingObj->getMass();
+				float e = 1.0;
+				QVector3D n(-1, 0, 0);
+				QMatrix4x4 i1, i2;
+				QVector3D vr = ph.calculateRelativeVelocity(v1, v2, w1, w2, r1, r2);
+				float impulseMagnitude = ph.calculateReactionForce(r1, r2, i1, i2, m1, m2, e, n, vr);
+				QVector3D newVelocity1 = ph.calculateLinearVelocity(v1, -impulseMagnitude, m1, n);
+				QVector3D newVelocity2 = ph.calculateLinearVelocity(v2, impulseMagnitude, m2, n);
+				object->setVelocity(newVelocity1);
+				collidingObj->setVelocity(newVelocity2);
+			}
 		}
 	}
 
