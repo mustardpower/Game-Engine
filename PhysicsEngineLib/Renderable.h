@@ -33,6 +33,8 @@ public:
 	Renderable(GeoModel3D model, RigidBody rigidBody);
 
 	AABB calculateBoundingBox();
+	QVector3D getAngularVelocity();
+	QMatrix4x4 getInertia();
 	float getMass();
 	GeoModel3D getModel() const;
 	QMatrix4x4 getModelMatrix() const;

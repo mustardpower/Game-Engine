@@ -19,23 +19,26 @@ class RigidBody
 private:
 	static int NUMBER_OF_OBJECTS;
 	int object_id;
+	QVector3D angular_velocity; // radians / s
+	QMatrix4x4 inertia; // in kgm^2
 	QMatrix4x4 model_matrix;
 	float mass;	// in kilograms (kg)
-	QVector3D inertia; // in kgm^2
 	QVector3D velocity;	// in m / s
-	QVector3D angular_velocity; // radians / s
 	static PhysicsHandler physicsHandler;
 public:
 
 	RigidBody(QVector3D position = QVector3D(0.0,0.0,0.0), float mass = 1.0);
 
 	// getters
+	QVector3D getAngularVelocity();
+	QMatrix4x4 getInertia();
 	float getMass() const;
 	QMatrix4x4 getModelMatrix() const;
 	QVector3D getMomentum();
 	QVector3D getVelocity();
 
 	// setters
+	void setAngularVelocity(QVector3D angV);
 	void setMass(float object_mass);
 	void setModelMatrix(QMatrix4x4 matrix);
 	void setVelocity(QVector3D v);
@@ -48,4 +51,5 @@ public:
 	static QString toString(QMatrix4x4 aMatrix);
 	static QMatrix4x4 fromString(QString aString);
 	static tinyxml2::XMLError deserialize(tinyxml2::XMLNode* parent, RigidBody& rigidBody);
+	static QVector3D deserializeVector3D(tinyxml2::XMLNode* parent, const char* elementName);
 };

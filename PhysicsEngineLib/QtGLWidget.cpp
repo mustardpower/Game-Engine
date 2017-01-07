@@ -207,7 +207,6 @@ void QtGLWidget::mouseReleaseEvent(QMouseEvent * event)
 		if (isMouseDragging(event))
 			return;
 
-		qDebug() << "Mouse click released";
 		QRect viewport(0.0f, 0.0f, width(), height());
 
 		// calculate point on near and far plane
@@ -458,15 +457,16 @@ void QtGLWidget::updateFrame()
 				PhysicsHandler ph;
 				QVector3D v1 = object->getVelocity();
 				QVector3D v2 = collidingObj->getVelocity();
-				QVector3D w1(0, 0, 0);
-				QVector3D w2(0, 0, 0);
+				QVector3D w1 = object->getAngularVelocity();
+				QVector3D w2 = collidingObj->getAngularVelocity();
 				QVector3D r1(-1, 0, 0);
 				QVector3D r2(1, 0, 0);
 				float m1 = object->getMass();
 				float m2 = collidingObj->getMass();
 				float e = 1.0;
 				QVector3D n(-1, 0, 0);
-				QMatrix4x4 i1, i2;
+				QMatrix4x4 i1 = object->getInertia();
+				QMatrix4x4 i2 = collidingObj->getInertia();
 				QVector3D vr = ph.calculateRelativeVelocity(v1, v2, w1, w2, r1, r2);
 				float impulseMagnitude = ph.calculateReactionForce(r1, r2, i1, i2, m1, m2, e, n, vr);
 				QVector3D newVelocity1 = ph.calculateLinearVelocity(v1, -impulseMagnitude, m1, n);

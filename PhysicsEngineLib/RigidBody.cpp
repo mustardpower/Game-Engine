@@ -27,6 +27,16 @@ void RigidBody::translate(QVector3D translation)
 	model_matrix.translate(translation);
 }
 
+QVector3D RigidBody::getAngularVelocity()
+{
+	return angular_velocity;
+}
+
+QMatrix4x4 RigidBody::getInertia()
+{
+	return inertia;
+}
+
 float RigidBody::getMass() const
 {
 	return mass;
@@ -45,6 +55,11 @@ QVector3D RigidBody::getMomentum()
 QVector3D RigidBody::getVelocity()
 {
 	return velocity;
+}
+
+void RigidBody::setAngularVelocity(QVector3D angV)
+{
+	angular_velocity = angV;
 }
 
 void RigidBody::setMass(float object_mass)
@@ -106,6 +121,7 @@ void RigidBody::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode*
 	velocityElement->LinkEndChild(velocityZElement);
 
 	objElement->LinkEndChild(velocityElement);
+
 	parent->LinkEndChild(objElement);
 }
 
@@ -125,13 +141,26 @@ tinyxml2::XMLError RigidBody::deserialize(tinyxml2::XMLNode* parent, RigidBody& 
 
 	rb.setModelMatrix(fromString(position));
 
-	tinyxml2::XMLElement* velocityElement = parent->FirstChildElement("Velocity");
-	float velocityX = atof(velocityElement->FirstChildElement("X")->GetText());
-	float velocityY = atof(velocityElement->FirstChildElement("Y")->GetText());
-	float velocityZ = atof(velocityElement->FirstChildElement("Z")->GetText());
+	QVector3D velocity = deserializeVector3D(parent, "Velocity");
+	rb.setVelocity(velocity);
 
-	rb.setVelocity(QVector3D(velocityX, velocityY, velocityZ));
+	QVector3D angularVelocity = deserializeVector3D(parent, "AngularVelocity");
+	rb.setAngularVelocity(angularVelocity);
+
 	return tinyxml2::XML_SUCCESS;
+}
+
+QVector3D RigidBody::deserializeVector3D(tinyxml2::XMLNode* parent, const char* elementName)
+{
+	float x = 0, y = 0, z = 0;
+	tinyxml2::XMLElement* anElement = parent->FirstChildElement(elementName);
+	if (anElement)
+	{
+		x = atof(anElement->FirstChildElement("X")->GetText());
+		y = atof(anElement->FirstChildElement("Y")->GetText());
+		z = atof(anElement->FirstChildElement("Z")->GetText());
+	}
+	return QVector3D(x, y, z);
 }
 
 QString RigidBody::toString(QMatrix4x4 aMatrix)

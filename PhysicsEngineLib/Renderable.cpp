@@ -51,6 +51,16 @@ bool Renderable::equalTo(const Renderable& other)
 	return object.equalTo(other.object);
 }
 
+QVector3D Renderable::getAngularVelocity()
+{
+	return object.getAngularVelocity();
+}
+
+QMatrix4x4 Renderable::getInertia()
+{
+	return object.getInertia();
+}
+
 float Renderable::getMass()
 {
 	return object.getMass();
