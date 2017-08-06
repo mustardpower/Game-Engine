@@ -1,2 +1,11 @@
-﻿  QtGLWidget.cpp
+﻿  Moc'ing QtGLWidget.h...
+  AABB.cpp
+  BoundingSphere.cpp
+  moc_QtGLWidget.cpp
+  moc_QtPhysicsEngine.cpp
+  GeoModel3D.cpp
+  QtGLWidget.cpp
+  QtPhysicsEngine.cpp
+  Renderable.cpp
+  Generating Code...
   PhysicsEngineLib.vcxproj -> D:\Users\paul\Documents\GitHub\Physics-Engine\x64\Debug\PhysicsEngineLib.lib

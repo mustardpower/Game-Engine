@@ -63,9 +63,7 @@ bool QtGLWidget::collisionsDetected(Renderable &obj)
 
 void QtGLWidget::createVAO(GeoModel3D model)
 {
-	QOpenGLVertexArrayObject* m_vao;
 	QVector<GLModel3DData> modelData = model.retrieveMeshes();
-	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 
 	for (QVector<GLModel3DData>::iterator mesh = modelData.begin(); mesh != modelData.end(); mesh++)
 	{
