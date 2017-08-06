@@ -205,17 +205,14 @@ void QtGLWidget::mouseReleaseEvent(QMouseEvent * event)
 		if (isMouseDragging(event))
 			return;
 
-		QRect viewport(0.0f, 0.0f, width(), height());
+		int x = event->pos().x();
+		int y = event->pos().y();
 
-		// calculate point on near and far plane
-		QVector3D worldPosNear = glCamera.pointOnNearPlane(event->pos().x(), height() - event->pos().y(), viewport);
-		QVector3D worldPosFar = glCamera.pointOnFarPlane(event->pos().x(), height() - event->pos().y(), viewport);
-
-		QVector3D ray_direction = (worldPosFar - worldPosNear).normalized();
+		QVector3D ray_direction = (pointOnFarPlane(x, y) - pointOnNearPlane(x, y)).normalized();
 		for (QVector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 		{
 			object->getBoundingBox();
-			bool intersects = object->intersects(worldPosNear, ray_direction);
+			bool intersects = object->intersects(pointOnNearPlane(x, y), ray_direction);
 			object->setSelection(intersects);
 		}
 	}
@@ -273,36 +270,28 @@ void QtGLWidget::paintGL()
 	}
 }
 
+QVector3D QtGLWidget::pointOnNearPlane(const int x, const int y)
+{
+	QRect viewport(0.0f, 0.0f, width(), height());
+	return glCamera.pointOnNearPlane(x, height() - y, viewport);
+}
+
+QVector3D QtGLWidget::pointOnFarPlane(const int x, const int y)
+{
+	QRect viewport(0.0f, 0.0f, width(), height());
+	return glCamera.pointOnFarPlane(x, height() - y, viewport);
+}
+
 void QtGLWidget::renderBoundingBox(Renderable& object)
 {
 	QOpenGLVertexArrayObject m_vao;
-	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-	AABB boundingBox = object.getBoundingBox();
-	QMatrix4x4 invTransform = object.getModelMatrix().inverted();
-	QVector3D min = boundingBox.getVecMin();
-	QVector3D max = boundingBox.getVecMax();
-	const int NUM_OF_VERTICES = 8;
 
 	m_shaderProgram.setUniformValue("mvp_matrix", glCamera.getMVPMatrix()); // bounding box stored in global coordinates so no need for object transform
 	m_vao.create(); 
 	m_vao.bind(); 
 
-	std::vector<float> vertices = {
-		max.x(),  max.y(),  max.z(), // Vertex 0 (X, Y, Z)
-		max.x(),  max.y(),  min.z(), // Vertex 1 (X, Y, Z)
-		max.x(),	min.y(),  min.z(), // Vertex 2 (X, Y, Z)
-		max.x(),	min.y(),  max.z(), // Vertex 3 (X, Y, Z)
-		min.x(),  max.y(), max.z(), // Vertex 4 (X, Y, Z)
-		min.x(),  max.y(), min.z(), // Vertex 5 (X, Y, Z)
-		min.x(),	min.y(), min.z(), // Vertex 6 (X, Y, Z)
-		min.x(),	min.y(), max.z()  // Vertex 7 (X, Y, Z)
-	};
-
-	std::vector<unsigned int> indices = {
-		0,1,  1,5,  5,4,  4,0,    // edges of the top face
-		7,3,  3,2,  2,6,  6,7,    // edges of the bottom face
-		1,2,  0,3,  4,7,  5,6	 // edges connecting top face to bottom face
-	};
+	std::vector<float> vertices = object.getBoundingBox().getVertices();
+	std::vector<unsigned int> indices = object.getBoundingBox().getEdgeIndices();
 
 	QOpenGLBuffer m_positionBuffer;
 	m_positionBuffer.create();
@@ -320,7 +309,8 @@ void QtGLWidget::renderBoundingBox(Renderable& object)
 	m_IndexBuffer.allocate(&indices[0],
 		indices.size() * sizeof(GLuint));
 
-	f->glDrawElements(GL_LINES, NUM_OF_VERTICES * 3, GL_UNSIGNED_INT, 0);
+	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+	f->glDrawElements(GL_LINES, vertices.size() * 3, GL_UNSIGNED_INT, 0);
 }
 
 void QtGLWidget::renderModel(GeoModel3D model)

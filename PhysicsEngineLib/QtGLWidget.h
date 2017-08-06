@@ -12,6 +12,8 @@
 #include "qopengldebug.h"
 #include <QtOpenGLExtensions\qopenglextensions.h>
 
+using namespace std;
+
 enum mode { PAN, ZOOM, ROTATE };
 
 class QtGLWidget : public QOpenGLWidget
@@ -31,6 +33,8 @@ public:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent * event);
 	QPoint normalizedDeviceCoordinatesToViewport(QVector3D ndc, int screen_width, int screen_height);
+	QVector3D pointOnFarPlane(const int x, const int y);
+	QVector3D pointOnNearPlane(const int x, const int y);
 	void renderBoundingBox(Renderable& object);
 	void renderModel(GeoModel3D model);
 	QVector<Renderable> selectedObjects();

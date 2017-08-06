@@ -293,3 +293,6 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+PhysicsEngineLib/x64/Debug/PhysicsEngineLib.log
+PhysicsEngineLib/x64/Debug/PhysicsEngineLib.log
+QtPhysicsEngineTests/x64/Debug/QtPhysicsEngineTests.vcxprojResolveAssemblyReference.cache
