@@ -316,7 +316,6 @@ void QtGLWidget::renderBoundingBox(Renderable& object)
 void QtGLWidget::renderModel(GeoModel3D model)
 {
 	QOpenGLVertexArrayObject* vaoID;
-	GLuint sampler_loc = 4;
 	QVector<GLModel3DData> modelData = model.retrieveMeshes();
 	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 
@@ -396,9 +395,9 @@ void QtGLWidget::wheelEvent(QWheelEvent *event)
 	QRect viewport(0.0f, 0.0f, width(), height());
 
 	// calculate point on near and far plane
-	QVector3D worldPosNear = glCamera.pointOnNearPlane(width() / 2.0, height() / 2.0, viewport);
-	QVector3D worldPosFar = glCamera.pointOnFarPlane(width() / 2.0, height() / 2.0, viewport);
-	QVector3D ray_direction = (worldPosFar - worldPosNear).normalized();
+	QVector3D worldPosNear = pointOnNearPlane(event->x(), event->y());
+	QVector3D worldPosFar = pointOnFarPlane(event->x(), event->y());
+	QVector3D ray_direction = (worldPosNear - worldPosFar).normalized();
 
 	if (event->delta() > 0)
 	{
