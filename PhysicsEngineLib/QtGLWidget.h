@@ -35,6 +35,7 @@ public:
 	QPoint normalizedDeviceCoordinatesToViewport(QVector3D ndc, int screen_width, int screen_height);
 	QVector3D pointOnFarPlane(const int x, const int y);
 	QVector3D pointOnNearPlane(const int x, const int y);
+	QVector3D rayDirectionBetweenNearAndFarPlane(const int x, const int y);
 	void renderBoundingBox(Renderable& object);
 	void renderModel(GeoModel3D model);
 	QVector<Renderable> selectedObjects();

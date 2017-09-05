@@ -1,6 +1,4 @@
 ﻿  Moc'ing QtGLWidget.h...
-  AABB.cpp
-  BoundingSphere.cpp
   moc_QtGLWidget.cpp
   moc_QtPhysicsEngine.cpp
   GeoModel3D.cpp

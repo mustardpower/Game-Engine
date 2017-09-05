@@ -208,6 +208,11 @@ void Renderable::setSelection(bool is_selected)
 	selected = is_selected;
 }
 
+void Renderable::setSelectionIfRayIntersects(QVector3D pos, QVector3D rayDirection)
+{
+	selected = intersects(pos, rayDirection);
+}
+
 void Renderable::setVelocity(QVector3D velocity)
 {
 	object.setVelocity(velocity);

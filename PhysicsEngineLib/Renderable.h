@@ -50,6 +50,7 @@ public:
 	void setModel(GeoModel3D aModel);
 	void setRigidBody(RigidBody rigidBody);
 	void setSelection(bool is_selected);
+	void setSelectionIfRayIntersects(QVector3D pos, QVector3D rayDirection);
 	void setVelocity(QVector3D velocity);
 	void storeFrame();
 	static tinyxml2::XMLError deserialize(tinyxml2::XMLNode* parent, Renderable& renderable);

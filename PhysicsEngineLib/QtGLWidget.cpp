@@ -205,15 +205,12 @@ void QtGLWidget::mouseReleaseEvent(QMouseEvent * event)
 		if (isMouseDragging(event))
 			return;
 
-		int x = event->pos().x();
-		int y = event->pos().y();
-
-		QVector3D ray_direction = (pointOnFarPlane(x, y) - pointOnNearPlane(x, y)).normalized();
 		for (QVector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 		{
 			object->getBoundingBox();
-			bool intersects = object->intersects(pointOnNearPlane(x, y), ray_direction);
-			object->setSelection(intersects);
+			int x = event->pos().x();
+			int y = event->pos().y();
+			object->setSelectionIfRayIntersects(pointOnNearPlane(x, y), rayDirectionBetweenNearAndFarPlane(x, y));
 		}
 	}
 };
@@ -240,28 +237,14 @@ void QtGLWidget::onZoomModeSelected()
 	viewMode = ZOOM;
 }
 
-void QtGLWidget::resizeGL(int w, int h)
-{
-	// Update projection matrix and other size related settings:
-	glCamera.resizeViewport(w, h);
-}
-
 void QtGLWidget::paintGL()
 {
-	// Draw the scene:
-
-	QMatrix4x4 object_model_matrix;
-	QMatrix4x4 mvp_matrix;
-	QMatrix4x4 camera_mvp_matrix = glCamera.getMVPMatrix();
 	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 	f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	m_shaderProgram.bind();
 	for (QVector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 	{
-		object_model_matrix = object->getModelMatrix();
-		mvp_matrix = camera_mvp_matrix * object_model_matrix;
-		m_shaderProgram.setUniformValue("mvp_matrix", mvp_matrix);
-
+		m_shaderProgram.setUniformValue("mvp_matrix", glCamera.getMVPMatrix() * object->getModelMatrix());
 		renderModel(object->getModel());
 		if(object->isSelected())
 		{
@@ -280,6 +263,17 @@ QVector3D QtGLWidget::pointOnFarPlane(const int x, const int y)
 {
 	QRect viewport(0.0f, 0.0f, width(), height());
 	return glCamera.pointOnFarPlane(x, height() - y, viewport);
+}
+
+QVector3D QtGLWidget::rayDirectionBetweenNearAndFarPlane(const int x, const int y)
+{
+	return (pointOnFarPlane(x,y) - pointOnNearPlane(x,y)).normalized();
+}
+
+void QtGLWidget::resizeGL(int w, int h)
+{
+	// Update projection matrix and other size related settings:
+	glCamera.resizeViewport(w, h);
 }
 
 void QtGLWidget::renderBoundingBox(Renderable& object)
@@ -393,11 +387,7 @@ QVector3D QtGLWidget::viewportToNormalizedDeviceCoordinates(int xPos, int yPos, 
 void QtGLWidget::wheelEvent(QWheelEvent *event)
 {
 	QRect viewport(0.0f, 0.0f, width(), height());
-
-	// calculate point on near and far plane
-	QVector3D worldPosNear = pointOnNearPlane(event->x(), event->y());
-	QVector3D worldPosFar = pointOnFarPlane(event->x(), event->y());
-	QVector3D ray_direction = (worldPosNear - worldPosFar).normalized();
+	QVector3D ray_direction = rayDirectionBetweenNearAndFarPlane(event->x(), event->y());
 
 	if (event->delta() > 0)
 	{
