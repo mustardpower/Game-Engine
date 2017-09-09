@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <Renderable>
+        <GEOModel>
+            <file_name>cube.obj</file_name>
+        </GEOModel>
+        <RigidBody>
+			<Mass>20.0</Mass>
+            <Position>1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -10.00000 0.000000 0.000000 1.000000</Position>
+			<Velocity unit="m/s">
+                <X>2.000000</X>
+                <Y>0</Y>
+                <Z>0</Z>
+            </Velocity>
+			<AngularVelocity unit="m/s">
+                <X>0.000000</X>
+                <Y>0.00000</Y>
+                <Z>-5.0000</Z>
+            </AngularVelocity>
+        </RigidBody>
+    </Renderable>
+	<Renderable>
+        <GEOModel>
+            <file_name>cube.obj</file_name>
+        </GEOModel>
+        <RigidBody>
+		<Mass>20.0</Mass>
+            <Position>1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 10.00000 0.000000 0.000000 1.000000</Position>
+			<Velocity unit="m/s">
+                <X>-2.000000</X>
+                <Y>0</Y>
+                <Z>0</Z>
+            </Velocity>
+			<AngularVelocity unit="m/s">
+                <X>4.00000</X>
+                <Y>2.00000</Y>
+                <Z>0.00000</Z>
+            </AngularVelocity>
+        </RigidBody>
+    </Renderable>
+	<Renderable>
+        <GEOModel>
+            <file_name>cube.obj</file_name>
+        </GEOModel>
+        <RigidBody>
+		<Mass>20.0</Mass>
+            <Position>1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 5.0 0.000000 0.000000 1.000000</Position>
+			<Velocity unit="m/s">
+                <X>0.2</X>
+                <Y>0</Y>
+                <Z>0</Z>
+            </Velocity>
+			<AngularVelocity unit="m/s">
+                <X>4.00000</X>
+                <Y>2.00000</Y>
+                <Z>0.00000</Z>
+            </AngularVelocity>
+        </RigidBody>
+    </Renderable>
+</root>

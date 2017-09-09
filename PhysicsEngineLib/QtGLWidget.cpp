@@ -121,6 +121,32 @@ Renderable* QtGLWidget::getCollidingObject(Renderable &object)
 	return NULL;
 }
 
+QVector3D QtGLWidget::getCollisionNormal(Renderable objectA, Renderable objectB)
+{
+	QVector3D collisionNormal;
+	AABB boxA = objectA.getBoundingBox();
+	AABB boxB = objectB.getBoundingBox();
+	
+	QVector3D overlap = boxA.overlap(boxB);
+	float ax = fabs(overlap.x());
+	float ay = fabs(overlap.y());
+	float az = fabs(overlap.z());
+
+	boxA.getCenter();
+	float sx = boxA.getCenter().x() < boxB.getCenter().x() ? -1.0f : 1.0f;
+	float sy = boxA.getCenter().y() < boxB.getCenter().y() ? -1.0f : 1.0f;
+	float sz = boxA.getCenter().z() < boxB.getCenter().z() ? -1.0f : 1.0f;
+
+	if (ax <= ay && ax <= az)
+		collisionNormal = QVector3D(sx, 0.0f, 0.0f);
+	else if (ay <= az)
+		collisionNormal = QVector3D(0.0f, sy, 0.0f);
+	else
+		collisionNormal = QVector3D(0.0f, 0.0f, sz);
+
+	return collisionNormal;
+}
+
 QVector<Renderable> QtGLWidget::getObjects()
 {
 	return objects;
@@ -364,7 +390,7 @@ void QtGLWidget::resolveCollision(Renderable &object, Renderable & collidingObj)
 	float m1 = object.getMass();
 	float m2 = collidingObj.getMass();
 	float e = 1.0;
-	QVector3D n(-1, 0, 0);
+	QVector3D n = getCollisionNormal(object, collidingObj); 
 	QMatrix4x4 i1 = object.getInertia();
 	QMatrix4x4 i2 = collidingObj.getInertia();
 	QVector3D vr = ph.calculateRelativeVelocity(v1, v2, w1, w2, r1, r2);

@@ -25,9 +25,11 @@ public:
 	bool contains(QVector3D point) const;
 	bool intersects(const AABB& aBoundingBox);
 	bool intersects(QVector3D origin, QVector3D dir);
+	QVector3D getCenter() const;
 	vector<unsigned int> getEdgeIndices();
 	QVector3D getVecMin() const;
 	QVector3D getVecMax() const;
 	vector<float> getVertices();
+	QVector3D overlap(AABB anotherBox);
 	void setDimensions(QVector3D vMin, QVector3D vMax);
 };

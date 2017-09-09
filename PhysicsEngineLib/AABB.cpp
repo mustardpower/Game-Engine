@@ -75,6 +75,11 @@ bool AABB::intersects(QVector3D origin, QVector3D dir)
 	return true;
 }
 
+QVector3D AABB::getCenter() const 
+{
+	return (vecMax - vecMin) / 2;
+}
+
 vector<unsigned int> AABB::getEdgeIndices()
 {
 	std::vector<unsigned int> indices = {
@@ -111,6 +116,14 @@ vector<float> AABB::getVertices()
 		min.x(),	min.y(), max.z()  // Vertex 7 (X, Y, Z)
 	};
 	return vertices;
+}
+
+QVector3D AABB::overlap(AABB anotherBox)
+{
+	float overlapX = std::max(0.0f, min(vecMax.x(), anotherBox.vecMax.x()) - max(vecMin.x(), anotherBox.vecMin.x()));
+	float overlapY = std::max(0.0f, min(vecMax.y(), anotherBox.vecMax.y()) - max(vecMin.y(), anotherBox.vecMin.y()));
+	float overlapZ = std::max(0.0f, min(vecMax.z(), anotherBox.vecMax.z()) - max(vecMin.z(), anotherBox.vecMin.z()));
+	return QVector3D(overlapX, overlapY, overlapZ);
 }
 
 void AABB::setDimensions(QVector3D vMin, QVector3D vMax)

@@ -1,8 +1,2 @@
-﻿  Moc'ing QtGLWidget.h...
-  moc_QtGLWidget.cpp
-  moc_QtPhysicsEngine.cpp
-  GeoModel3D.cpp
-  QtGLWidget.cpp
-  QtPhysicsEngine.cpp
-  Generating Code...
+﻿  QtGLWidget.cpp
   PhysicsEngineLib.vcxproj -> D:\Users\paul\Documents\GitHub\Physics-Engine\x64\Debug\PhysicsEngineLib.lib

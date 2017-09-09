@@ -27,6 +27,7 @@ public:
 	bool collisionsDetected(Renderable& obj);
 	void createVAO(GeoModel3D model);
 	Renderable* getCollidingObject(Renderable &object);
+	QVector3D getCollisionNormal(Renderable object1, Renderable object2);
 	QVector<Renderable> getObjects();
 	void initShaders();
 	bool isMouseDragging(QMouseEvent *event);
