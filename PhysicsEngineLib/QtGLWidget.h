@@ -26,6 +26,7 @@ public:
 
 	bool collisionsDetected(Renderable& obj);
 	void createVAO(GeoModel3D model);
+	Renderable* getCollidingObject(Renderable &object);
 	QVector<Renderable> getObjects();
 	void initShaders();
 	bool isMouseDragging(QMouseEvent *event);
@@ -38,6 +39,7 @@ public:
 	QVector3D rayDirectionBetweenNearAndFarPlane(const int x, const int y);
 	void renderBoundingBox(Renderable& object);
 	void renderModel(GeoModel3D model);
+	void resolveCollision(Renderable &object, Renderable & collidingObj);
 	QVector<Renderable> selectedObjects();
 	void setObjects(QVector<Renderable> objs);
 	void showContextMenu(const QPoint &pos);
