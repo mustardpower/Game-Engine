@@ -123,7 +123,6 @@ Renderable* QtGLWidget::getCollidingObject(Renderable &object)
 
 QVector3D QtGLWidget::getCollisionNormal(Renderable objectA, Renderable objectB)
 {
-	QVector3D collisionNormal;
 	AABB boxA = objectA.getBoundingBox();
 	AABB boxB = objectB.getBoundingBox();
 	
@@ -132,19 +131,16 @@ QVector3D QtGLWidget::getCollisionNormal(Renderable objectA, Renderable objectB)
 	float ay = fabs(overlap.y());
 	float az = fabs(overlap.z());
 
-	boxA.getCenter();
 	float sx = boxA.getCenter().x() < boxB.getCenter().x() ? -1.0f : 1.0f;
 	float sy = boxA.getCenter().y() < boxB.getCenter().y() ? -1.0f : 1.0f;
 	float sz = boxA.getCenter().z() < boxB.getCenter().z() ? -1.0f : 1.0f;
 
 	if (ax <= ay && ax <= az)
-		collisionNormal = QVector3D(sx, 0.0f, 0.0f);
+		return QVector3D(sx, 0.0f, 0.0f);
 	else if (ay <= az)
-		collisionNormal = QVector3D(0.0f, sy, 0.0f);
+		return QVector3D(0.0f, sy, 0.0f);
 	else
-		collisionNormal = QVector3D(0.0f, 0.0f, sz);
-
-	return collisionNormal;
+		return QVector3D(0.0f, 0.0f, sz);
 }
 
 QVector<Renderable> QtGLWidget::getObjects()
