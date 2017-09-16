@@ -5,10 +5,21 @@
 int RigidBody::NUMBER_OF_OBJECTS = 0;
 PhysicsHandler RigidBody::physicsHandler;
 
-RigidBody::RigidBody(QVector3D position)
+RigidBody::RigidBody(QVector3D position, float object_mass)
 {
 	object_id = ++NUMBER_OF_OBJECTS;
 	translate(position);
+	mass = object_mass;
+}
+
+bool RigidBody::equalTo(const RigidBody & other)
+{
+	if (mass != other.mass) return false;
+	if (model_matrix != other.model_matrix) return false;
+	if (velocity != other.velocity) return false;
+	if (inertia != other.inertia) return false;
+	if (angular_velocity != other.angular_velocity) return false;
+	return true;
 }
 
 void RigidBody::translate(QVector3D translation)
@@ -16,7 +27,22 @@ void RigidBody::translate(QVector3D translation)
 	model_matrix.translate(translation);
 }
 
-QMatrix4x4 RigidBody::getModelMatrix()
+QVector3D RigidBody::getAngularVelocity()
+{
+	return angular_velocity;
+}
+
+QMatrix4x4 RigidBody::getInertia()
+{
+	return inertia;
+}
+
+float RigidBody::getMass() const
+{
+	return mass;
+}
+
+QMatrix4x4 RigidBody::getModelMatrix() const
 {
 	return model_matrix;
 }
@@ -29,6 +55,16 @@ QVector3D RigidBody::getMomentum()
 QVector3D RigidBody::getVelocity()
 {
 	return velocity;
+}
+
+void RigidBody::setAngularVelocity(QVector3D angV)
+{
+	angular_velocity = angV;
+}
+
+void RigidBody::setMass(float object_mass)
+{
+	mass = object_mass;
 }
 
 void RigidBody::setModelMatrix(QMatrix4x4 matrix)
@@ -50,6 +86,12 @@ void RigidBody::updatePosition(float dt)
 void RigidBody::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode* parent)
 {	
 	tinyxml2::XMLElement* objElement = xmlDocument.NewElement("RigidBody");
+
+	// --------------------- Mass ----------------------------//
+	tinyxml2::XMLElement* massElement = xmlDocument.NewElement("Mass");
+	tinyxml2::XMLText* massText = xmlDocument.NewText(std::to_string(mass).c_str());
+	massElement->LinkEndChild(massText);
+	objElement->LinkEndChild(massElement);
 
 	// --------------------- Position ----------------------------//
 	tinyxml2::XMLElement* positionElement = xmlDocument.NewElement("Position");
@@ -79,27 +121,46 @@ void RigidBody::serialize(tinyxml2::XMLDocument &xmlDocument, tinyxml2::XMLNode*
 	velocityElement->LinkEndChild(velocityZElement);
 
 	objElement->LinkEndChild(velocityElement);
+
 	parent->LinkEndChild(objElement);
 }
 
 tinyxml2::XMLError RigidBody::deserialize(tinyxml2::XMLNode* parent, RigidBody& rb)
 {
 	const char* elementText;
-	const char* velocityUnit;
+
+	tinyxml2::XMLElement* massElement = parent->FirstChildElement("Mass");
+	if (massElement)
+	{
+		float mass = atof(massElement->GetText());
+		rb.setMass(mass);
+	}
 
 	elementText = parent->FirstChildElement("Position")->GetText();
 	QString position(elementText);
 
 	rb.setModelMatrix(fromString(position));
 
-	tinyxml2::XMLElement* velocityElement = parent->FirstChildElement("Velocity");
-	velocityUnit = velocityElement->Attribute("unit");
-	float velocityX = atof(velocityElement->FirstChildElement("X")->GetText());
-	float velocityY = atof(velocityElement->FirstChildElement("Y")->GetText());
-	float velocityZ = atof(velocityElement->FirstChildElement("Z")->GetText());
+	QVector3D velocity = deserializeVector3D(parent, "Velocity");
+	rb.setVelocity(velocity);
 
-	rb.setVelocity(QVector3D(velocityX, velocityY, velocityZ));
+	QVector3D angularVelocity = deserializeVector3D(parent, "AngularVelocity");
+	rb.setAngularVelocity(angularVelocity);
+
 	return tinyxml2::XML_SUCCESS;
+}
+
+QVector3D RigidBody::deserializeVector3D(tinyxml2::XMLNode* parent, const char* elementName)
+{
+	float x = 0, y = 0, z = 0;
+	tinyxml2::XMLElement* anElement = parent->FirstChildElement(elementName);
+	if (anElement)
+	{
+		x = atof(anElement->FirstChildElement("X")->GetText());
+		y = atof(anElement->FirstChildElement("Y")->GetText());
+		z = atof(anElement->FirstChildElement("Z")->GetText());
+	}
+	return QVector3D(x, y, z);
 }
 
 QString RigidBody::toString(QMatrix4x4 aMatrix)
@@ -123,5 +184,5 @@ QMatrix4x4 RigidBody::fromString(QString aString)
 
 	QTextStream values(&aString);
 	values >> x[0] >> x[1] >> x[2] >> x[3] >> y[0] >> y[1] >> y[2] >> y[3] >> z[0] >> z[1] >> z[2] >> z[3] >> w[0] >> w[1] >> w[2] >> w[3];
-	return QMatrix4x4(x[0], x[1], x[2], x[3], y[0], y[1], y[2], y[3], z[0], z[1], z[2], z[3], w[0], w[1], w[2], w[3]);
+	return QMatrix4x4(x[0], y[0], z[0], w[0], x[1], y[1], z[1], w[1], x[2], y[2], z[2], w[2], x[3], y[3], z[3], w[3]);
 }

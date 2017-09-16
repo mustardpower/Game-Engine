@@ -12,6 +12,8 @@
 #include "qopengldebug.h"
 #include <QtOpenGLExtensions\qopenglextensions.h>
 
+using namespace std;
+
 enum mode { PAN, ZOOM, ROTATE };
 
 class QtGLWidget : public QOpenGLWidget
@@ -22,8 +24,10 @@ public:
 	QtGLWidget(QWidget *parent = Q_NULLPTR);
 	~QtGLWidget();
 
-	bool collisionsDetected(const Renderable& obj);
+	bool collisionsDetected(Renderable& obj);
 	void createVAO(GeoModel3D model);
+	Renderable* getCollidingObject(Renderable &object);
+	QVector3D getCollisionNormal(Renderable object1, Renderable object2);
 	QVector<Renderable> getObjects();
 	void initShaders();
 	bool isMouseDragging(QMouseEvent *event);
@@ -31,8 +35,12 @@ public:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent * event);
 	QPoint normalizedDeviceCoordinatesToViewport(QVector3D ndc, int screen_width, int screen_height);
-	void renderBoundingBox(AABB boundingBox);
+	QVector3D pointOnFarPlane(const int x, const int y);
+	QVector3D pointOnNearPlane(const int x, const int y);
+	QVector3D rayDirectionBetweenNearAndFarPlane(const int x, const int y);
+	void renderBoundingBox(Renderable& object);
 	void renderModel(GeoModel3D model);
+	void resolveCollision(Renderable &object, Renderable & collidingObj);
 	QVector<Renderable> selectedObjects();
 	void setObjects(QVector<Renderable> objs);
 	void showContextMenu(const QPoint &pos);

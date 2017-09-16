@@ -44,17 +44,26 @@ void QtGLWidget::initializeGL()
 	f->glEnable(GL_CULL_FACE);
 }
 
-bool QtGLWidget::collisionsDetected(const Renderable &obj)
+bool QtGLWidget::collisionsDetected(Renderable &obj)
 {
 	// TO DO: COLLISION DETECTION!
+	for (QVector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+	{
+		if (*object != obj)
+		{
+			if (object->intersects(obj))
+			{
+				return true;
+			}
+		}
+	}
+
 	return false;
 }
 
 void QtGLWidget::createVAO(GeoModel3D model)
 {
-	QOpenGLVertexArrayObject* m_vao;
 	QVector<GLModel3DData> modelData = model.retrieveMeshes();
-	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 
 	for (QVector<GLModel3DData>::iterator mesh = modelData.begin(); mesh != modelData.end(); mesh++)
 	{
@@ -94,6 +103,44 @@ void QtGLWidget::createVAO(GeoModel3D model)
 
 		m_vao->release();
 	}
+}
+
+Renderable* QtGLWidget::getCollidingObject(Renderable &object)
+{
+	for (QVector<Renderable>::iterator obj = objects.begin(); obj != objects.end(); obj++)
+	{
+		if (object != *obj)
+		{
+			if (object.intersects(*obj))
+			{
+				return obj;
+			}
+		}
+	}
+
+	return NULL;
+}
+
+QVector3D QtGLWidget::getCollisionNormal(Renderable objectA, Renderable objectB)
+{
+	AABB boxA = objectA.getBoundingBox();
+	AABB boxB = objectB.getBoundingBox();
+	
+	QVector3D overlap = boxA.overlap(boxB);
+	float ax = fabs(overlap.x());
+	float ay = fabs(overlap.y());
+	float az = fabs(overlap.z());
+
+	float sx = boxA.getCenter().x() < boxB.getCenter().x() ? -1.0f : 1.0f;
+	float sy = boxA.getCenter().y() < boxB.getCenter().y() ? -1.0f : 1.0f;
+	float sz = boxA.getCenter().z() < boxB.getCenter().z() ? -1.0f : 1.0f;
+
+	if (ax <= ay && ax <= az)
+		return QVector3D(sx, 0.0f, 0.0f);
+	else if (ay <= az)
+		return QVector3D(0.0f, sy, 0.0f);
+	else
+		return QVector3D(0.0f, 0.0f, sz);
 }
 
 QVector<Renderable> QtGLWidget::getObjects()
@@ -196,17 +243,12 @@ void QtGLWidget::mouseReleaseEvent(QMouseEvent * event)
 		if (isMouseDragging(event))
 			return;
 
-		QRect viewport(0.0f, 0.0f, width(), height());
-
-		// calculate point on near and far plane
-		QVector3D worldPosNear = glCamera.pointOnNearPlane(event->pos().x(), height() - event->pos().y(), viewport);
-		QVector3D worldPosFar = glCamera.pointOnFarPlane(event->pos().x(), height() - event->pos().y(), viewport);
-
-		QVector3D ray_direction = (worldPosFar - worldPosNear).normalized();
 		for (QVector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 		{
-			bool intersects = object->intersects(worldPosNear, ray_direction);
-			object->setSelection(intersects);
+			object->getBoundingBox();
+			int x = event->pos().x();
+			int y = event->pos().y();
+			object->setSelectionIfRayIntersects(pointOnNearPlane(x, y), rayDirectionBetweenNearAndFarPlane(x, y));
 		}
 	}
 };
@@ -233,63 +275,55 @@ void QtGLWidget::onZoomModeSelected()
 	viewMode = ZOOM;
 }
 
+void QtGLWidget::paintGL()
+{
+	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+	f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	m_shaderProgram.bind();
+	for (QVector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
+	{
+		m_shaderProgram.setUniformValue("mvp_matrix", glCamera.getMVPMatrix() * object->getModelMatrix());
+		renderModel(object->getModel());
+		if(object->isSelected())
+		{
+			renderBoundingBox(*object);
+		}
+	}
+}
+
+QVector3D QtGLWidget::pointOnNearPlane(const int x, const int y)
+{
+	QRect viewport(0.0f, 0.0f, width(), height());
+	return glCamera.pointOnNearPlane(x, height() - y, viewport);
+}
+
+QVector3D QtGLWidget::pointOnFarPlane(const int x, const int y)
+{
+	QRect viewport(0.0f, 0.0f, width(), height());
+	return glCamera.pointOnFarPlane(x, height() - y, viewport);
+}
+
+QVector3D QtGLWidget::rayDirectionBetweenNearAndFarPlane(const int x, const int y)
+{
+	return (pointOnFarPlane(x,y) - pointOnNearPlane(x,y)).normalized();
+}
+
 void QtGLWidget::resizeGL(int w, int h)
 {
 	// Update projection matrix and other size related settings:
 	glCamera.resizeViewport(w, h);
 }
 
-void QtGLWidget::paintGL()
-{
-	// Draw the scene:
-
-	QMatrix4x4 object_model_matrix;
-	QMatrix4x4 mvp_matrix;
-	QMatrix4x4 camera_mvp_matrix = glCamera.getMVPMatrix();
-	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-	f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	m_shaderProgram.bind();
-	for (QVector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
-	{
-		object_model_matrix = object->getModelMatrix();
-		mvp_matrix = camera_mvp_matrix * object_model_matrix;
-		m_shaderProgram.setUniformValue("mvp_matrix", mvp_matrix);
-
-		renderModel(object->getModel());
-		if (object->isSelected())
-		{
-			renderBoundingBox(object->getBoundingBox());
-		}
-	}
-}
-
-void QtGLWidget::renderBoundingBox(AABB boundingBox)
+void QtGLWidget::renderBoundingBox(Renderable& object)
 {
 	QOpenGLVertexArrayObject m_vao;
-	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-	QVector3D min = boundingBox.getVecMin();
-	QVector3D max = boundingBox.getVecMax();
-	const int NUM_OF_VERTICES = 8;
 
-	m_vao.create(); // Create our Vertex Array Object
-	m_vao.bind(); // Bind our Vertex Array Object so we can use it
+	m_shaderProgram.setUniformValue("mvp_matrix", glCamera.getMVPMatrix()); // bounding box stored in global coordinates so no need for object transform
+	m_vao.create(); 
+	m_vao.bind(); 
 
-	std::vector<float> vertices = {
-		max.x(),  max.y(),  max.z(), // Vertex 0 (X, Y, Z)
-		max.x(),  max.y(),  min.z(), // Vertex 1 (X, Y, Z)
-		max.x(),	min.y(),  min.z(), // Vertex 2 (X, Y, Z)
-		max.x(),	min.y(),  max.z(), // Vertex 3 (X, Y, Z)
-		min.x(),  max.y(), max.z(), // Vertex 4 (X, Y, Z)
-		min.x(),  max.y(), min.z(), // Vertex 5 (X, Y, Z)
-		min.x(),	min.y(), min.z(), // Vertex 6 (X, Y, Z)
-		min.x(),	min.y(), max.z()  // Vertex 7 (X, Y, Z)
-	};
-
-	std::vector<unsigned int> indices = {
-		0,1,  1,5,  5,4,  4,0,    // edges of the top face
-		7,3,  3,2,  2,6,  6,7,    // edges of the bottom face
-		1,2,  0,3,  4,7,  5,6	 // edges connecting top face to bottom face
-	};
+	std::vector<float> vertices = object.getBoundingBox().getVertices();
+	std::vector<unsigned int> indices = object.getBoundingBox().getEdgeIndices();
 
 	QOpenGLBuffer m_positionBuffer;
 	m_positionBuffer.create();
@@ -307,13 +341,13 @@ void QtGLWidget::renderBoundingBox(AABB boundingBox)
 	m_IndexBuffer.allocate(&indices[0],
 		indices.size() * sizeof(GLuint));
 
-	f->glDrawElements(GL_LINES, NUM_OF_VERTICES * 3, GL_UNSIGNED_INT, 0);
+	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+	f->glDrawElements(GL_LINES, vertices.size() * 3, GL_UNSIGNED_INT, 0);
 }
 
 void QtGLWidget::renderModel(GeoModel3D model)
 {
 	QOpenGLVertexArrayObject* vaoID;
-	GLuint sampler_loc = 4;
 	QVector<GLModel3DData> modelData = model.retrieveMeshes();
 	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 
@@ -328,12 +362,39 @@ void QtGLWidget::renderModel(GeoModel3D model)
 		vaoID->bind();
 
 		//QOpenGLTexture texture(QImage(m->texture).mirrored());
-		QOpenGLTexture texture(QImage(m->texture));
+		QOpenGLTexture texture(QImage(m->getTexture()));
 		texture.bind();
 
 		tinyobj::mesh_t mesh = m->getMeshData();
 		f->glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
 	}
+}
+
+void QtGLWidget::resolveCollision(Renderable &object, Renderable & collidingObj)
+{
+	// calculate contact point on colliding bodies
+	// calculate offset between contact points and centre of mass
+	// calculate the contact normal (assumed to point away from body 1 and towards body 2)
+	// calculate vr (the pre-collision relative velocity)
+	PhysicsHandler ph;
+	QVector3D v1 = object.getVelocity();
+	QVector3D v2 = collidingObj.getVelocity();
+	QVector3D w1 = object.getAngularVelocity();
+	QVector3D w2 = collidingObj.getAngularVelocity();
+	QVector3D r1(-1, 0, 0);
+	QVector3D r2(1, 0, 0);
+	float m1 = object.getMass();
+	float m2 = collidingObj.getMass();
+	float e = 1.0;
+	QVector3D n = getCollisionNormal(object, collidingObj); 
+	QMatrix4x4 i1 = object.getInertia();
+	QMatrix4x4 i2 = collidingObj.getInertia();
+	QVector3D vr = ph.calculateRelativeVelocity(v1, v2, w1, w2, r1, r2);
+	float impulseMagnitude = ph.calculateReactionForce(r1, r2, i1, i2, m1, m2, e, n, vr);
+	QVector3D newVelocity1 = ph.calculateLinearVelocity(v1, -impulseMagnitude, m1, n);
+	QVector3D newVelocity2 = ph.calculateLinearVelocity(v2, impulseMagnitude, m2, n);
+	object.setVelocity(newVelocity1);
+	collidingObj.setVelocity(newVelocity2);
 }
 
 QVector<Renderable> QtGLWidget::selectedObjects()
@@ -391,11 +452,7 @@ QVector3D QtGLWidget::viewportToNormalizedDeviceCoordinates(int xPos, int yPos, 
 void QtGLWidget::wheelEvent(QWheelEvent *event)
 {
 	QRect viewport(0.0f, 0.0f, width(), height());
-
-	// calculate point on near and far plane
-	QVector3D worldPosNear = glCamera.pointOnNearPlane(width() / 2.0, height() / 2.0, viewport);
-	QVector3D worldPosFar = glCamera.pointOnFarPlane(width() / 2.0, height() / 2.0, viewport);
-	QVector3D ray_direction = (worldPosFar - worldPosNear).normalized();
+	QVector3D ray_direction = rayDirectionBetweenNearAndFarPlane(event->x(), event->y());
 
 	if (event->delta() > 0)
 	{
@@ -412,15 +469,20 @@ void QtGLWidget::updateFrame()
 	auto current_time_step = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<float> time_step(current_time_step - last_time_step);
 	float dt = time_step.count();
-
+	Renderable* collidingObj;
 	for (QVector<Renderable>::iterator object = objects.begin(); object != objects.end(); object++)
 	{
 		object->storeFrame();				// store the position, velocity, inertia etc
 		object->updateFrame(dt);			// update the position based on the velocity etc
 		if (collisionsDetected(*object))
 		{
+			collidingObj = getCollidingObject(*object);
 			object->previousFrame();		// if the new position is in collision with another object
 											// revert to previous position and use more accurate handling
+			if (collidingObj)
+			{
+				resolveCollision(*object, *collidingObj);
+			}
 		}
 	}
 

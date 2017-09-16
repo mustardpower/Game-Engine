@@ -2,6 +2,8 @@
 #include "qvector3d.h"
 #include "BoundingObject.h"
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
 // Name:		AABB
 // Variables:	vecMin - the minimum point in 3d space that the box is bounding
@@ -17,10 +19,17 @@ private:
 public:
 	AABB();
 	AABB(QVector3D min, QVector3D max);
+	AABB(AABB& other);
+	AABB& operator= (const AABB& other);
 
 	bool contains(QVector3D point) const;
 	bool intersects(const AABB& aBoundingBox);
 	bool intersects(QVector3D origin, QVector3D dir);
-	QVector3D getVecMin();
-	QVector3D getVecMax();
+	QVector3D getCenter() const;
+	vector<unsigned int> getEdgeIndices();
+	QVector3D getVecMin() const;
+	QVector3D getVecMax() const;
+	vector<float> getVertices();
+	QVector3D overlap(AABB anotherBox);
+	void setDimensions(QVector3D vMin, QVector3D vMax);
 };

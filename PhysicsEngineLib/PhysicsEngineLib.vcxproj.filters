@@ -115,6 +115,9 @@
     <ClCompile Include="Unit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BoundingSphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="PhysicsEngineLib.qrc">
@@ -189,6 +192,9 @@
       <Filter>Header Files\tinyxml2</Filter>
     </ClInclude>
     <ClInclude Include="Unit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingSphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

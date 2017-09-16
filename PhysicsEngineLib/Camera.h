@@ -22,7 +22,7 @@ public:
 	Camera();
 	QVector3D Camera::rotatePoint(QVector3D point, QVector3D origin, QVector3D direction, float angle);
 	QMatrix4x4 getMVPMatrix();
-	QMatrix4x4 getModelMatrix();
+	QMatrix4x4 getModelMatrix() const;
 	QMatrix4x4 getViewMatrix();
 	QMatrix4x4 getProjectionMatrix();
 	void onRotate(float deltaX, float deltaY);

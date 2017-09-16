@@ -30,12 +30,17 @@ public:
 	Renderable & operator= (const Renderable & other);
 	bool operator==(const Renderable& other);
 	bool operator!=(const Renderable& other);
-
 	Renderable(GeoModel3D model, RigidBody rigidBody);
+
+	AABB calculateBoundingBox();
+	QVector3D getAngularVelocity();
+	QMatrix4x4 getInertia();
+	float getMass();
 	GeoModel3D getModel() const;
-	QMatrix4x4 getModelMatrix();
+	QMatrix4x4 getModelMatrix() const;
 	QVector3D getVelocity();
-	const AABB& getBoundingBox();
+	AABB getBoundingBox();
+	bool equalTo(const Renderable& other);
 	bool isSelected();
 	bool intersects(Renderable other);
 	bool intersects(QVector3D p, QVector3D dir);
@@ -45,6 +50,8 @@ public:
 	void setModel(GeoModel3D aModel);
 	void setRigidBody(RigidBody rigidBody);
 	void setSelection(bool is_selected);
+	void setSelectionIfRayIntersects(QVector3D pos, QVector3D rayDirection);
+	void setVelocity(QVector3D velocity);
 	void storeFrame();
 	static tinyxml2::XMLError deserialize(tinyxml2::XMLNode* parent, Renderable& renderable);
 	void translate(QVector3D translation);

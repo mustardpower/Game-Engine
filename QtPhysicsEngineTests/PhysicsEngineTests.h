@@ -9,6 +9,7 @@ class PhysicsEngineTests : public QObject
 	void initTestCase();
 	void testXMLRead();
 	void testXMLReadFailure();
+	void testXMLRoundTrip();
 	void testRayCollision();
 	void testAABBCollision();
 	void testLinePlaneCollision();

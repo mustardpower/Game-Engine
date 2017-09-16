@@ -70,6 +70,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AABB.cpp" />
+    <ClCompile Include="BoundingSphere.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_QtGLWidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -119,6 +120,7 @@
   <ItemGroup>
     <ClInclude Include="AABB.h" />
     <ClInclude Include="BoundingObject.h" />
+    <ClInclude Include="BoundingSphere.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GeneratedFiles\ui_QtGLWidget.h" />
     <ClInclude Include="GeneratedFiles\ui_QtPhysicsEngine.h" />
