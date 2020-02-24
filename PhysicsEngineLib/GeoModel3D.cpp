@@ -3,7 +3,7 @@
 #include <QOpenGLFunctions>
 #include <iostream>
 #include "SOIL\SOIL.h"
-#include <experimental\filesystem>
+#include <filesystem>
 
 int GeoModel3D::NUMBER_OF_MODELS = 0;
 int GLModel3DData::NUMBER_OF_MESHES = 0;
@@ -120,7 +120,7 @@ tinyxml2::XMLError GeoModel3D::deserialize(tinyxml2::XMLNode* parent, GeoModel3D
 	const char* elementText = parent->FirstChildElement("file_name")->GetText();
 	std::string file_name(elementText);
 	std::string modelDir = modelDirectory.toUtf8().constData();
-	if (!std::experimental::filesystem::exists(modelDir + file_name))
+	if (!std::filesystem::exists(modelDir + file_name))
 	{
 		return tinyxml2::XML_ERROR_FILE_COULD_NOT_BE_OPENED;
 	}
