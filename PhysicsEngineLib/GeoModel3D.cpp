@@ -69,7 +69,7 @@ void GeoModel3D::loadFromFile(QString file_name)
 		{
 			tinyobj::material_t& material = materials[current_mesh.material_ids[0]];
 			QString color_map = texturesDirectory + QString::fromStdString(material.diffuse_texname);
-			if (!color_map.isEmpty())
+			if (!color_map.isEmpty() && filesystem::exists(color_map.toStdString()))
 			{
 				new_mesh.addTexture(color_map);
 			}
