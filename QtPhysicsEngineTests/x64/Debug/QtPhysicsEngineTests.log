@@ -1,2 +1,6 @@
-﻿  PhysicsEngineTests.cpp
+﻿  Moc'ing PhysicsEngineTests.h...
+  moc_PhysicsEngineTests.cpp
+  PhysicsEngineTests.cpp
+  TestSettings.cpp
+  Generating Code...
   QtPhysicsEngineTests.vcxproj -> D:\Users\paul\Documents\GitHub\Physics-Engine\QtPhysicsEngineTests\\QtPhysicsEngineTests.exe
