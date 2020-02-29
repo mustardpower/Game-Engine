@@ -10,6 +10,8 @@
 #include "qopenglvertexarrayobject.h"
 #include "qopenglbuffer.h"
 
+#include <iostream>
+
 QtGLWidget::QtGLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
 	ui.setupUi(this);
@@ -362,8 +364,16 @@ void QtGLWidget::renderModel(GeoModel3D model)
 		vaoID->bind();
 
 		//QOpenGLTexture texture(QImage(m->texture).mirrored());
-		QOpenGLTexture texture(QImage(m->getTexture()));
-		texture.bind();
+		QImage texture_image(m->getTexture());
+		if (!texture_image.isNull())
+		{
+			QOpenGLTexture texture(texture_image);
+			texture.bind();
+		}
+		else
+		{
+			std::cout << "Texture could not bind";
+		}
 
 		tinyobj::mesh_t mesh = m->getMeshData();
 		f->glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
