@@ -13,14 +13,18 @@ public:
 	static QString getTexturesDirectory();
 
 	QVector<Renderable> getObjects();
-	int loadFromFile(QString fileName);
-	int saveToFile(QString file_name);
+
+	int loadFromXML(QString fileName);
+	int saveToXML(QString file_name);
+
+	int loadFromObj(QString fileName);
 
     QtPhysicsEngine(QWidget *parent = Q_NULLPTR);
 
 	public slots:
 	void loadXML();
 	void saveXML();
+	void loadObj();
 
 private:
 	static QString applicationDirectory;

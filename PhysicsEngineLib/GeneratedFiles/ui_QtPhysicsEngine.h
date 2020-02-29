@@ -29,9 +29,11 @@ class Ui_QtPhysicsEngineClass
 {
 public:
     QAction *actionNew;
-    QAction *actionLoad;
-    QAction *actionSave;
+    QAction *actionLoadXML;
+    QAction *actionSaveXML;
     QAction *actionExit;
+    QAction *actionLoad_Obj;
+    QAction *actionSave_Obj;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QtGLWidget *openGLWidget;
@@ -47,12 +49,16 @@ public:
         QtPhysicsEngineClass->resize(882, 593);
         actionNew = new QAction(QtPhysicsEngineClass);
         actionNew->setObjectName(QStringLiteral("actionNew"));
-        actionLoad = new QAction(QtPhysicsEngineClass);
-        actionLoad->setObjectName(QStringLiteral("actionLoad"));
-        actionSave = new QAction(QtPhysicsEngineClass);
-        actionSave->setObjectName(QStringLiteral("actionSave"));
+        actionLoadXML = new QAction(QtPhysicsEngineClass);
+        actionLoadXML->setObjectName(QStringLiteral("actionLoadXML"));
+        actionSaveXML = new QAction(QtPhysicsEngineClass);
+        actionSaveXML->setObjectName(QStringLiteral("actionSaveXML"));
         actionExit = new QAction(QtPhysicsEngineClass);
         actionExit->setObjectName(QStringLiteral("actionExit"));
+        actionLoad_Obj = new QAction(QtPhysicsEngineClass);
+        actionLoad_Obj->setObjectName(QStringLiteral("actionLoad_Obj"));
+        actionSave_Obj = new QAction(QtPhysicsEngineClass);
+        actionSave_Obj->setObjectName(QStringLiteral("actionSave_Obj"));
         centralWidget = new QWidget(QtPhysicsEngineClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -80,8 +86,9 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuFile->addAction(actionNew);
-        menuFile->addAction(actionLoad);
-        menuFile->addAction(actionSave);
+        menuFile->addAction(actionLoadXML);
+        menuFile->addAction(actionSaveXML);
+        menuFile->addAction(actionLoad_Obj);
         menuFile->addAction(actionExit);
 
         retranslateUi(QtPhysicsEngineClass);
@@ -93,9 +100,11 @@ public:
     {
         QtPhysicsEngineClass->setWindowTitle(QApplication::translate("QtPhysicsEngineClass", "QtPhysicsEngine", Q_NULLPTR));
         actionNew->setText(QApplication::translate("QtPhysicsEngineClass", "New...", Q_NULLPTR));
-        actionLoad->setText(QApplication::translate("QtPhysicsEngineClass", "Load...", Q_NULLPTR));
-        actionSave->setText(QApplication::translate("QtPhysicsEngineClass", "Save...", Q_NULLPTR));
+        actionLoadXML->setText(QApplication::translate("QtPhysicsEngineClass", "Load XML...", Q_NULLPTR));
+        actionSaveXML->setText(QApplication::translate("QtPhysicsEngineClass", "Save XML...", Q_NULLPTR));
         actionExit->setText(QApplication::translate("QtPhysicsEngineClass", "Quit", Q_NULLPTR));
+        actionLoad_Obj->setText(QApplication::translate("QtPhysicsEngineClass", "Load Obj...", Q_NULLPTR));
+        actionSave_Obj->setText(QApplication::translate("QtPhysicsEngineClass", "Save Obj...", Q_NULLPTR));
         menuFile->setTitle(QApplication::translate("QtPhysicsEngineClass", "File", Q_NULLPTR));
     } // retranslateUi
 
