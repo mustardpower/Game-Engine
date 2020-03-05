@@ -365,15 +365,18 @@ void QtGLWidget::renderModel(GeoModel3D model)
 
 		//QOpenGLTexture texture(QImage(m->texture).mirrored());
 		QImage texture_image(m->getTexture());
-		if (!texture_image.isNull())
-		{
+
+		// Check is commented out as checking the image is null 
+		// causes the rendering of the texture to fail - WTF???
+		/*if (!texture_image.isNull())
+		{*/
 			QOpenGLTexture texture(texture_image);
 			texture.bind();
-		}
+		/*}
 		else
 		{
 			std::cout << "Texture could not bind";
-		}
+		}*/
 
 		tinyobj::mesh_t mesh = m->getMeshData();
 		f->glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
