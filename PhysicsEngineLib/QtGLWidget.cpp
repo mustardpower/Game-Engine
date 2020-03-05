@@ -363,7 +363,6 @@ void QtGLWidget::renderModel(GeoModel3D model)
 		vaoID = object_vao_map.at(m->getMeshID());
 		vaoID->bind();
 
-		//QOpenGLTexture texture(QImage(m->texture).mirrored());
 		QString texture_str = m->getTexture();
 
 		if (texture_str.isNull() || texture_str.isEmpty())
@@ -379,7 +378,8 @@ void QtGLWidget::renderModel(GeoModel3D model)
 			}
 			else
 			{
-				QOpenGLTexture texture(texture_image);
+				QOpenGLTexture texture(texture_image.mirrored());
+				//QOpenGLTexture texture(texture_image);
 				texture.bind();
 
 				tinyobj::mesh_t mesh = m->getMeshData();
