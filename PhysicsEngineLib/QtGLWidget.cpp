@@ -351,7 +351,7 @@ void QtGLWidget::renderModel(GeoModel3D model)
 {
 	QOpenGLVertexArrayObject* vaoID;
 	QVector<GLModel3DData> modelData = model.retrieveMeshes();
-	QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+	QOpenGLFunctions* f = QOpenGLContext::currentContext()->functions();
 
 	for (QVector<GLModel3DData>::iterator m = modelData.begin(); m != modelData.end(); m++)
 	{
@@ -364,22 +364,33 @@ void QtGLWidget::renderModel(GeoModel3D model)
 		vaoID->bind();
 
 		//QOpenGLTexture texture(QImage(m->texture).mirrored());
-		QImage texture_image(m->getTexture());
+		QString texture_str = m->getTexture();
 
-		// Check is commented out as checking the image is null 
-		// causes the rendering of the texture to fail - WTF???
-		/*if (!texture_image.isNull())
-		{*/
-			QOpenGLTexture texture(texture_image);
-			texture.bind();
-		/*}
+		if (texture_str.isNull() || texture_str.isEmpty())
+		{
+			std::cout << "Texture could not bind" << std::endl;
+		}
 		else
 		{
-			std::cout << "Texture could not bind";
-		}*/
+			QImage texture_image(texture_str);
+			if (texture_image.isNull())
+			{
+				std::cout << "Image is not loaded" << std::endl;
+			}
+			else
+			{
+				QOpenGLTexture texture(texture_image);
+				texture.bind();
 
-		tinyobj::mesh_t mesh = m->getMeshData();
-		f->glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
+				tinyobj::mesh_t mesh = m->getMeshData();
+				f->glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
+
+				if (texture.isBound())
+				{
+					texture.release();
+				}
+			}
+		}
 	}
 }
 
