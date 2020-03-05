@@ -45,16 +45,11 @@ class GLModel3DData		// this is model data to be uploaded to the graphics card -
 class GeoModel3D
 {
 private:
-	static QString modelDirectory;
-	static QString texturesDirectory;
 	QVector<GLModel3DData> meshes;
 	int model_id;			//this is unique to an instance of the object
 	static int NUMBER_OF_MODELS;
 	QString geo_file_name;
 public:
-
-	static void setModelDirectory(QString directoryPath);
-	static void setTexturesDirectory(QString directoryPath);
 
 	GeoModel3D();
 	~GeoModel3D();

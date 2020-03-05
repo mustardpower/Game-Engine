@@ -2,7 +2,7 @@
 <root>
 	<Renderable>
         <GEOModel>
-            <file_name>12140_Skull_v3_L2.obj</file_name>
+            <file_name>models//12140_Skull_v3_L2.obj</file_name>
         </GEOModel>
         <RigidBody>
             <Position>1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000</Position>

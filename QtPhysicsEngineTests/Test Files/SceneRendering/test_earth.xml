@@ -2,7 +2,7 @@
 <root>
     <Renderable>
         <GEOModel>
-            <file_name>earth.obj</file_name>
+            <file_name>models//earth.obj</file_name>
         </GEOModel>
         <RigidBody>
             <Position>mat4x4((1.000000, 0.000000, 0.000000, 0.000000), (0.000000, 1.000000, 0.000000, 0.000000), (0.000000, 0.000000, 1.000000, 0.000000), (0.000000, 0.000000, 0.000000, 1.000000))</Position>

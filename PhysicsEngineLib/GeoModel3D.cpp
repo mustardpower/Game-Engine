@@ -7,8 +7,6 @@
 
 int GeoModel3D::NUMBER_OF_MODELS = 0;
 int GLModel3DData::NUMBER_OF_MESHES = 0;
-QString GeoModel3D::modelDirectory = QtPhysicsEngine::getApplicationDirectory() + "\\models\\";
-QString GeoModel3D::texturesDirectory = QtPhysicsEngine::getApplicationDirectory() + "\\textures\\";
 
 GLModel3DData::~GLModel3DData()
 {
@@ -31,16 +29,6 @@ GeoModel3D::GeoModel3D(const GeoModel3D& model)
 	meshes = model.retrieveMeshes();
 }
 
-void GeoModel3D::setModelDirectory(QString directoryPath)
-{
-	modelDirectory = directoryPath;
-}
-
-void GeoModel3D::setTexturesDirectory(QString directoryPath)
-{
-	texturesDirectory = directoryPath;
-}
-
 void GeoModel3D::print()
 {
 	std::cout << "Model ID: " << model_id << std::endl;
@@ -52,10 +40,10 @@ void GeoModel3D::loadFromFile(QString file_name)
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
 
-	std::string fileName = file_name.toUtf8().constData();
-	std::string modelDir = modelDirectory.toUtf8().constData();
-	std::string absPath = modelDir + fileName;
-	std::string err = tinyobj::LoadObj(shapes, materials, absPath.c_str(), modelDir.c_str());
+	std::filesystem::path filePath = file_name.toStdString();
+	std::string absPath = std::filesystem::absolute(filePath).string();
+	std::string mtlDir = filePath.parent_path().string() + "/";
+	std::string err = tinyobj::LoadObj(shapes, materials, absPath.c_str(), mtlDir.c_str());
 	GLModel3DData new_mesh;
 
 	for (size_t i = 0; i<shapes.size(); i++)
@@ -68,7 +56,8 @@ void GeoModel3D::loadFromFile(QString file_name)
 		if (current_mesh.material_ids[0] >= 0) // no texture = -1 in material ids
 		{
 			tinyobj::material_t& material = materials[current_mesh.material_ids[0]];
-			QString color_map = texturesDirectory + QString::fromStdString(material.diffuse_texname);
+			std::filesystem::path texturePath = std::filesystem::absolute(material.diffuse_texname);
+			QString color_map = QString::fromStdString(texturePath.string());
 			if (!color_map.isEmpty() && filesystem::exists(color_map.toStdString()))
 			{
 				new_mesh.addTexture(color_map);
@@ -119,8 +108,8 @@ tinyxml2::XMLError GeoModel3D::deserialize(tinyxml2::XMLNode* parent, GeoModel3D
 {
 	const char* elementText = parent->FirstChildElement("file_name")->GetText();
 	std::string file_name(elementText);
-	std::string modelDir = modelDirectory.toUtf8().constData();
-	if (!std::filesystem::exists(modelDir + file_name))
+	std::filesystem::path file_path = std::filesystem::absolute(file_name);
+	if (!std::filesystem::exists(file_path.string()))
 	{
 		return tinyxml2::XML_ERROR_FILE_COULD_NOT_BE_OPENED;
 	}

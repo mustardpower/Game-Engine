@@ -2,7 +2,7 @@
 <root>
     <Renderable>
         <GEOModel>
-            <file_name>cube.obj</file_name>
+            <file_name>models//cube.obj</file_name>
         </GEOModel>
         <RigidBody>
             <Position>1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -10.00000 0.000000 0.000000 1.000000</Position>
@@ -15,7 +15,7 @@
     </Renderable>
 	<Renderable>
         <GEOModel>
-            <file_name>cube.obj</file_name>
+            <file_name>models//cube.obj</file_name>
         </GEOModel>
         <RigidBody>
             <Position>1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 10.00000 0.000000 0.000000 1.000000</Position>
