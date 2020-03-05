@@ -9,8 +9,6 @@ class QtPhysicsEngine : public QMainWindow
 
 public:
 	static QString getApplicationDirectory();
-	static QString getModelDirectory();
-	static QString getTexturesDirectory();
 
 	QVector<Renderable> getObjects();
 
@@ -28,8 +26,6 @@ public:
 
 private:
 	static QString applicationDirectory;
-	static QString modelDirectory;
-	static QString texturesDirectory;
 
     Ui::QtPhysicsEngineClass ui;
 };

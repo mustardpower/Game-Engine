@@ -8,8 +8,6 @@
 #include <filesystem>
 
 QString QtPhysicsEngine::applicationDirectory = QtPhysicsEngine::getApplicationDirectory();
-QString QtPhysicsEngine::modelDirectory = QtPhysicsEngine::getModelDirectory();
-QString QtPhysicsEngine::texturesDirectory = QtPhysicsEngine::getTexturesDirectory();
 
 QtPhysicsEngine::QtPhysicsEngine(QWidget *parent)
 	: QMainWindow(parent)
@@ -26,16 +24,6 @@ QtPhysicsEngine::QtPhysicsEngine(QWidget *parent)
 QString QtPhysicsEngine::getApplicationDirectory()
 {
 	return QDir::currentPath();
-}
-
-QString QtPhysicsEngine::getModelDirectory()
-{
-	return getApplicationDirectory() + "\\models\\";
-}
-
-QString QtPhysicsEngine::getTexturesDirectory()
-{
-	return getApplicationDirectory() + "\\textures\\";
 }
 
 QVector<Renderable> QtPhysicsEngine::getObjects()
