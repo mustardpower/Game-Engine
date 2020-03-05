@@ -1,6 +1,15 @@
 ﻿  Moc'ing PhysicsEngineTests.h...
   moc_PhysicsEngineTests.cpp
   PhysicsEngineTests.cpp
+D:\Users\paul\Documents\GitHub\Physics-Engine\QtPhysicsEngineTests\PhysicsEngineTests.cpp(14,25): error C2039: 'loadFromFile': is not a member of 'QtPhysicsEngine'
+D:\Users\paul\Documents\GitHub\Physics-Engine\PhysicsEngineLib\QtPhysicsEngine.h(6): message : see declaration of 'QtPhysicsEngine'
+D:\Users\paul\Documents\GitHub\Physics-Engine\QtPhysicsEngineTests\PhysicsEngineTests.cpp(29,35): error C2039: 'loadFromFile': is not a member of 'QtPhysicsEngine'
+D:\Users\paul\Documents\GitHub\Physics-Engine\PhysicsEngineLib\QtPhysicsEngine.h(6): message : see declaration of 'QtPhysicsEngine'
+D:\Users\paul\Documents\GitHub\Physics-Engine\QtPhysicsEngineTests\PhysicsEngineTests.cpp(39,35): error C2039: 'loadFromFile': is not a member of 'QtPhysicsEngine'
+D:\Users\paul\Documents\GitHub\Physics-Engine\PhysicsEngineLib\QtPhysicsEngine.h(6): message : see declaration of 'QtPhysicsEngine'
+D:\Users\paul\Documents\GitHub\Physics-Engine\QtPhysicsEngineTests\PhysicsEngineTests.cpp(46,29): error C2039: 'saveToFile': is not a member of 'QtPhysicsEngine'
+D:\Users\paul\Documents\GitHub\Physics-Engine\PhysicsEngineLib\QtPhysicsEngine.h(6): message : see declaration of 'QtPhysicsEngine'
+D:\Users\paul\Documents\GitHub\Physics-Engine\QtPhysicsEngineTests\PhysicsEngineTests.cpp(49,31): error C2039: 'loadFromFile': is not a member of 'QtPhysicsEngine'
+D:\Users\paul\Documents\GitHub\Physics-Engine\PhysicsEngineLib\QtPhysicsEngine.h(6): message : see declaration of 'QtPhysicsEngine'
   TestSettings.cpp
   Generating Code...
-  QtPhysicsEngineTests.vcxproj -> D:\Users\paul\Documents\GitHub\Physics-Engine\QtPhysicsEngineTests\\QtPhysicsEngineTests.exe

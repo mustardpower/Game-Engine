@@ -11,7 +11,7 @@ void PhysicsEngineTests::initTestCase()
 void PhysicsEngineTests::testXMLRead()
 {
 	QtPhysicsEngine testEngine;
-	testEngine.loadFromFile(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_cube.xml");
+	testEngine.loadFromXML(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_cube.xml");
 	QVector<Renderable> objects = testEngine.getObjects();
 	QVERIFY(objects.size() == 1);
 	Renderable object = objects.at(0);
@@ -26,7 +26,7 @@ void PhysicsEngineTests::testXMLRead()
 void PhysicsEngineTests::testXMLReadFailure()
 {
 	QtPhysicsEngine testEngine;
-	int res = testEngine.loadFromFile(TestSettings::getTestFileDirectory() + "\\SceneRendering\\nonexistant.xml");
+	int res = testEngine.loadFromXML(TestSettings::getTestFileDirectory() + "\\SceneRendering\\nonexistant.xml");
 	QVERIFY(res != tinyxml2::XML_SUCCESS);
 
 	QVector<Renderable> objects = testEngine.getObjects();
@@ -36,17 +36,17 @@ void PhysicsEngineTests::testXMLReadFailure()
 void PhysicsEngineTests::testXMLRoundTrip()
 {
 	QtPhysicsEngine testEngine;
-	int res = testEngine.loadFromFile(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_roundtrip.xml");
+	int res = testEngine.loadFromXML(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_roundtrip.xml");
 	QVERIFY(res == tinyxml2::XML_SUCCESS);
 	QVector<Renderable> originalObjects = testEngine.getObjects();
 	QVERIFY(originalObjects.size() == 2);
 	Renderable originalObj1 = originalObjects.at(0);
 	Renderable originalObj2 = originalObjects.at(1);
 
-	res = testEngine.saveToFile(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_roundtripsave.xml");
+	res = testEngine.loadFromXML(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_roundtripsave.xml");
 	QVERIFY(res == tinyxml2::XML_SUCCESS);
 
-	res = testEngine.loadFromFile(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_roundtripsave.xml");
+	res = testEngine.loadFromXML(TestSettings::getTestFileDirectory() + "\\SceneRendering\\test_roundtripsave.xml");
 	QVERIFY(res == tinyxml2::XML_SUCCESS);
 	QVector<Renderable> roundtripObjects = testEngine.getObjects();
 	QVERIFY(roundtripObjects.size() == 2);
