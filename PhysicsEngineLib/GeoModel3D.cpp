@@ -44,11 +44,11 @@ void GeoModel3D::loadFromFile(QString file_name)
 	std::string absPath = std::filesystem::absolute(filePath).string();
 	std::string mtlDir = filePath.parent_path().string() + "/";
 	std::string err = tinyobj::LoadObj(shapes, materials, absPath.c_str(), mtlDir.c_str());
-	GLModel3DData new_mesh;
 
 	for (size_t i = 0; i<shapes.size(); i++)
 	{
 		int texture;
+		GLModel3DData new_mesh;
 
 		// each mesh is made up of a number of shapes	
 		tinyobj::mesh_t current_mesh = shapes[i].mesh;
@@ -56,7 +56,7 @@ void GeoModel3D::loadFromFile(QString file_name)
 		if (current_mesh.material_ids[0] >= 0) // no texture = -1 in material ids
 		{
 			tinyobj::material_t& material = materials[current_mesh.material_ids[0]];
-			std::filesystem::path texturePath = std::filesystem::absolute(material.diffuse_texname);
+			std::filesystem::path texturePath = std::filesystem::relative(material.diffuse_texname);
 			QString color_map = QString::fromStdString(texturePath.string());
 			if (!color_map.isEmpty() && filesystem::exists(color_map.toStdString()))
 			{
